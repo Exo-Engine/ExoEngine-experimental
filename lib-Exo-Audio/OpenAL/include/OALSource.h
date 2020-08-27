@@ -1,0 +1,69 @@
+/*
+ *	MIT License
+ *
+ *	Copyright (c) 2020 Gaëtan Dezeiraud and Ribault Paul
+ *
+ *	Permission is hereby granted, free of charge, to any person obtaining a copy
+ *	of this software and associated documentation files (the "Software"), to deal
+ *	in the Software without restriction, including without limitation the rights
+ *	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *	copies of the Software, and to permit persons to whom the Software is
+ *	furnished to do so, subject to the following conditions:
+ *
+ *	The above copyright notice and this permission notice shall be included in all
+ *	copies or substantial portions of the Software.
+ *
+ *	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *	SOFTWARE.
+ */
+
+#pragma once
+
+#ifdef __linux__
+# include <AL/al.h>
+# include <AL/alc.h>
+#else
+# include <OpenAL/al.h>
+# include <OpenAL/alc.h>
+#endif
+
+#include "ISource.h"
+#include "OALSound.h"
+#include "OALMusic.h"
+
+namespace	ExoAudioOpenAL
+{
+
+class OALSource : public ExoAudio::ISource
+{
+public:
+	OALSource(void);
+	virtual ~OALSource(void);
+
+	virtual void play(void) const;
+	virtual void stop(void) const;
+	virtual void rewind(void) const;
+
+	virtual void streamingUpdate(void) const;
+
+	// Getters
+	virtual ISource::SourceState getState(void);
+	ALuint getSource(void) const;
+
+	// Setters
+	virtual void setAudio(const ExoAudio::ISound* sound);
+	virtual void setAudio(const ExoAudio::IMusic* music);
+	virtual void setPosition(const glm::vec3 &position);
+	virtual void setVolume(float volume);
+	virtual void setPitch(float pitch);
+private:
+	OALMusic *_pMusic; // For streaming
+	ALuint _id;
+};
+
+}
