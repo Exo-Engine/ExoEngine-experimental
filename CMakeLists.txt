@@ -1,4 +1,9 @@
 cmake_minimum_required(VERSION 3.8)
+
+if (WIN32)
+	set(CMAKE_TOOLCHAIN_FILE C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
+endif
+
 project(ExoEngine CXX)
 
 subdirs(examples)
@@ -20,7 +25,11 @@ include_directories(
 	lib-Exo-Renderer/renderer/include
 	lib-Exo-Audio/audio/include)
 
-	SET(CMAKE_CXX_FLAGS  "-Wall -Wextra")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+	set(CMAKE_CXX_FLAGS "/W4 /FS /EHsc")
+else ()
+	set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+endif ()
 
 link_libraries(SDL2_net ssl crypto dl pthread xml2 BulletDynamics BulletCollision LinearMath)
 

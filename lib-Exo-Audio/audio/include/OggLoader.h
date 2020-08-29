@@ -29,10 +29,12 @@
 #include <cstdio>
 #include <vorbis/vorbisfile.h>
 
-#ifdef __linux__
-# include <AL/al.h>
+#ifdef __APPLE__
+	#include <OpenAL/al.h>
+	#include <OpenAL/alc.h>
 #else
-# include <OpenAL/al.h>
+	#include <AL/al.h>
+	#include <AL/alc.h>
 #endif
 
 #define OGG_DEFAULT_BUFFER_SIZE 4096

@@ -24,12 +24,12 @@
 
 #pragma once
 
-#ifdef __linux__
-# include <AL/al.h>
-# include <AL/alc.h>
+#ifdef __APPLE__
+	#include <OpenAL/al.h>
+	#include <OpenAL/alc.h>
 #else
-# include <OpenAL/al.h>
-# include <OpenAL/alc.h>
+	#include <AL/al.h>
+	#include <AL/alc.h>
 #endif
 
 #include "IMusic.h"

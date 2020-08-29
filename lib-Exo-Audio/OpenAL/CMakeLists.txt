@@ -18,6 +18,9 @@ include_directories(
 	include
 	${AUDIO_DIR}/include)
 
-link_libraries(openal vorbisfile)
+find_package(OpenAL CONFIG REQUIRED)
+find_package(Vorbis CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
+link_libraries(glm OpenAL::OpenAL Vorbis::vorbis Vorbis::vorbisenc Vorbis::vorbisfile)
 add_library(ExoAudioOpenAL SHARED ${SOURCES})
