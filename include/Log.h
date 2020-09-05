@@ -25,6 +25,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <mutex>
 #include <time.h>
@@ -36,6 +37,10 @@
 
 #ifdef LOG_TERM
 # include <iostream>
+#endif
+
+#ifdef _WIN32
+	#define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif
 
 #ifndef __linux__

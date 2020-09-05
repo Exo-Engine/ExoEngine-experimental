@@ -27,6 +27,7 @@
 #include <libxml/parser.h>
 #include <vector>
 #include <map>
+#include <string>
 
 namespace	ExoEngine
 {
