@@ -31,7 +31,7 @@
 #include <time.h>
 
 #define LOG_TERM
-#if (defined __linux__ || defined __APPLE__)
+#if (defined __linux__)
 # define LOG_COLORS
 #endif
 
@@ -120,17 +120,7 @@ class Log
 					{
 						if (_start)
 #ifdef LOG_COLORS
-						#if (defined __APPLE__)
-							_log <<
-								(_name == "error" ? "☠️"
-								 : (_name == "warning") ? "⚠️"
-								 : (_name == "info" ? "ℹ️"
-									: (_name == "debug") ? "🐞"
-									: (_name == "look at meeeee") ? "👋" : ""))
-								<< "[" << _name << "] " << s;
-						#else
 							_log << "[\e[38;5;" << (int)_color << "m" << _name << "\e[0m" << "] " << s;
-						#endif
 #else
 							_log << "[" << _name << "] " << s;
 #endif

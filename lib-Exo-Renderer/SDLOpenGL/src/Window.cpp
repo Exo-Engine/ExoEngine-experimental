@@ -94,11 +94,6 @@ void Window::initialize(const std::string& title, uint32_t width, uint32_t heigh
 	_contextWidth = width;
 	_contextHeight = height;
 
-#ifndef __APPLE__
-	static bool	glew_init = false;
-	GLenum		error;
-#endif
-
 	if (!(SDL_WasInit(SDL_INIT_EVERYTHING) & SDL_INIT_VIDEO))
 		if (SDL_Init(SDL_INIT_EVERYTHING))
 			throw (SDLException());
@@ -131,13 +126,6 @@ void Window::initialize(const std::string& title, uint32_t width, uint32_t heigh
 		SDL_Quit();
 		throw (SDLException());
 	}
-#ifdef __APPLE__
-	if (SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG))
-	{
-		SDL_Quit();
-		throw (SDLException());
-	}
-#endif
 
 	_windowMode = mode;
 	auto windowModeFlag = 0;
@@ -170,11 +158,9 @@ void Window::initialize(const std::string& title, uint32_t width, uint32_t heigh
 	SDL_GL_MakeCurrent(_window, _context);
 	SDL_ShowCursor(SDL_DISABLE); // Disable cursor
 
-#ifndef __APPLE__
 	if (glew_init == false)
 		if ((error = glewInit()) != GLEW_OK)
 			throw (error);
-#endif
 
 	if (SDL_GameControllerAddMappingsFromFile("resources/SDL2/gamecontrollerdb.txt") == -1)
 		;	//	silent

@@ -24,11 +24,8 @@
 
 #pragma once
 
-#ifdef __APPLE__
-	#include <OpenGL/gl3.h>
-#else
-	#include <GL/glew.h>
-#endif
+#include <GL/glew.h>
+
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
