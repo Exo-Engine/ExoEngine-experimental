@@ -31,7 +31,6 @@
 #include <libxml/parser.h>
 
 #include "IShader.h"
-#include "Font.h"
 #include "hitboxes.h"
 #include "IRenderer.h"
 #include "IAudio.h"
@@ -70,7 +69,6 @@ class ResourceManager : public IResource
 
 		void	loadProperties(xmlNodePtr node);
 
-		void	loadFont(const std::string &path, xmlNodePtr node);
 		void	loadTexture(const std::string &path, xmlNodePtr node);
 		void	loadArrayTexture(const std::string &path, xmlNodePtr node);
 		void	loadSound(const std::string &path, xmlNodePtr node);

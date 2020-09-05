@@ -32,20 +32,9 @@
 #include "ICamera.h"
 #include "IGamepadManager.h"
 #include "IMouse.h"
-#include "ICursor.h"
 #include "IShader.h"
 #include "ITexture.h"
 #include "IArrayTexture.h"
-#include "IWidget.h"
-#include "IButton.h"
-#include "ICheckbox.h"
-#include "IInput.h"
-#include "IImage.h"
-#include "ISpinner.h"
-#include "ISelect.h"
-#include "ISlider.h"
-#include "IView.h"
-#include "ILabel.h"
 #include "ILight.h"
 #include "IFrameBuffer.h"
 #include "sprite.h"
@@ -73,30 +62,15 @@ public:
 	virtual ITexture		*createTexture(unsigned int width, unsigned int height, TextureFormat format = TextureFormat::RGBA, TextureFilter filter = TextureFilter::LINEAR) = 0;
 	virtual IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, TextureFilter filter = TextureFilter::LINEAR) = 0;
 
-	virtual ICursor		 *createCursor() = 0;
-	virtual ILabel			*createLabel() = 0;
-	virtual IButton		 *createButton(const std::shared_ptr<ITexture> &texture, ButtonType buttonType = ButtonType::NORMAL, bool withLabel = true) = 0;
-	virtual ICheckbox		*createCheckbox(const std::shared_ptr<ITexture> &texture, bool checked = false) = 0;
-	virtual IInput			*createInput(const std::shared_ptr<ITexture> &texture, const std::string &text = "", InputType type = InputType::TEXT) = 0;
-	virtual IImage			*createImage(const std::shared_ptr<ITexture> &texture) = 0;
-	virtual ISpinner		*createSpinner(const std::shared_ptr<ITexture> &texture) = 0;
-	virtual ISlider		 *createSlider(const std::shared_ptr<ITexture>& buttonTexture, const std::shared_ptr<ITexture>& barTexture) = 0;
-	virtual ISelect		 *createSelect(const std::shared_ptr<ITexture>& buttonTexture, const std::shared_ptr<ITexture>& backgroundTexture, const std::shared_ptr<ITexture>& scrollTexture, const std::shared_ptr<Font>& font) = 0;
-	virtual IView			*createView(const std::shared_ptr<ITexture>& scrollTexture, unsigned int numberOfRows = 1, unsigned int numberOfColumns = 1) = 0;
-	virtual IView			*createView(const std::shared_ptr<ITexture>& backgroundTexture, const std::shared_ptr<ITexture>& scrollTexture, unsigned int numberOfRows = 1, unsigned int numberOfColumns = 1) = 0;
 	virtual ILight			*createOrthogonalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const glm::vec2 &x, const glm::vec2 &y, const glm::vec2 &z) = 0;
 	virtual ILight			*createPerspectivelLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const float &fovy, const float &aspect, const float &near, const float &far) = 0;
 	virtual ILight			*createPointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const float &fovy, const float &aspect, const float &near, const float &far) = 0;
 	virtual IFrameBuffer	*createFrameBuffer(void) = 0;
 
 	virtual void add(sprite &s) = 0;
-	virtual void add(IWidget *widget) = 0;
-	virtual void add(ILabel *label) = 0;
 	virtual void add(std::shared_ptr<ILight> &light) = 0;
 
 	virtual void remove(sprite &s) = 0;
-	virtual void remove(IWidget *widget) = 0;
-	virtual void remove(ILabel *label) = 0;
 	virtual void remove(std::shared_ptr<ILight> &light) = 0;
 
 	virtual void draw(void) = 0;
@@ -116,7 +90,6 @@ public:
 	// Setters
 	void setNavigationType(const NavigationType &type) { _currentNavigationType = type; }
 	void setCurrentCamera(ICamera* camera) { _pCurrentCamera = camera; }
-	virtual void setCursor(ICursor* cursor) = 0;
 	virtual void setMousePicker(MousePicker* picker) = 0;
 	virtual void setAxis(IAxis* axis) = 0;
 	virtual void setGridEnable(bool val) = 0;

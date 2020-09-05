@@ -27,7 +27,7 @@
 using namespace	ExoEngine;
 using namespace	ExoRenderer;
 
-int		main(void)
+int	main(void)
 {
 	Engine		engine("resources/settings.xml");
 	IRenderer*	renderer = engine.getRenderer();
@@ -41,24 +41,16 @@ int		main(void)
 	keyboard = renderer->getKeyboard();
 	window->setVsync(true);
 
-	ICursor* cursor = renderer->createCursor();
-	std::shared_ptr<ITexture> cursorTexture = engine.getResourceManager()->get<ITexture>("cursor");
-	cursor->setCursorTexture(cursorTexture);
-	renderer->setCursor(cursor);
-
-	IImage* image = renderer->createImage(cursorTexture);
-	image->setAnchor(AnchorPoint::CENTER);
-	image->setSize(100, 100);
-	renderer->add(image);
-
 	while (run)
 	{
 		if (keyboard->isKeyDown(KEY_ESCAPE))
 			run = false;
+
 		if (window->getIsClosing())
 			run = false;
-		cursor->update();
+
 		renderer->swap();
 	}
+
 	return (EXIT_SUCCESS);
 }

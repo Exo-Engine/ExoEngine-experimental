@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "IRenderer.h"
 #include "IAudio.h"
 #include "ResourceManager.h"
 #include "SettingsManager.h"
