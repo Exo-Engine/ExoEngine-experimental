@@ -25,7 +25,6 @@
 #pragma once
 
 #include "Message.h"
-#include "network/network.h"
 #include "Log.h"
 
 #include <string>
