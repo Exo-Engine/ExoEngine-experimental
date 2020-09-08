@@ -56,7 +56,7 @@ struct sprite
 	}
 
 	sprite(std::shared_ptr<IArrayTexture> texture, std::shared_ptr<IArrayTexture> normalMapTexture, int layer = 0)
-	: position(glm::vec2(0.0f)), scale(glm::vec2(1.0f)), angle(0.0f), layer(layer), flip(DEFAULT), texture(texture), normalMapTexture(normalMapTexture)
+	: position(glm::vec2(0.0f)), scale(glm::vec2(1.0f)), angle(0.0f), layer(layer), flip(FlipSprite::DEFAULT), texture(texture), normalMapTexture(normalMapTexture)
 	{	}
 
 	sprite	&operator=(const sprite &b)

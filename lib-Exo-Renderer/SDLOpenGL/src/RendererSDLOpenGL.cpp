@@ -25,12 +25,6 @@
 #include "RendererSDLOpenGL.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Button.h"
-#include "Input.h"
-#include "Checkbox.h"
-#include "Select.h"
-#include "Spinner.h"
-#include "View.h"
 #include "OrthogonalLight.h"
 #include "PerspectiveLight.h"
 #include "PointLight.h"
@@ -75,8 +69,6 @@ void RendererSDLOpenGL::initialize(const std::string& title, const int width, co
 
 	// Renderers
 	_pObjectRenderer = new ObjectRenderer();
-	_pGUIRenderer = new GUIRenderer();
-	_pTextRenderer = new TextRenderer();
 }
 
 void RendererSDLOpenGL::resize()
@@ -150,62 +142,6 @@ IArrayTexture* RendererSDLOpenGL::createArrayTexture(int width, int height, std:
 	}
 	else
 		return (new ArrayTexture(width, height, textures, filter));
-}
-
-ICursor* RendererSDLOpenGL::createCursor()
-{
-	return new Cursor();
-}
-
-ILabel* RendererSDLOpenGL::createLabel()
-{
-	return new Label();
-}
-
-IButton* RendererSDLOpenGL::createButton(const std::shared_ptr<ITexture> &texture, ButtonType buttonType, bool withLabel)
-{
-	return new Button(texture, buttonType, withLabel, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-
-}
-
-ICheckbox* RendererSDLOpenGL::createCheckbox(const std::shared_ptr<ITexture> &texture, bool checked)
-{
-	return new Checkbox(texture, checked, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-}
-
-IInput* RendererSDLOpenGL::createInput(const std::shared_ptr<ITexture> &texture, const std::string &text, InputType type)
-{
-	return new Input(type, texture, text, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-}
-
-IImage* RendererSDLOpenGL::createImage(const std::shared_ptr<ITexture> &texture)
-{
-	return new Image(texture, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-}
-
-ISpinner* RendererSDLOpenGL::createSpinner(const std::shared_ptr<ITexture> &texture)
-{
-	return new Spinner(texture, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-}
-
-ISlider* RendererSDLOpenGL::createSlider(const std::shared_ptr<ITexture>& buttonTexture, const std::shared_ptr<ITexture>& barTexture)
-{
-	return new Slider(buttonTexture, barTexture, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-}
-
-ISelect* RendererSDLOpenGL::createSelect(const std::shared_ptr<ITexture>& buttonTexture, const std::shared_ptr<ITexture>& backgroundTexture, const std::shared_ptr<ITexture>& scrollTexture, const std::shared_ptr<Font>& font)
-{
-	return new Select(buttonTexture, backgroundTexture, scrollTexture, font, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-}
-
-IView* RendererSDLOpenGL::createView(const std::shared_ptr<ITexture>& scrollTexture, unsigned int numberOfRows, unsigned int numberOfColumns)
-{
-	return new View(scrollTexture, numberOfRows, numberOfColumns, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-}
-
-IView* RendererSDLOpenGL::createView(const std::shared_ptr<ITexture>& backgroundTexture, const std::shared_ptr<ITexture>& scrollTexture, unsigned int numberOfRows, unsigned int numberOfColumns)
-{
-	return new View(backgroundTexture, scrollTexture, numberOfRows, numberOfColumns, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
 }
 
 ILight	*RendererSDLOpenGL::createOrthogonalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const glm::vec2 &x, const glm::vec2 &y, const glm::vec2 &z)
@@ -286,46 +222,6 @@ void RendererSDLOpenGL::add(sprite &s)
 	_pObjectRenderer->add(s);
 }
 
-void RendererSDLOpenGL::add(IWidget *widget)
-{
-	widget->update(getMouse(), getKeyboard(), getGamepadManager()->getGamepad(0), getNavigationType());
-
-	// Update
-	switch (widget->getType())
-	{
-		case IWidget::BUTTON: {
-			auto button = (Button*)widget;
-			add(button->getLabel());
-			break;
-		}
-		case IWidget::SELECT: {
-			auto select = (Select*)widget;
-			add(select->getLabel());
-			break;
-		}
-		case IWidget::INPUT: {
-			auto input = (Input*)widget;
-			add(input->getLabel());
-			break;
-		}
-		case IWidget::SPINNER: {
-			auto spinner = (Spinner*)widget;
-			spinner->update(_pWindow->getDelta());
-			break;
-		}
-		default: break;
-	}
-
-	// Push in renderer
-	_pGUIRenderer->add(widget);
-}
-
-void RendererSDLOpenGL::add(ILabel *label)
-{
-	label->contextInfo(_UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-	_pTextRenderer->add((Label*)label);
-}
-
 void RendererSDLOpenGL::add(std::shared_ptr<ILight> &light)
 {
 }
@@ -334,37 +230,6 @@ void RendererSDLOpenGL::add(std::shared_ptr<ILight> &light)
 void RendererSDLOpenGL::remove(sprite &s)
 {
 	_pObjectRenderer->remove(s);
-}
-
-void RendererSDLOpenGL::remove(IWidget *widget)
-{
-	// Update
-	switch (widget->getType())
-	{
-		case IWidget::BUTTON: {
-			auto button = (Button*)widget;
-			remove(button->getLabel());
-			break;
-		}
-		case IWidget::SELECT: {
-			auto select = (Select*)widget;
-			remove(select->getLabel());
-			break;
-		}
-		case IWidget::INPUT: {
-			auto input = (Input*)widget;
-			remove(input->getLabel());
-			break;
-		}
-		default: break;
-	}
-	// Push in renderer
-	_pGUIRenderer->remove(widget);
-}
-
-void RendererSDLOpenGL::remove(ILabel *label)
-{
-	_pTextRenderer->remove((Label*)label);
 }
 
 void RendererSDLOpenGL::remove(std::shared_ptr<ILight> &light)
@@ -387,8 +252,6 @@ void RendererSDLOpenGL::draw(void)
 
 	GL_CALL(glEnable(GL_BLEND));
 	GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-	_pGUIRenderer->render(_orthographic);
-	_pTextRenderer->render(_orthographic);
 
 	GL_CALL(glDisable(GL_BLEND));
 }
@@ -482,15 +345,6 @@ unsigned int RendererSDLOpenGL::getTime(void) const
 }
 
 // Setters
-void RendererSDLOpenGL::setCursor(ICursor* cursor)
-{
-	if (_pCursor)
-		remove(_pCursor->getImage());
-	_pCursor = (Cursor*)cursor;
-	if (_pCursor)
-		add(_pCursor->getImage());
-}
-
 void RendererSDLOpenGL::setMousePicker(MousePicker* picker)
 {
 	_pMousePicker = picker;
@@ -509,7 +363,7 @@ void RendererSDLOpenGL::setGridEnable(bool val)
 
 // Private
 RendererSDLOpenGL::RendererSDLOpenGL(void)
-: IRenderer(), _pWindow(nullptr), _pObjectRenderer(nullptr), _pGUIRenderer(nullptr), _pTextRenderer(nullptr), _pCursor(nullptr)
+: IRenderer(), _pWindow(nullptr), _pObjectRenderer(nullptr)
 {
 	_mainThread = std::this_thread::get_id();
 }
@@ -519,35 +373,13 @@ RendererSDLOpenGL::~RendererSDLOpenGL(void)
 	if (_pWindow)
 		delete _pWindow;
 
-	if (_pCursor)
-		delete _pCursor;
-
 	// Renderers
 	if (_pObjectRenderer)
 		delete _pObjectRenderer;
 
-	if (_pGUIRenderer)
-		delete _pGUIRenderer;
-
-	if (_pTextRenderer)
-		delete _pTextRenderer;
-
-	// Buffers
-	if (TextRenderer::vaoBuffer)
-		delete TextRenderer::vaoBuffer;
-
-	if (TextRenderer::vertexBuffer)
-		delete TextRenderer::vertexBuffer;
-
 	// Shaders
 	if (ObjectRenderer::pShader)
 		delete ObjectRenderer::pShader;
-
-	if (GUIRenderer::pGuiShader)
-		delete GUIRenderer::pGuiShader;
-
-	if (TextRenderer::pTextShader)
-		delete TextRenderer::pTextShader;
 }
 
 void RendererSDLOpenGL::createBuffers(void)
@@ -575,10 +407,6 @@ void RendererSDLOpenGL::createBuffers(void)
 	ObjectRenderer::vertexBuffer = new Buffer(12, 3, &vertexBuffer, BufferType::ARRAYBUFFER, BufferDraw::STATIC, 0, false);
 	ObjectRenderer::indexBuffer = new Buffer(6, 3, &indexBuffer, BufferType::INDEXBUFFER, BufferDraw::STATIC, 0, false);
 	ObjectRenderer::uvBuffer = new Buffer(8, 2, &UVBuffer, BufferType::ARRAYBUFFER, BufferDraw::STATIC, 1, true);
-
-	// TextRenderer
-	TextRenderer::vaoBuffer = new Buffer(0, 0, NULL, BufferType::VERTEXARRAY, BufferDraw::STATIC, 0, false);
-	TextRenderer::vertexBuffer = new Buffer(24, 4, NULL, BufferType::ARRAYBUFFER, BufferDraw::DYNAMIC, 0, false);
 
 	// Grid
 	const float line[] = {
@@ -780,8 +608,6 @@ void RendererSDLOpenGL::loadShaders(void)
 	Axis::pShader = new Shader("resources/shaders/OpenGL3/axis.glsl");
 #else
 	ObjectRenderer::pShader = new Shader(g_2DShader);
-	GUIRenderer::pGuiShader = new Shader(g_guiShader);
-	TextRenderer::pTextShader = new Shader(g_fontShader);
 	Grid::pShader = new Shader(g_lineShader);
 	Axis::pShader = new Shader(g_axisShader);
 #endif

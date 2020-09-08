@@ -94,6 +94,9 @@ void Window::initialize(const std::string& title, uint32_t width, uint32_t heigh
 	_contextWidth = width;
 	_contextHeight = height;
 
+	static bool	glew_init = false;
+	GLenum error;
+
 	if (!(SDL_WasInit(SDL_INIT_EVERYTHING) & SDL_INIT_VIDEO))
 		if (SDL_Init(SDL_INIT_EVERYTHING))
 			throw (SDLException());

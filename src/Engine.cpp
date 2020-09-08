@@ -57,7 +57,7 @@ Engine::~Engine(void)
 		delete _audioPlugin;
 }
 
-void					Engine::initialize(const std::string& settingsFile)
+void Engine::initialize(const std::string& settingsFile)
 {
 	std::string	path;
 	Setting*	rendererLibSetting;
@@ -81,17 +81,18 @@ void					Engine::initialize(const std::string& settingsFile)
 	{
 		_log.error << "missing libAudio in settings file '" << settingsFile << "'" << std::endl;
 	}
-	_rendererPlugin = new LibLoader<IRenderer>(path + rendererLibSetting->getValue());
-	_audioPlugin = new LibLoader<IAudio>(path + audioLibSetting->getValue());
+
+	_rendererPlugin = new LibLoader<IRenderer>(rendererLibSetting->getValue());
+	_audioPlugin = new LibLoader<IAudio>(audioLibSetting->getValue());
 	_resourceManager = new ResourceManager(getRenderer(), getAudio());
 }
 
-ResourceManager*		Engine::getResourceManager(void) const
+ResourceManager* Engine::getResourceManager(void) const
 {
 	return (_resourceManager);
 }
 
-SettingsManager*		Engine::getSettingsManager(void) const
+SettingsManager* Engine::getSettingsManager(void) const
 {
 	return (_settingsManager);
 }

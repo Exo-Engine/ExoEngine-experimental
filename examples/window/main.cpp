@@ -32,14 +32,30 @@ int	main(void)
 	Engine		engine("resources/settings.xml");
 	IRenderer*	renderer = engine.getRenderer();
 	IWindow*	window;
+	IMouse* mouse;
 	IKeyboard*	keyboard;
+	IGamepad* gamepad;
 	bool		run = true;
 
 	renderer->initialize("example window", 1280, 720, WINDOWED, false);
 	engine.getResourceManager()->load("resources/resources.xml");
 	window = renderer->getWindow();
+	mouse = renderer->getMouse();
 	keyboard = renderer->getKeyboard();
+	gamepad = renderer->getGamepadManager()->getGamepad(0);
 	window->setVsync(true);
+
+	auto cam = renderer->createCamera();
+	cam->setPosition(0.0f, 0.0f, 20.0f);
+
+	renderer->setCurrentCamera(cam);
+
+	sprite img;
+	img.texture = engine.getResourceManager()->get<IArrayTexture>("cursor");
+	img.scale = glm::vec2(3.6);
+
+	renderer->setGridEnable(true);
+	renderer->add(img);
 
 	while (run)
 	{
@@ -49,6 +65,7 @@ int	main(void)
 		if (window->getIsClosing())
 			run = false;
 
+		cam->update(mouse, keyboard, gamepad);
 		renderer->swap();
 	}
 

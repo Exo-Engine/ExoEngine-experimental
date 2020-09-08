@@ -107,9 +107,11 @@ void	ResourceManager::loadArrayTexture(const std::string &relativePath, xmlNodeP
 		_log.warning << "array texture without height" << std::endl;
 	if (!content)
 		_log.warning << "array texture without content" << std::endl;
-	textures = explode((char *)content, " \t\n");
+
+	textures = explode((char *)content, "\t\n");
 	for (auto texture = textures.begin(); texture != textures.end(); texture++)
 		(*texture) = relativePath + (*texture);
+
 	if (name && width && height && content)
 		add((char *)name, std::shared_ptr<IArrayTexture>(_renderer->createArrayTexture(std::stoi((char *)width), std::stoi((char *)height), textures, strcmp((char*)filter, "nearest") == 0 ? TextureFilter::NEAREST : TextureFilter::LINEAR)));
 }

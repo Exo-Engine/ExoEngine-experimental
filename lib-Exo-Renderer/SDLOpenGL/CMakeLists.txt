@@ -16,8 +16,15 @@ file(GLOB SOURCES
 
 include_directories(
 	include
-	${RENDERER_DIR}/include)
+	${RENDERER_DIR}/include
+)
 
-link_libraries(SDL2 SDL2_image OpenGL GLEW)
+find_package(OpenGL REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(sdl2-image CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
+find_package(GLEW REQUIRED)
+
+link_libraries(SDL2::SDL2 SDL2::SDL2_image glm OpenGL::GL GLEW::GLEW)
 
 add_library(ExoRendererSDLOpenGL SHARED ${SOURCES})

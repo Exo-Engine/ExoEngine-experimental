@@ -50,16 +50,15 @@ public:
 #ifdef _WIN32
 		_library = LoadLibrary(TEXT(std::string(path + ".dll").c_str()));
 		if (!_library) {
-			std::cout << "could not load the dynamic library" << std::endl;
+			char err[256];
+			DWORD errID = GetLastError();
+			FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, errID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), err, 255, NULL);
+
+			std::cout << "could not load the dynamic library '" << path << ".dll' because: " << errID << " | " << err << std::endl;
 			exit(EXIT_FAILURE);
 		}
 #else
-
-#ifdef __linux__
 		_library = dlopen(std::string("./" + path + ".so").c_str(), RTLD_LAZY);
-#else
-		_library = dlopen(std::string("lib" + path + ".dylib").c_str(), RTLD_LAZY);
-#endif
 
 		if (!_library)
 			throw (std::invalid_argument(std::string("could not load the dynamic library! ").append(dlerror())));
