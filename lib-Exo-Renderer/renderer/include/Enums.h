@@ -27,168 +27,168 @@
 #define REFRENCE_RESOLUTION_WIDTH 1280
 #define REFRENCE_RESOLUTION_HEIGHT 720
 
-namespace	ExoRenderer
+namespace ExoRenderer
 {
 
-enum NavigationType
-{
-	MOUSE,
-	GAMEPAD
-};
+	enum NavigationType
+	{
+		MOUSE,
+		GAMEPAD
+	};
 
-// Buffer
-enum BufferType
-{
-	VERTEXARRAY,
-	ARRAYBUFFER,
-	INDEXBUFFER,
-	RENDERBUFFER,
-};
+	// Buffer
+	enum BufferType
+	{
+		VERTEXARRAY,
+		ARRAYBUFFER,
+		INDEXBUFFER,
+		RENDERBUFFER,
+	};
 
-enum BufferDraw
-{
-	DYNAMIC,
-	STATIC
-};
+	enum BufferDraw
+	{
+		DYNAMIC,
+		STATIC
+	};
 
-// Texture
-enum TextureFilter
-{
-	NEAREST,
-	LINEAR,
-};
+	// Texture
+	enum TextureFilter
+	{
+		NEAREST,
+		LINEAR,
+	};
 
-enum TextureFormat
-{
-	RGB,
-	RGBA,
-	DEPTH
-};
+	enum TextureFormat
+	{
+		RGB,
+		RGBA,
+		DEPTH
+	};
 
-// Window
-enum WindowMode
-{
-	WINDOWED = 0,
-	FULLSCREEN,
-	BORDERLESS
-};
+	// Window
+	enum WindowMode
+	{
+		WINDOWED = 0,
+		FULLSCREEN,
+		BORDERLESS
+	};
 
-// Inputs
-enum MouseButtons
-{
-	BUTTON_LEFT,
-	BUTTON_MIDDLE,
-	BUTTON_RIGHT,
-	MOUSE_BUTTON_MAX,
-	MOUSE_BUTTON_UNKNOW
-};
+	// Inputs
+	enum MouseButtons
+	{
+		BUTTON_LEFT,
+		BUTTON_MIDDLE,
+		BUTTON_RIGHT,
+		MOUSE_BUTTON_MAX,
+		MOUSE_BUTTON_UNKNOW
+	};
 
-enum GamepadButtons
-{
-	BUTTON_A,
-	BUTTON_B,
-	BUTTON_X,
-	BUTTON_Y,
-	BUTTON_BACK,
-	BUTTON_GUIDE,
-	BUTTON_START,
-	BUTTON_LEFTSTICK,
-	BUTTON_RIGHTSTICK,
-	BUTTON_LEFTSHOULDER,
-	BUTTON_RIGHTSHOULDER,
-	BUTTON_DPAD_UP,
-	BUTTON_DPAD_DOWN,
-	BUTTON_DPAD_LEFT,
-	BUTTON_DPAD_RIGHT,
-	GAMEPAD_BUTTON_MAX,
-	GAMEPAD_BUTTON_UNKNOW
-};
+	enum GamepadButtons
+	{
+		BUTTON_A,
+		BUTTON_B,
+		BUTTON_X,
+		BUTTON_Y,
+		BUTTON_BACK,
+		BUTTON_GUIDE,
+		BUTTON_START,
+		BUTTON_LEFTSTICK,
+		BUTTON_RIGHTSTICK,
+		BUTTON_LEFTSHOULDER,
+		BUTTON_RIGHTSHOULDER,
+		BUTTON_DPAD_UP,
+		BUTTON_DPAD_DOWN,
+		BUTTON_DPAD_LEFT,
+		BUTTON_DPAD_RIGHT,
+		GAMEPAD_BUTTON_MAX,
+		GAMEPAD_BUTTON_UNKNOW
+	};
 
-enum KeyboardKeys
-{
-	KEY_0,
-	KEY_1,
-	KEY_2,
-	KEY_3,
-	KEY_4,
-	KEY_5,
-	KEY_6,
-	KEY_7,
-	KEY_8,
-	KEY_9,
-	KEY_KP_0,
-	KEY_KP_1,
-	KEY_KP_2,
-	KEY_KP_3,
-	KEY_KP_4,
-	KEY_KP_5,
-	KEY_KP_6,
-	KEY_KP_7,
-	KEY_KP_8,
-	KEY_KP_9,
-	KEY_A,
-	KEY_B,
-	KEY_BACKSLASH,
-	KEY_BACKSPACE,
-	KEY_C,
-	KEY_CAPSLOCK,
-	KEY_D,
-	KEY_DELETE,
-	KEY_DOWN,
-	KEY_E,
-	KEY_ESCAPE,
-	KEY_F,
-	KEY_F1,
-	KEY_F2,
-	KEY_F3,
-	KEY_F4,
-	KEY_F5,
-	KEY_F6,
-	KEY_F7,
-	KEY_F8,
-	KEY_F9,
-	KEY_F10,
-	KEY_F11,
-	KEY_F12,
-	KEY_G,
-	KEY_H,
-	KEY_I,
-	KEY_J,
-	KEY_K,
-	KEY_L,
-	KEY_LALT,
-	KEY_LCTRL,
-	KEY_LEFT,
-	KEY_LSHIFT,
-	KEY_M,
-	KEY_N,
-	KEY_NUMLOCKCLEAR,
-	KEY_O,
-	KEY_P,
-	KEY_Q,
-	KEY_R,
-	KEY_RIGHT,
-	KEY_RALT,
-	KEY_RCTRL,
-	KEY_RETURN,
-	KEY_RSHIFT,
-	KEY_S,
-	KEY_SPACE,
-	KEY_T,
-	KEY_TAB,
-	KEY_U,
-	KEY_UP,
-	KEY_V,
-	KEY_W,
-	KEY_X,
-	KEY_Y,
-	KEY_Z,
-	KEY_PERIOD,
-	KEY_COMMA,
-	KEY_MINUS,
-	KEY_KP_MINUS,
-	KEY_MAX,
-	KEY_UNKNOW
-};
+	enum KeyboardKeys
+	{
+		KEY_0,
+		KEY_1,
+		KEY_2,
+		KEY_3,
+		KEY_4,
+		KEY_5,
+		KEY_6,
+		KEY_7,
+		KEY_8,
+		KEY_9,
+		KEY_KP_0,
+		KEY_KP_1,
+		KEY_KP_2,
+		KEY_KP_3,
+		KEY_KP_4,
+		KEY_KP_5,
+		KEY_KP_6,
+		KEY_KP_7,
+		KEY_KP_8,
+		KEY_KP_9,
+		KEY_A,
+		KEY_B,
+		KEY_BACKSLASH,
+		KEY_BACKSPACE,
+		KEY_C,
+		KEY_CAPSLOCK,
+		KEY_D,
+		KEY_DELETE,
+		KEY_DOWN,
+		KEY_E,
+		KEY_ESCAPE,
+		KEY_F,
+		KEY_F1,
+		KEY_F2,
+		KEY_F3,
+		KEY_F4,
+		KEY_F5,
+		KEY_F6,
+		KEY_F7,
+		KEY_F8,
+		KEY_F9,
+		KEY_F10,
+		KEY_F11,
+		KEY_F12,
+		KEY_G,
+		KEY_H,
+		KEY_I,
+		KEY_J,
+		KEY_K,
+		KEY_L,
+		KEY_LALT,
+		KEY_LCTRL,
+		KEY_LEFT,
+		KEY_LSHIFT,
+		KEY_M,
+		KEY_N,
+		KEY_NUMLOCKCLEAR,
+		KEY_O,
+		KEY_P,
+		KEY_Q,
+		KEY_R,
+		KEY_RIGHT,
+		KEY_RALT,
+		KEY_RCTRL,
+		KEY_RETURN,
+		KEY_RSHIFT,
+		KEY_S,
+		KEY_SPACE,
+		KEY_T,
+		KEY_TAB,
+		KEY_U,
+		KEY_UP,
+		KEY_V,
+		KEY_W,
+		KEY_X,
+		KEY_Y,
+		KEY_Z,
+		KEY_PERIOD,
+		KEY_COMMA,
+		KEY_MINUS,
+		KEY_KP_MINUS,
+		KEY_MAX,
+		KEY_UNKNOW
+	};
 
 }

@@ -75,7 +75,6 @@ public:
 	virtual void remove(ExoRenderer::sprite &s);
 	virtual void remove(std::shared_ptr<ExoRenderer::ILight> &light);
 
-	virtual void draw(void);
 	virtual void swap(void);
 
 	void beginScissor(glm::vec2 position, glm::vec2 size, glm::vec2 parentPosition, glm::vec2 parentSize);
@@ -99,6 +98,8 @@ private:
 
 	void createBuffers(void);
 	void loadShaders(void);
+
+	virtual void draw(void);
 private:
 	Window* _pWindow;
 

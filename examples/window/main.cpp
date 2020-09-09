@@ -37,7 +37,7 @@ int	main(void)
 	IGamepad* gamepad;
 	bool		run = true;
 
-	renderer->initialize("example window", 1280, 720, WINDOWED, false);
+	renderer->initialize("example window", 1280, 720, WindowMode::WINDOWED, false);
 	engine.getResourceManager()->load("resources/resources.xml");
 	window = renderer->getWindow();
 	mouse = renderer->getMouse();
@@ -54,12 +54,11 @@ int	main(void)
 	img.texture = engine.getResourceManager()->get<IArrayTexture>("cursor");
 	img.scale = glm::vec2(3.6);
 
-	renderer->setGridEnable(true);
 	renderer->add(img);
 
 	while (run)
 	{
-		if (keyboard->isKeyDown(KEY_ESCAPE))
+		if (keyboard->isKeyDown(KeyboardKeys::KEY_ESCAPE))
 			run = false;
 
 		if (window->getIsClosing())

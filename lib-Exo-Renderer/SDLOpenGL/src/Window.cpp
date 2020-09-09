@@ -159,7 +159,7 @@ void Window::initialize(const std::string& title, uint32_t width, uint32_t heigh
 		throw (SDLException());
 	}
 	SDL_GL_MakeCurrent(_window, _context);
-	SDL_ShowCursor(SDL_DISABLE); // Disable cursor
+	// SDL_ShowCursor(SDL_DISABLE); // Disable cursor
 
 	if (glew_init == false)
 		if ((error = glewInit()) != GLEW_OK)
@@ -311,7 +311,7 @@ void Window::swap(void)
 void	Window::handleThread(void)
 {
 	static std::thread::id	prev = std::thread::id();
-	int					 error;
+	int	error;
 
 	if (std::this_thread::get_id() != prev)
 		if ((error = SDL_GL_MakeCurrent(_window, _threadContext)))
@@ -371,10 +371,10 @@ void Window::setWindowMode(const WindowMode &mode)
 	int error = 0;
 	switch (mode)
 	{
-		case FULLSCREEN:
+		case WindowMode::FULLSCREEN:
 			error = SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
 			break;
-		case BORDERLESS:
+		case WindowMode::BORDERLESS:
 			error = SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 			break;
 		default: // Windowed

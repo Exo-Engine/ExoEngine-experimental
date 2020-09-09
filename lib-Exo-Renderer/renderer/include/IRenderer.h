@@ -73,7 +73,6 @@ public:
 	virtual void remove(sprite &s) = 0;
 	virtual void remove(std::shared_ptr<ILight> &light) = 0;
 
-	virtual void draw(void) = 0;
 	virtual void swap(void) = 0;
 
 	// Getters
@@ -93,6 +92,8 @@ public:
 	virtual void setMousePicker(MousePicker* picker) = 0;
 	virtual void setAxis(IAxis* axis) = 0;
 	virtual void setGridEnable(bool val) = 0;
+protected:
+	virtual void draw(void) = 0;
 protected:
 	NavigationType _currentNavigationType;
 	float		_UIScaleFactor;
