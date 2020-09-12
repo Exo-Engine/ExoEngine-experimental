@@ -25,10 +25,6 @@
 #include "RendererSDLOpenGL.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "OrthogonalLight.h"
-#include "PerspectiveLight.h"
-#include "PointLight.h"
-
 using namespace ExoRenderer;
 using namespace ExoRendererSDLOpenGL;
 
@@ -73,8 +69,6 @@ void RendererSDLOpenGL::initialize(const std::string& title, const int width, co
 
 void RendererSDLOpenGL::resize()
 {
-	_UIScaleFactor = _pWindow->getWidth() / REFRENCE_RESOLUTION_WIDTH;
-
 	_perspective = glm::perspective(glm::radians(90.0f), (float)(_pWindow->getWidth() / _pWindow->getHeight()), 0.1f, 100.f);
 	_orthographic = glm::ortho(0.0f, (float)_pWindow->getWidth(), (float)_pWindow->getHeight(), 0.0f, 0.0f, 1.0f);
 }
@@ -144,60 +138,6 @@ IArrayTexture* RendererSDLOpenGL::createArrayTexture(int width, int height, std:
 		return (new ArrayTexture(width, height, textures, filter));
 }
 
-ILight	*RendererSDLOpenGL::createOrthogonalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const glm::vec2 &x, const glm::vec2 &y, const glm::vec2 &z)
-{
-	ILight		*light;
-	GLsync		fenceId;
-
-	if (std::this_thread::get_id() != _mainThread)
-	{
-		_pWindow->handleThread();
-		light = new OrthogonalLight(ambient, diffuse, pos, dir, up, x, y, z);
-		fenceId = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
-		while(glClientWaitSync(fenceId, GL_SYNC_FLUSH_COMMANDS_BIT, GLuint64(1000000)) == GL_TIMEOUT_EXPIRED)
-			;
-		return (light);
-	}
-	else
-		return (new OrthogonalLight(ambient, diffuse, pos, dir, up, x, y, z));
-}
-
-ILight	*RendererSDLOpenGL::createPerspectivelLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const float &fovy, const float &aspect, const float &near, const float &far)
-{
-	ILight		*light;
-	GLsync		fenceId;
-
-	if (std::this_thread::get_id() != _mainThread)
-	{
-		_pWindow->handleThread();
-		light = new PerspectiveLight(ambient, diffuse, pos, dir, up, fovy, aspect, near, far);
-		fenceId = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
-		while(glClientWaitSync(fenceId, GL_SYNC_FLUSH_COMMANDS_BIT, GLuint64(1000000)) == GL_TIMEOUT_EXPIRED)
-			;
-		return (light);
-	}
-	else
-		return (new PerspectiveLight(ambient, diffuse, pos, dir, up, fovy, aspect, near, far));
-}
-
-ILight	*RendererSDLOpenGL::createPointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const float &fovy, const float &aspect, const float &near, const float &far)
-{
-	ILight		*light;
-	GLsync		fenceId;
-
-	if (std::this_thread::get_id() != _mainThread)
-	{
-		_pWindow->handleThread();
-		light = new PointLight(ambient, diffuse, pos, dir, up, fovy, aspect, near, far);
-		fenceId = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
-		while(glClientWaitSync(fenceId, GL_SYNC_FLUSH_COMMANDS_BIT, GLuint64(1000000)) == GL_TIMEOUT_EXPIRED)
-			;
-		return (light);
-	}
-	else
-		return (new PointLight(ambient, diffuse, pos, dir, up, fovy, aspect, near, far));
-}
-
 IFrameBuffer	*RendererSDLOpenGL::createFrameBuffer(void)
 {
 	IFrameBuffer	*frameBuffer;
@@ -222,18 +162,10 @@ void RendererSDLOpenGL::add(sprite &s)
 	_pObjectRenderer->add(s);
 }
 
-void RendererSDLOpenGL::add(std::shared_ptr<ILight> &light)
-{
-}
-
 // Push
 void RendererSDLOpenGL::remove(sprite &s)
 {
 	_pObjectRenderer->remove(s);
-}
-
-void RendererSDLOpenGL::remove(std::shared_ptr<ILight> &light)
-{
 }
 
 void RendererSDLOpenGL::draw(void)
@@ -272,50 +204,6 @@ void RendererSDLOpenGL::swap(void)
 	_pWindow->swap();
 
 	_pWindow->clearScreen();
-}
-
-void RendererSDLOpenGL::beginScissor(glm::vec2 position, glm::vec2 size, glm::vec2 parentPosition, glm::vec2 parentSize)
-{
-	position		*= (!_pWindow->isFullscreen() ? _pWindow->getHighDPIFactor() : 1);
-	size			*= (!_pWindow->isFullscreen() ? _pWindow->getHighDPIFactor() : 1);
-	parentPosition	*= (!_pWindow->isFullscreen() ? _pWindow->getHighDPIFactor() : 1);
-	parentSize		*= (!_pWindow->isFullscreen() ? _pWindow->getHighDPIFactor() : 1);
-
-	if (parentPosition.x != 0 && parentPosition.y != 0 && parentSize.x != 0 && parentSize.y != 0)
-	{
-		glGetIntegerv(GL_SCISSOR_BOX, _scissorBit);
-		// X
-		if (position.x + size.x > parentPosition.x + parentSize.x) // Right
-			size.x = (parentPosition.x + parentSize.x) - position.x;
-
-		if (position.x < parentPosition.x) // Left
-		{
-			size.x = (position.x + size.x) - parentPosition.x;
-			position.x = parentPosition.x;
-		}
-
-		// Y
-		if (position.y + size.y > parentPosition.y + parentSize.y) // Top
-			size.y = (parentPosition.y + parentSize.y) - position.y;
-
-		if (position.y < parentPosition.y) // Bottom
-		{
-			size.y = (position.y + size.y) - parentPosition.y;
-			position.y = parentPosition.y;
-		}
-	}
-
-	glEnable(GL_SCISSOR_TEST);
-	glScissor(position.x, position.y, size.x, size.y);
-}
-
-void RendererSDLOpenGL::endScissor(void)
-{
-	glScissor(_scissorBit[0], _scissorBit[1], _scissorBit[2], _scissorBit[3]);
-	glDisable(GL_SCISSOR_TEST);
-
-	// Reset
-	_scissorBit[0] = 0; _scissorBit[1] = 0; _scissorBit[2] = 0; _scissorBit[3] = 0;
 }
 
 // Getters

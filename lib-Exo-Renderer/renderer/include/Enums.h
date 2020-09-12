@@ -24,17 +24,8 @@
 
 #pragma once
 
-#define REFRENCE_RESOLUTION_WIDTH 1280
-#define REFRENCE_RESOLUTION_HEIGHT 720
-
 namespace ExoRenderer
 {
-
-	enum NavigationType
-	{
-		MOUSE,
-		GAMEPAD
-	};
 
 	// Buffer
 	enum BufferType

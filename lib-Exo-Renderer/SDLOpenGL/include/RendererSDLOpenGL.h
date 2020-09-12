@@ -43,7 +43,7 @@
 
 #include <vector>
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoRendererSDLOpenGL
 {
 
 class RendererSDLOpenGL : public ExoRenderer::IRenderer
@@ -58,27 +58,17 @@ public:
 	virtual void initialize(const std::string& title, const int width, const int height, const ExoRenderer::WindowMode &mode, bool resizable);
 	virtual void resize();
 
-	virtual ExoRenderer::ICamera		 *createCamera(void);
+	virtual ExoRenderer::ICamera		*createCamera(void);
 	virtual ExoRenderer::IAxis			*createAxis(void);
 	virtual ExoRenderer::ITexture		*createTexture(const std::string& filePath, ExoRenderer::TextureFilter filter = ExoRenderer::TextureFilter::LINEAR);
 	virtual ExoRenderer::ITexture		*createTexture(unsigned int width, unsigned int height, ExoRenderer::TextureFormat format = ExoRenderer::TextureFormat::RGBA, ExoRenderer::TextureFilter filter = ExoRenderer::TextureFilter::LINEAR);
 	virtual ExoRenderer::IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, ExoRenderer::TextureFilter filter = ExoRenderer::TextureFilter::LINEAR);
-
-	virtual ExoRenderer::ILight			*createOrthogonalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const glm::vec2 &x, const glm::vec2 &y, const glm::vec2 &z);
-	virtual ExoRenderer::ILight			*createPerspectivelLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const float &fovy, const float &aspect, const float &near, const float &far);
-	virtual ExoRenderer::ILight			*createPointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const float &fovy, const float &aspect, const float &near, const float &far);
 	virtual ExoRenderer::IFrameBuffer	*createFrameBuffer(void);
 
 	virtual void add(ExoRenderer::sprite &s);
-	virtual void add(std::shared_ptr<ExoRenderer::ILight> &light);
-
 	virtual void remove(ExoRenderer::sprite &s);
-	virtual void remove(std::shared_ptr<ExoRenderer::ILight> &light);
 
 	virtual void swap(void);
-
-	void beginScissor(glm::vec2 position, glm::vec2 size, glm::vec2 parentPosition, glm::vec2 parentSize);
-	void endScissor(void);
 
 	// Getters
 	virtual ExoRenderer::IWindow *getWindow(void);

@@ -3,7 +3,6 @@ Designed for Windows and Linux (not for macOS). x64 arch only.
 
 **TO-DO**
 
-* Can enable or disable the Network API with a flag
 * Vulkan API (replace OpenGL)
 * IMGUI
 * Profiling the engine

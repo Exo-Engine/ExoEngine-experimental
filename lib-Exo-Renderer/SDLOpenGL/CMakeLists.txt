@@ -6,8 +6,6 @@ set(RENDERER_DIR ../renderer)
 file(GLOB SOURCES
 	${RENDERER_DIR}/include/*.h
 	${RENDERER_DIR}/include/**/**.h
-	${RENDERER_DIR}/src/*.cpp
-	${RENDERER_DIR}/src/**/**.cpp
 	include/*.h
 	include/**/**.h
 	src/*.cpp

@@ -35,19 +35,18 @@
 #include "IShader.h"
 #include "ITexture.h"
 #include "IArrayTexture.h"
-#include "ILight.h"
 #include "IFrameBuffer.h"
 #include "sprite.h"
 #include "MousePicker.h"
 #include "IAxis.h"
 
-namespace	ExoRenderer
+namespace ExoRenderer
 {
 
 class IRenderer
 {
 public:
-	IRenderer(void): _UIScaleFactor(1.0f), _pCurrentCamera(nullptr), _pMousePicker(nullptr), _pAxis(nullptr), _currentNavigationType(NavigationType::MOUSE)
+	IRenderer(void): _pCurrentCamera(nullptr), _pMousePicker(nullptr), _pAxis(nullptr)
 	{ };
 
 	virtual ~IRenderer(void)
@@ -56,28 +55,19 @@ public:
 	virtual void initialize(const std::string& title, const int width, const int height, const WindowMode &mode, bool resizable) = 0;
 	virtual void resize() = 0;
 
-	virtual ICamera		 *createCamera(void) = 0;
+	virtual ICamera		    *createCamera(void) = 0;
 	virtual IAxis			*createAxis(void) = 0;
 	virtual ITexture		*createTexture(const std::string& filePath, TextureFilter filter = TextureFilter::LINEAR) = 0;
 	virtual ITexture		*createTexture(unsigned int width, unsigned int height, TextureFormat format = TextureFormat::RGBA, TextureFilter filter = TextureFilter::LINEAR) = 0;
 	virtual IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, TextureFilter filter = TextureFilter::LINEAR) = 0;
-
-	virtual ILight			*createOrthogonalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const glm::vec2 &x, const glm::vec2 &y, const glm::vec2 &z) = 0;
-	virtual ILight			*createPerspectivelLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const float &fovy, const float &aspect, const float &near, const float &far) = 0;
-	virtual ILight			*createPointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &pos, const glm::vec3 &dir, const glm::vec3 &up, const float &fovy, const float &aspect, const float &near, const float &far) = 0;
 	virtual IFrameBuffer	*createFrameBuffer(void) = 0;
 
 	virtual void add(sprite &s) = 0;
-	virtual void add(std::shared_ptr<ILight> &light) = 0;
-
 	virtual void remove(sprite &s) = 0;
-	virtual void remove(std::shared_ptr<ILight> &light) = 0;
 
 	virtual void swap(void) = 0;
 
 	// Getters
-	NavigationType &getNavigationType(void) { return _currentNavigationType; }
-	float getUIScaleFactor(void) { return _UIScaleFactor; }
 	ICamera *getCurrentCamera(void) { return _pCurrentCamera; }
 	virtual IWindow *getWindow(void) = 0;
 
@@ -87,7 +77,6 @@ public:
 	virtual unsigned int getTime(void) const = 0;
 
 	// Setters
-	void setNavigationType(const NavigationType &type) { _currentNavigationType = type; }
 	void setCurrentCamera(ICamera* camera) { _pCurrentCamera = camera; }
 	virtual void setMousePicker(MousePicker* picker) = 0;
 	virtual void setAxis(IAxis* axis) = 0;
@@ -95,8 +84,6 @@ public:
 protected:
 	virtual void draw(void) = 0;
 protected:
-	NavigationType _currentNavigationType;
-	float		_UIScaleFactor;
 	ICamera	 *_pCurrentCamera;
 	MousePicker *_pMousePicker;
 	IAxis		*_pAxis;
