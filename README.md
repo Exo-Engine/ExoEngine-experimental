@@ -1,5 +1,5 @@
 # ExoEngine
-Designed for Windows and Linux (not for macOS). x64 arch only.
+Designed for Windows and Linux. x64 arch only.
 
 **TO-DO**
 
@@ -7,7 +7,6 @@ Designed for Windows and Linux (not for macOS). x64 arch only.
 * IMGUI
 * Profiling the engine
 * Level Editor
-* XAudio for Windows
 * ARM-64 support
 * And more...
 
