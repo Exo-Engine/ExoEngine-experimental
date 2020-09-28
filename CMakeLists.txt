@@ -9,8 +9,6 @@ project(ExoEngine CXX)
 set(CMAKE_CXX_STANDARD 17)
 subdirs(examples)
 
-add_subdirectory(lib-Exo-Renderer)
-
 file(GLOB SOURCES
 	include/*.h
 	include/**/**.h
@@ -24,11 +22,13 @@ include_directories(
 	lib-Exo-Renderer/renderer/include)
 	
 find_package(SDL2 CONFIG REQUIRED)
+find_package(sdl2-image CONFIG REQUIRED)
+find_package(OpenGL REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(LibXml2 REQUIRED)
 find_package(Threads REQUIRED)
 find_package(Bullet CONFIG REQUIRED)
-
+find_package(GLEW REQUIRED)
 find_package(OpenAL CONFIG REQUIRED)
 find_package(Vorbis CONFIG REQUIRED)
 
@@ -38,5 +38,5 @@ else ()
 	set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 endif ()
 
-link_libraries(SDL2::SDL2 ${CMAKE_THREAD_LIBS_INIT} ${LIBXML2_LIBRARIES} glm OpenAL::OpenAL Vorbis::vorbis Vorbis::vorbisenc Vorbis::vorbisfile LinearMath Bullet3Common BulletDynamics BulletSoftBody)
+link_libraries(SDL2::SDL2 SDL2::SDL2_image ${CMAKE_THREAD_LIBS_INIT} ${LIBXML2_LIBRARIES} OpenGL::GL GLEW::GLEW glm OpenAL::OpenAL Vorbis::vorbis Vorbis::vorbisenc Vorbis::vorbisfile LinearMath Bullet3Common BulletDynamics BulletSoftBody)
 add_library(ExoEngine STATIC ${SOURCES})

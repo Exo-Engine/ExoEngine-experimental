@@ -26,6 +26,7 @@
 #include "Utils.h"
 
 #include "OALAudio.h"
+#include "RendererSDLOpenGL.h"
 #include "LibLoader.h"
 
 using namespace	ExoEngine;
@@ -80,7 +81,6 @@ void Engine::initialize(const std::string& settingsFile)
 		_log.error << "missing libAudio in settings file '" << settingsFile << "'" << std::endl;
 	}
 
-	_rendererPlugin = new LibLoader<IRenderer>(rendererLibSetting->getValue());
 	_resourceManager = new ResourceManager(getRenderer(), getAudio());
 }
 
@@ -96,7 +96,7 @@ SettingsManager* Engine::getSettingsManager(void) const
 
 ExoRenderer::IRenderer*	Engine::getRenderer(void) const
 {
-	return _rendererPlugin->getPlugin();
+	return &ExoRendererSDLOpenGL::RendererSDLOpenGL::Get();
 }
 
 ExoAudio::IAudio* Engine::getAudio(void) const
