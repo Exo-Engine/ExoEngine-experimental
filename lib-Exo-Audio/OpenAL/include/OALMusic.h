@@ -44,7 +44,6 @@ public:
 	// Getters
 	ALuint* getBuffers(void);
 private:
-	std::vector<char>		_bufferData;
 	ExoAudio::OggLoader*	_pOggLoader;
 	ALuint					_id[2] = {0, 0};
 };

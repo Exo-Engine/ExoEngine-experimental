@@ -36,9 +36,9 @@ OALMusic::OALMusic(const std::string &filePath)
 	// Load
 	_pOggLoader = new OggLoader(filePath);
 
-	std::vector<short> samples(44100);
+	std::vector<ALshort> samples(44100);
 	alBufferData(_id[0], _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
-	samples.clear();
+	samples.empty();
 	alBufferData(_id[1], _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
 }
 
@@ -65,7 +65,7 @@ void OALMusic::streamingUpdate(ALuint source)
 			ALuint bufferId;
 			alSourceUnqueueBuffers(source, 1, &bufferId);
 
-			std::vector<short> samples(44100);
+			std::vector<ALshort> samples(44100);
 			alBufferData(bufferId, _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
 
 			alSourceQueueBuffers(source, 1, &bufferId);

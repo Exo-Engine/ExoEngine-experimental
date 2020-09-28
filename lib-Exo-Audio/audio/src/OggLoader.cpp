@@ -66,7 +66,7 @@ void OggLoader::readAll(std::vector<char> &buffer, int nbSamples)
 
 char* OggLoader::readSample(std::vector<short> &samples, int nbSamples)
 {
-	int totalSize	= nbSamples * sizeof(short);
+	ALsizei totalSize = nbSamples * sizeof(ALshort);
 	char* samplesPtr = reinterpret_cast<char*>(&samples[0]);
 	_totalRead	= 0;
 

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<sound name="music" path="music.ogg" />
+	<sound name="sound" path="star.ogg" />
+</resources>

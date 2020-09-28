@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+ <width>1280</width>
+ <height>720</height>
+ <windowMode>0</windowMode>
+ <vsync>0</vsync>
+ <fps>0</fps>
+ <globalVolume>100</globalVolume>
+ <language>fr</language>
+ <libGraphic>../../lib-Exo-Renderer/SDLOpenGL/Debug/ExoRendererSDLOpenGL</libGraphic>
+ <libAudio>../../lib-Exo-Audio/OpenAL/Debug/ExoAudioOpenAL</libAudio>
+</settings>

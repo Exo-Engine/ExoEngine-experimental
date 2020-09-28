@@ -55,7 +55,7 @@ private:
 	FILE*			_file;
 	int			 _format;
 	int			 _sampleRate;
-	int			 _totalRead;
+	ALsizei	     _totalRead;
 };
 
 }
