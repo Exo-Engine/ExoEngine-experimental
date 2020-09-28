@@ -50,7 +50,6 @@ class	Engine
 		ResourceManager*					_resourceManager;
 		SettingsManager*					_settingsManager;
 		LibLoader<ExoRenderer::IRenderer>*	_rendererPlugin;
-		LibLoader<ExoAudio::IAudio>*		_audioPlugin;
 };
 
 }

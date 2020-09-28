@@ -25,6 +25,7 @@
 #include "Engine.h"
 #include "Utils.h"
 
+#include "OALAudio.h"
 #include "LibLoader.h"
 
 using namespace	ExoEngine;
@@ -34,8 +35,7 @@ using namespace	ExoAudio;
 Engine::Engine(void) :
 	_resourceManager(nullptr),
 	_settingsManager(nullptr),
-	_rendererPlugin(nullptr),
-	_audioPlugin(nullptr)
+	_rendererPlugin(nullptr)
 {
 	_settingsManager = new SettingsManager();
 }
@@ -53,8 +53,6 @@ Engine::~Engine(void)
 		delete _settingsManager;
 	if (_rendererPlugin)
 		delete _rendererPlugin;
-	if (_audioPlugin)
-		delete _audioPlugin;
 }
 
 void Engine::initialize(const std::string& settingsFile)
@@ -83,26 +81,25 @@ void Engine::initialize(const std::string& settingsFile)
 	}
 
 	_rendererPlugin = new LibLoader<IRenderer>(rendererLibSetting->getValue());
-	_audioPlugin = new LibLoader<IAudio>(audioLibSetting->getValue());
 	_resourceManager = new ResourceManager(getRenderer(), getAudio());
 }
 
 ResourceManager* Engine::getResourceManager(void) const
 {
-	return (_resourceManager);
+	return _resourceManager;
 }
 
 SettingsManager* Engine::getSettingsManager(void) const
 {
-	return (_settingsManager);
+	return _settingsManager;
 }
 
 ExoRenderer::IRenderer*	Engine::getRenderer(void) const
 {
-	return (_rendererPlugin->getPlugin());
+	return _rendererPlugin->getPlugin();
 }
 
-ExoAudio::IAudio*		Engine::getAudio(void) const
+ExoAudio::IAudio* Engine::getAudio(void) const
 {
-	return (_audioPlugin->getPlugin());
+	return &ExoAudioOpenAL::OALAudio::Get();
 }

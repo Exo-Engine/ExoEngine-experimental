@@ -10,7 +10,6 @@ set(CMAKE_CXX_STANDARD 17)
 subdirs(examples)
 
 add_subdirectory(lib-Exo-Renderer)
-add_subdirectory(lib-Exo-Audio)
 
 file(GLOB SOURCES
 	include/*.h
@@ -22,8 +21,7 @@ file(GLOB SOURCES
 include_directories(
 	include
 	${LIBXML2_INCLUDE_DIR}
-	lib-Exo-Renderer/renderer/include
-	lib-Exo-Audio/audio/include)
+	lib-Exo-Renderer/renderer/include)
 	
 find_package(SDL2 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
@@ -31,11 +29,14 @@ find_package(LibXml2 REQUIRED)
 find_package(Threads REQUIRED)
 find_package(Bullet CONFIG REQUIRED)
 
+find_package(OpenAL CONFIG REQUIRED)
+find_package(Vorbis CONFIG REQUIRED)
+
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 	set(CMAKE_CXX_FLAGS "/W4 /FS /EHsc")
 else ()
 	set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 endif ()
 
-link_libraries(SDL2::SDL2 ${CMAKE_THREAD_LIBS_INIT} ${LIBXML2_LIBRARIES} glm  LinearMath Bullet3Common BulletDynamics BulletSoftBody)
+link_libraries(SDL2::SDL2 ${CMAKE_THREAD_LIBS_INIT} ${LIBXML2_LIBRARIES} glm OpenAL::OpenAL Vorbis::vorbis Vorbis::vorbisenc Vorbis::vorbisfile LinearMath Bullet3Common BulletDynamics BulletSoftBody)
 add_library(ExoEngine STATIC ${SOURCES})

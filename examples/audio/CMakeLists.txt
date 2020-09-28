@@ -20,6 +20,3 @@ add_executable(sound ${SOURCES})
 add_custom_command(TARGET sound POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/lib-Exo-Renderer/SDLOpenGL/Debug/ ${CMAKE_CURRENT_BINARY_DIR}
 )
-add_custom_command(TARGET sound POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/lib-Exo-Audio/OpenAL/Debug/ ${CMAKE_CURRENT_BINARY_DIR}
-)
