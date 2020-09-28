@@ -27,7 +27,6 @@
 #include "IAudio.h"
 #include "ResourceManager.h"
 #include "SettingsManager.h"
-#include "LibLoader.h"
 
 namespace	ExoEngine
 {
@@ -49,7 +48,6 @@ class	Engine
 	private:
 		ResourceManager*					_resourceManager;
 		SettingsManager*					_settingsManager;
-		LibLoader<ExoRenderer::IRenderer>*	_rendererPlugin;
 };
 
 }

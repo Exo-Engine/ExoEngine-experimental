@@ -27,7 +27,6 @@
 
 #include "OALAudio.h"
 #include "RendererSDLOpenGL.h"
-#include "LibLoader.h"
 
 using namespace	ExoEngine;
 using namespace	ExoRenderer;
@@ -35,8 +34,7 @@ using namespace	ExoAudio;
 
 Engine::Engine(void) :
 	_resourceManager(nullptr),
-	_settingsManager(nullptr),
-	_rendererPlugin(nullptr)
+	_settingsManager(nullptr)
 {
 	_settingsManager = new SettingsManager();
 }
@@ -52,8 +50,6 @@ Engine::~Engine(void)
 		delete _resourceManager;
 	if (_settingsManager)
 		delete _settingsManager;
-	if (_rendererPlugin)
-		delete _rendererPlugin;
 }
 
 void Engine::initialize(const std::string& settingsFile)
