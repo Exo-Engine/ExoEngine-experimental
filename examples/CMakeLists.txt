@@ -1,1 +1,1 @@
-subdirs(dynamic reflection window audio)
+subdirs(window audio)
