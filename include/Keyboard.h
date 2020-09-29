@@ -25,6 +25,7 @@
 #pragma once
 
 #include <SDL2/SDL_keycode.h>
+
 #include "IKeyboard.h"
 
 namespace ExoEngine
@@ -48,3 +49,5 @@ namespace ExoEngine
 	};
 
 }
+
+#define KEY_PRESSED(keyboard, key) keyboard->isKeyDown(key) && !keyboard->lastIsKeyDown(key) 

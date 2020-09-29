@@ -23,10 +23,9 @@
  */
 
 #include "Engine.h"
+#include <Keyboard.h>
 
 using namespace	ExoEngine;
-using namespace	ExoRenderer;
-using namespace ExoAudio;
 
 int	main(void)
 {
@@ -60,10 +59,10 @@ int	main(void)
 		if (keyboard->isKeyDown(KeyboardKeys::KEY_ESCAPE))
 			run = false;
 
-		if (keyboard->isKeyDown(KeyboardKeys::KEY_S) && !keyboard->lastIsKeyDown(KeyboardKeys::KEY_S))
+		if (KEY_PRESSED(keyboard, KeyboardKeys::KEY_S))
 			source2->play();
 
-		if (keyboard->isKeyDown(KeyboardKeys::KEY_SPACE) && !keyboard->lastIsKeyDown(KeyboardKeys::KEY_SPACE))
+		if (KEY_PRESSED(keyboard, KeyboardKeys::KEY_SPACE))
 		{
 			if (source1->getState() == source1->PLAYING)
 				source1->stop();

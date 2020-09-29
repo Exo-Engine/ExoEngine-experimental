@@ -30,7 +30,7 @@
 
 #define ASSERT(x) if(!(x)) __debugbreak();
 
-#	define GL_CALL(call)	\
+#define GL_CALL(call)	\
 {\
 	call;\
 	GLenum glCallError = glGetError();\
