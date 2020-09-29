@@ -33,7 +33,6 @@ int	main(void)
 	IWindow*	window;
 	Mouse*      mouse;
 	Keyboard*	keyboard;
-	IGamepad*   gamepad;
 	bool		run = true;
 
 	renderer->initialize("example window", 1280, 720, WindowMode::WINDOWED, false);
@@ -41,7 +40,6 @@ int	main(void)
 	window = renderer->getWindow();
 	mouse = renderer->getMouse();
 	keyboard = renderer->getKeyboard();
-	gamepad = renderer->getGamepadManager()->getGamepad(0);
 	window->setVsync(true);
 
 	auto cam = renderer->createCamera();
@@ -63,7 +61,7 @@ int	main(void)
 		if (window->getIsClosing())
 			run = false;
 
-		cam->update(mouse, keyboard, gamepad);
+		cam->update(mouse, keyboard);
 		renderer->swap();
 	}
 

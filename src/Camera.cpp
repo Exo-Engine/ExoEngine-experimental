@@ -38,26 +38,26 @@ namespace ExoEngine {
 
 	}
 
-	void Camera::update(Mouse* mouse, Keyboard* keyboard, IGamepad* gamepad)
+	void Camera::update(Mouse* mouse, Keyboard* keyboard)
 	{
 		(void)mouse;
 
 		// Keyboard & Gamepad
-		if (keyboard->isKeyDown(KeyboardKeys::KEY_SPACE) || gamepad->triggerLeft > 0)
+		if (keyboard->isKeyDown(KeyboardKeys::KEY_SPACE))
 			_position.z += _speed * RendererSDLOpenGL::Get().getWindow()->getDelta();
-		else if ((keyboard->isKeyDown(KeyboardKeys::KEY_LSHIFT) && _position.z > 1.0f) || (gamepad->triggerRight > 0 && _position.z > 3.0f))
+		else if ((keyboard->isKeyDown(KeyboardKeys::KEY_LSHIFT) && _position.z > 1.0f))
 			_position.z -= _speed * RendererSDLOpenGL::Get().getWindow()->getDelta();
 
 		if (_pFollowedEntity == nullptr)
 		{
-			if (keyboard->isKeyDown(KeyboardKeys::KEY_W) || gamepad->leftStick.y < 0 - GAMEPAD_DEAD_ZONE)
+			if (keyboard->isKeyDown(KeyboardKeys::KEY_W))
 				_position.y += _speed * RendererSDLOpenGL::Get().getWindow()->getDelta();
-			else if (keyboard->isKeyDown(KeyboardKeys::KEY_S) || gamepad->leftStick.y > 0 + GAMEPAD_DEAD_ZONE)
+			else if (keyboard->isKeyDown(KeyboardKeys::KEY_S))
 				_position.y -= _speed * RendererSDLOpenGL::Get().getWindow()->getDelta();
 
-			if (keyboard->isKeyDown(KeyboardKeys::KEY_A) || gamepad->leftStick.x < 0 - GAMEPAD_DEAD_ZONE)
+			if (keyboard->isKeyDown(KeyboardKeys::KEY_A))
 				_position.x -= _speed * RendererSDLOpenGL::Get().getWindow()->getDelta();
-			else if (keyboard->isKeyDown(KeyboardKeys::KEY_D) || gamepad->leftStick.x > 0 + GAMEPAD_DEAD_ZONE)
+			else if (keyboard->isKeyDown(KeyboardKeys::KEY_D))
 				_position.x += _speed * RendererSDLOpenGL::Get().getWindow()->getDelta();
 		}
 

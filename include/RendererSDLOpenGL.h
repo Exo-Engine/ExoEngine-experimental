@@ -33,8 +33,6 @@
 #include "Window.h"
 #include "Keyboard.h"
 #include "Mouse.h"
-#include "GamepadManager.h"
-#include "Gamepad.h"
 #include "ObjectRenderer.h"
 #include "Grid.h"
 #include "Shader.h"
@@ -75,7 +73,6 @@ namespace ExoEngine
 
 		virtual Keyboard *getKeyboard(void);
 		virtual Mouse *getMouse(void);
-		virtual IGamepadManager *getGamepadManager(void);
 		virtual unsigned int getTime(void) const;
 
 		// Setters
@@ -95,7 +92,6 @@ namespace ExoEngine
 
 		Keyboard _keyboard;
 		Mouse _mouse;
-		GamepadManager _gamepad;
 
 		ObjectRenderer* _pObjectRenderer;
 

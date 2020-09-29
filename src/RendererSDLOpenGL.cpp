@@ -51,7 +51,7 @@ namespace ExoEngine {
 		if (_pWindow)
 			delete _pWindow;
 
-		_pWindow = new Window(title, width, height, mode, resizable, _gamepad);
+		_pWindow = new Window(title, width, height, mode, resizable);
 		resize();
 
 		// Shaders
@@ -193,12 +193,9 @@ namespace ExoEngine {
 
 		_mouse.updateLastBuffer();
 		_keyboard.updateLastBuffer();
-		_gamepad.update();
 
-		_pWindow->handleEvents(_keyboard, _mouse, _gamepad);
-
+		_pWindow->handleEvents(_keyboard, _mouse);
 		_pWindow->swap();
-
 		_pWindow->clearScreen();
 	}
 
@@ -216,11 +213,6 @@ namespace ExoEngine {
 	Mouse* RendererSDLOpenGL::getMouse(void)
 	{
 		return &_mouse;
-	}
-
-	IGamepadManager* RendererSDLOpenGL::getGamepadManager(void)
-	{
-		return &_gamepad;
 	}
 
 	unsigned int RendererSDLOpenGL::getTime(void) const

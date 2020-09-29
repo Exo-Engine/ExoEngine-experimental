@@ -32,10 +32,10 @@
 
 namespace ExoEngine {
 
-	Window::Window(const std::string& title, uint32_t width, uint32_t height, const WindowMode& mode, bool resizable, GamepadManager& gamepad)
+	Window::Window(const std::string& title, uint32_t width, uint32_t height, const WindowMode& mode, bool resizable)
 		: IWindow(), _frameTexture(nullptr), _window(nullptr), _pFrameBuffer(nullptr)
 	{
-		initialize(title, width, height, mode, resizable, gamepad);
+		initialize(title, width, height, mode, resizable);
 	}
 
 	Window::~Window(void)
@@ -84,7 +84,7 @@ namespace ExoEngine {
 
 #endif
 
-	void Window::initialize(const std::string& title, uint32_t width, uint32_t height, const WindowMode& mode, bool resizable, GamepadManager& gamepad)
+	void Window::initialize(const std::string& title, uint32_t width, uint32_t height, const WindowMode& mode, bool resizable)
 	{
 
 		_width = width;
@@ -213,7 +213,7 @@ namespace ExoEngine {
 		initPostProcessing();
 	}
 
-	void Window::handleEvents(Keyboard& keyboard, Mouse& mouse, GamepadManager& gamepad)
+	void Window::handleEvents(Keyboard& keyboard, Mouse& mouse)
 	{
 		while (SDL_PollEvent(&_event))
 		{
@@ -241,40 +241,6 @@ namespace ExoEngine {
 			case SDL_MOUSEMOTION:
 				mouse.x = _event.motion.x;
 				mouse.y = _event.motion.y;
-				break;
-			case SDL_CONTROLLERDEVICEREMOVED:
-				gamepad.remove(_event.cdevice.which);
-				break;
-			case SDL_CONTROLLERDEVICEADDED:
-				gamepad.add(_event.cdevice.which);
-				break;
-			case SDL_CONTROLLERBUTTONDOWN:
-				gamepad.keyDown(_event.cdevice.which, Gamepad::getGamepadInput(_event.cbutton.button));
-				break;
-			case SDL_CONTROLLERBUTTONUP:
-				gamepad.keyUp(_event.cdevice.which, Gamepad::getGamepadInput(_event.cbutton.button));
-				break;
-			case SDL_CONTROLLERAXISMOTION:
-				switch (_event.caxis.axis) {
-				case SDL_CONTROLLER_AXIS_LEFTX:
-					gamepad.leftStickX(_event.cdevice.which, _event.caxis.value);
-					break;
-				case SDL_CONTROLLER_AXIS_LEFTY:
-					gamepad.leftStickY(_event.cdevice.which, _event.caxis.value);
-					break;
-				case SDL_CONTROLLER_AXIS_RIGHTX:
-					gamepad.rightStickX(_event.cdevice.which, _event.caxis.value);
-					break;
-				case SDL_CONTROLLER_AXIS_RIGHTY:
-					gamepad.rightStickY(_event.cdevice.which, _event.caxis.value);
-					break;
-				case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
-					gamepad.triggerLeft(_event.cdevice.which, _event.caxis.value);
-					break;
-				case SDL_CONTROLLER_AXIS_TRIGGERRIGHT:
-					gamepad.triggerRight(_event.cdevice.which, _event.caxis.value);
-					break;
-				}
 				break;
 			}
 		}

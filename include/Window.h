@@ -37,7 +37,6 @@
 
 #include "Keyboard.h"
 #include "Mouse.h"
-#include "GamepadManager.h"
 
 namespace ExoEngine
 {
@@ -45,10 +44,10 @@ namespace ExoEngine
 	class Window : public IWindow
 	{
 	public:
-		Window(const std::string& title, uint32_t width, uint32_t height, const WindowMode &mode, bool resizable, GamepadManager &gamepad);
+		Window(const std::string& title, uint32_t width, uint32_t height, const WindowMode &mode, bool resizable);
 		~Window(void);
 
-		void handleEvents(Keyboard& keyboard, Mouse& mouse, GamepadManager& gamepad);
+		void handleEvents(Keyboard& keyboard, Mouse& mouse);
 		void clearScreen(void);
 		void swap(void);
 
@@ -74,7 +73,7 @@ namespace ExoEngine
 		virtual bool getIsClosing(void) const;
 		Texture		 *_frameTexture;
 	private:
-		void initialize(const std::string& title, uint32_t width, uint32_t height, const WindowMode &mode, bool resizable, GamepadManager& gamepad);
+		void initialize(const std::string& title, uint32_t width, uint32_t height, const WindowMode &mode, bool resizable);
 		void initPostProcessing(void);
 	private:
 		SDL_Window*	 _window;

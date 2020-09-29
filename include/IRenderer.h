@@ -30,7 +30,6 @@
 #include "IWindow.h"
 #include "Keyboard.h"
 #include "ICamera.h"
-#include "IGamepadManager.h"
 #include "Mouse.h"
 #include "IShader.h"
 #include "ITexture.h"
@@ -73,7 +72,6 @@ namespace ExoEngine
 
 		virtual Keyboard *getKeyboard(void) = 0;
 		virtual Mouse *getMouse(void) = 0;
-		virtual IGamepadManager *getGamepadManager(void) = 0;
 		virtual unsigned int getTime(void) const = 0;
 
 		// Setters

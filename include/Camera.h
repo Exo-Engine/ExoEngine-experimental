@@ -36,7 +36,7 @@ namespace ExoEngine
 		Camera(void);
 		~Camera(void);
 
-		virtual void update(Mouse* mouse, Keyboard* keyboard, IGamepad* gamepad);
+		virtual void update(Mouse* mouse, Keyboard* keyboard);
 
 		// Getters
 		glm::mat4 getLookAt(void);
