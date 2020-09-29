@@ -30,31 +30,22 @@ using namespace	ExoEngine;
 
 PhysicManager::PhysicManager(void)
 {
-	_collisionConfiguration = new btDefaultCollisionConfiguration();
-	_collisionDispatcher = new btCollisionDispatcher(_collisionConfiguration);
-	_broadPhase = new btDbvtBroadphase();
-	_constraintSolver = new btSequentialImpulseConstraintSolver();
-	_world = new btDiscreteDynamicsWorld(_collisionDispatcher, _broadPhase, _constraintSolver, _collisionConfiguration);
-	_world->setGravity(btVector3(0, -9.81, 0));
+
 }
 
 PhysicManager::~PhysicManager(void)
 {
-	_world;
-	_constraintSolver;
-	_broadPhase;
-	_collisionDispatcher;
-	_collisionConfiguration;
+
 }
 
 void	PhysicManager::add(Hitbox *hitbox)
 {
-	_world->addRigidBody(hitbox->getBody());
+
 }
 
 void	PhysicManager::remove(Hitbox *hitbox)
 {
-	_world->removeRigidBody(hitbox->getBody());
+
 }
 
 void	PhysicManager::run(void)
@@ -70,7 +61,6 @@ void	PhysicManager::run(void)
 		std::this_thread::sleep_for(std::chrono::microseconds((size_t)((speed - diff) * 1000000)));
 	now = std::chrono::high_resolution_clock::now();
 	diff = (double)std::chrono::duration_cast<std::chrono::microseconds>(now - prev).count() / 1000000;
-	_world->stepSimulation(speed, 1, speed);
 
 	prev = now;
 }

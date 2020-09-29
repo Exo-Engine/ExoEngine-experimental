@@ -32,9 +32,9 @@ int	main(void)
 	Engine		engine("resources/settings.xml");
 	IRenderer*	renderer = engine.getRenderer();
 	IWindow*	window;
-	IMouse* mouse;
+	IMouse*     mouse;
 	IKeyboard*	keyboard;
-	IGamepad* gamepad;
+	IGamepad*   gamepad;
 	bool		run = true;
 
 	renderer->initialize("example window", 1280, 720, WindowMode::WINDOWED, false);

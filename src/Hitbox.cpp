@@ -28,38 +28,21 @@ using namespace	ExoEngine;
 
 Hitbox::Hitbox(const glm::vec2 &absolute, const hitbox &src, const float &weight) : _pos(src.x, src.y), _size(src.w, src.h)
 {
-	_shape = new btBoxShape(btVector3(_size.x, _size.y, 1));
-	_transform.setIdentity();
-	_transform.setOrigin(btVector3(_pos.x + absolute.x, _pos.y + absolute.y, 0));
-	_motionState = new btDefaultMotionState(_transform);
-	_body = new btRigidBody(btRigidBody::btRigidBodyConstructionInfo(weight, _motionState, _shape));
+
 }
 
 Hitbox::~Hitbox(void)
 {
-	_shape;
-	_motionState;
-	_body;
+
 }
 
-const glm::vec2&	Hitbox::getPos(void)
+const glm::vec2& Hitbox::getPos(void)
 {
 	return (_pos);
 }
 
-btRigidBody*	Hitbox::getBody(void) const
+glm::mat4 Hitbox::getTransform(void)
 {
-	return (_body);
-}
-
-glm::mat4		Hitbox::getTransform(void)
-{
-	btScalar	buffer[16];
 	glm::mat4	matrix(1);
-
-	_motionState->m_graphicsWorldTrans.getOpenGLMatrix((btScalar *)&buffer);
-	for (size_t x = 0; x < 4; x++)
-		for (size_t y = 0; y < 4; y++)
-			matrix[y][x] = buffer[y * 4 + x];
 	return (matrix);
 }

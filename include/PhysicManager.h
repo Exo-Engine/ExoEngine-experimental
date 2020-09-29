@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include <bullet/btBulletDynamicsCommon.h>
-
 #include "Hitbox.h"
 
 namespace	ExoEngine
@@ -41,12 +39,6 @@ class	PhysicManager
 		void	remove(Hitbox *hitbox);
 
 		void	run(void);
-	private:
-		btDiscreteDynamicsWorld*				_world;
-		btBroadphaseInterface*					_broadPhase;
-		btCollisionDispatcher*					_collisionDispatcher;
-		btDefaultCollisionConfiguration*		_collisionConfiguration;
-		btSequentialImpulseConstraintSolver*	_constraintSolver;
 };
 
 }

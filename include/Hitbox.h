@@ -28,7 +28,6 @@
 
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
-#include <bullet/btBulletDynamicsCommon.h>
 
 namespace	ExoEngine
 {
@@ -43,15 +42,10 @@ public:
 	~Hitbox(void);
 
 	const glm::vec2&	getPos(void);
-	btRigidBody*		getBody(void) const;
 	glm::mat4			getTransform(void);
 private:
 	glm::vec2				_pos;
 	glm::vec2				_size;
-	btCollisionShape*		_shape;
-	btTransform				_transform;
-	btDefaultMotionState*	_motionState;
-	btRigidBody*			_body;
 };
 
 }
