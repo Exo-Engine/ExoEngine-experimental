@@ -24,79 +24,81 @@
 
 #include "Log.h"
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-Log	ExoEngine::_log("log");
+	Log	ExoEngine::_log("log");
 
-Log::Log(const std::string &file) : error(*this, "error", 196, _start), warning(*this, "warning", 208, _start), info(*this, "info", 190, _start), debug(*this, "debug", 46, _start), meeseeks(*this, "look at meeeee", 39, _start)
-{
-	try
+	Log::Log(const std::string& file) : error(*this, "error", 196, _start), warning(*this, "warning", 208, _start), info(*this, "info", 190, _start), debug(*this, "debug", 46, _start), meeseeks(*this, "look at meeeee", 39, _start)
 	{
-		_file.open(file.c_str(), std::ofstream::out | std::ofstream::app);
-		_file << "___ Log start ___" << std::endl;
+		try
+		{
+			_file.open(file.c_str(), std::ofstream::out | std::ofstream::app);
+			_file << "___ Log start ___" << std::endl;
 #ifdef LOG_TERM
-		std::cout << "___ Log start ___" << std::endl;
+			std::cout << "___ Log start ___" << std::endl;
 #endif
+		}
+		catch (const std::exception&)
+		{
+			throw;
+		}
+		_start = true;
 	}
-	catch (const std::exception &)
-	{
-		throw ;
-	}
-	_start = true;
-}
 
-Log::~Log()
-{
-	_file << "___ Log end ___" << std::endl;
-#ifdef LOG_TERM
-	std::cout << "___ Log end ___" << std::endl;
-#endif
-	_file.close();
-}
-
-Log		&Log::operator<<(std::ostream& (*pf)(std::ostream&))
-{
-	if (!pf)
-		throw (std::exception());
-	_mutex.lock();
-	try
+	Log::~Log()
 	{
+		_file << "___ Log end ___" << std::endl;
 #ifdef LOG_TERM
-		pf(std::cout);
+		std::cout << "___ Log end ___" << std::endl;
 #endif
-		pf(_file);
+		_file.close();
 	}
-	catch (const std::exception &)
+
+	Log& Log::operator<<(std::ostream& (*pf)(std::ostream&))
 	{
+		if (!pf)
+			throw (std::exception());
+		_mutex.lock();
+		try
+		{
+#ifdef LOG_TERM
+			pf(std::cout);
+#endif
+			pf(_file);
+		}
+		catch (const std::exception&)
+		{
+			_mutex.unlock();
+			throw;
+		}
+		_start = true;
 		_mutex.unlock();
-		throw ;
+		return (*this);
 	}
-	_start = true;
-	_mutex.unlock();
-	return (*this);
-}
 
-Log::LogLeveled::LogLeveled(Log &log, const std::string &name, const uint8_t &color, const bool &start) : _log(log), _name(name), _color(color), _start(start), _enabled(true)
-{
-}
+	Log::LogLeveled::LogLeveled(Log& log, const std::string& name, const uint8_t& color, const bool& start) : _log(log), _name(name), _color(color), _start(start), _enabled(true)
+	{
+	}
 
-Log::LogLeveled::~LogLeveled(void)
-{
-}
+	Log::LogLeveled::~LogLeveled(void)
+	{
+	}
 
-Log::LogLeveled		&Log::LogLeveled::operator<<(std::ostream& (*pf)(std::ostream&))
-{
-	if (_enabled)
-		_log << pf;
-	return (*this);
-}
+	Log::LogLeveled& Log::LogLeveled::operator<<(std::ostream& (*pf)(std::ostream&))
+	{
+		if (_enabled)
+			_log << pf;
+		return (*this);
+	}
 
-void	Log::LogLeveled::disable(void)
-{
-	_enabled = false;
-}
+	void	Log::LogLeveled::disable(void)
+	{
+		_enabled = false;
+	}
 
-void	Log::LogLeveled::enable(void)
-{
-	_enabled = true;
+	void	Log::LogLeveled::enable(void)
+	{
+		_enabled = true;
+	}
+
 }

@@ -28,22 +28,22 @@
 #include <map>
 #include "Singleton.h"
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class Local : public Singleton<Local>
-{
-public:
-	void loadLocal(const std::string &lang);
-	const std::string &get(const std::string &id);
-private:
-	friend class Singleton<Local>;
+	class Local : public Singleton<Local>
+	{
+	public:
+		void loadLocal(const std::string &lang);
+		const std::string &get(const std::string &id);
+	private:
+		friend class Singleton<Local>;
 
-	Local(void);
-	~Local(void);
+		Local(void);
+		~Local(void);
 
-	std::string _currentLang;
-	std::map<std::string, std::string> _words;
-};
+		std::string _currentLang;
+		std::map<std::string, std::string> _words;
+	};
 
 }

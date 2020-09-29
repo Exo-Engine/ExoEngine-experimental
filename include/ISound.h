@@ -27,14 +27,14 @@
 #include <string>
 #include "IResource.h"
 
-namespace	ExoAudio
+namespace ExoEngine
 {
 
-class ISound : public ExoEngine::IResource
-{
-public:
-	ISound(void);
-	virtual ~ISound(void) = 0;
-};
+	class ISound : public ExoEngine::IResource
+	{
+	public:
+		ISound(void);
+		virtual ~ISound(void) = 0;
+	};
 
 }

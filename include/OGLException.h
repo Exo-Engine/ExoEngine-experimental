@@ -27,20 +27,20 @@
 #include <GL/glew.h>
 #include <exception>
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class	OGLException : public std::exception
-{
-	public:
-		OGLException(GLenum error);
-		virtual	~OGLException(void);
+	class	OGLException : public std::exception
+	{
+		public:
+			OGLException(GLenum error);
+			virtual	~OGLException(void);
 
-		virtual const char*	what() const noexcept;
+			virtual const char*	what() const noexcept;
 
-		OGLException	&operator=(const std::exception &);
-	private:
-		GLenum	_error;
-};
+			OGLException	&operator=(const std::exception &);
+		private:
+			GLenum	_error;
+	};
 
 }

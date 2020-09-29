@@ -27,25 +27,25 @@
 #include "Shader.h"
 #include "Buffer.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Grid
-{
-	public:
-		Grid(int width, int height, glm::vec2 pos);
-		virtual ~Grid(void);
+	class Grid
+	{
+		public:
+			Grid(int width, int height, glm::vec2 pos);
+			virtual ~Grid(void);
 
-		void render(const glm::mat4& lookAt, const glm::mat4& perspective);
-	private:
-		void drawLine(int x, int y, float angle);
-	public:
-		static Shader* pShader;
-		static Buffer* vaoBuffer;
-		static Buffer* vertexBuffer;
-	private:
-		unsigned int _width, _height;
-		glm::vec2 _pos;
-};
+			void render(const glm::mat4& lookAt, const glm::mat4& perspective);
+		private:
+			void drawLine(int x, int y, float angle);
+		public:
+			static Shader* pShader;
+			static Buffer* vaoBuffer;
+			static Buffer* vertexBuffer;
+		private:
+			unsigned int _width, _height;
+			glm::vec2 _pos;
+	};
 
 }

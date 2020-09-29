@@ -25,7 +25,6 @@
 #include "Engine.h"
 
 using namespace	ExoEngine;
-using namespace	ExoRenderer;
 
 int	main(void)
 {

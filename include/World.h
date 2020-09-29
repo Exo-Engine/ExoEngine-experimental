@@ -30,11 +30,11 @@
 #include <deque>
 #include <glm/vec3.hpp>
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	World : public std::recursive_mutex
-{
+	class World : public std::recursive_mutex
+	{
 	public:
 		World(void);
 		~World(void);
@@ -71,6 +71,6 @@ class	World : public std::recursive_mutex
 		std::string					 _mapMusic;
 		int							 _cameraType;
 		glm::vec3						_cameraPos;
-};
+	};
 
 }

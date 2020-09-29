@@ -33,29 +33,29 @@
 #include "OALSound.h"
 #include "OALMusic.h"
 
-namespace	ExoAudioOpenAL
+namespace ExoEngine
 {
 
-class OALAudio : public ExoAudio::IAudio
-{
-public:
-	static OALAudio&	Get(void);
+	class OALAudio : public IAudio
+	{
+	public:
+		static OALAudio&	Get(void);
 
-	virtual void initialize(void);
+		virtual void initialize(void);
 
-	virtual void getDevices(std::vector<std::string> &devices);
-	virtual void updateListener(const glm::vec3 &position, const glm::vec3 &velocity, float volume);
-	virtual void updateVolume(float volume);
+		virtual void getDevices(std::vector<std::string> &devices);
+		virtual void updateListener(const glm::vec3 &position, const glm::vec3 &velocity, float volume);
+		virtual void updateVolume(float volume);
 
-	virtual ExoAudio::ISource* createSource(void);
-	virtual ExoAudio::ISound* createSound(const std::string& filePath);
-	virtual ExoAudio::IMusic* createMusic(const std::string& filePath);
-private:
-	OALAudio(void);
-	virtual ~OALAudio(void);
-private:
-	ALCdevice* _pDevice;
-	ALCcontext* _pContext;
-};
+		virtual ISource* createSource(void);
+		virtual ISound* createSound(const std::string& filePath);
+		virtual IMusic* createMusic(const std::string& filePath);
+	private:
+		OALAudio(void);
+		virtual ~OALAudio(void);
+	private:
+		ALCdevice* _pDevice;
+		ALCcontext* _pContext;
+	};
 
 }

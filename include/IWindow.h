@@ -27,43 +27,43 @@
 #include "Enums.h"
 #include "IFrameBuffer.h"
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-class IWindow
-{
-public:
-	IWindow(void): _width(0), _height(0), _contextWidth(0), _contextHeight(0), _highDPIFactor(1), _close(false)
-	{ };
+	class IWindow
+	{
+	public:
+		IWindow(void): _width(0), _height(0), _contextWidth(0), _contextHeight(0), _highDPIFactor(1), _close(false)
+		{ };
 
-	virtual ~IWindow(void)
-	{ };
+		virtual ~IWindow(void)
+		{ };
 
-	// Setters
-	virtual void setWindowSize(int w, int h) = 0;
-	virtual void setWindowMode(const WindowMode &mode) = 0;
-	virtual void setVsync(bool vsync) = 0;
+		// Setters
+		virtual void setWindowSize(int w, int h) = 0;
+		virtual void setWindowMode(const WindowMode &mode) = 0;
+		virtual void setVsync(bool vsync) = 0;
 
-	// Getters
-	virtual double getDelta(void) const = 0;
-	virtual float getWidth(void) const = 0;
-	virtual float getHeight(void) const = 0;
+		// Getters
+		virtual double getDelta(void) const = 0;
+		virtual float getWidth(void) const = 0;
+		virtual float getHeight(void) const = 0;
 
-	virtual int getContextWidth(void) const = 0;
-	virtual int getContextHeight(void) const = 0;
+		virtual int getContextWidth(void) const = 0;
+		virtual int getContextHeight(void) const = 0;
 
-	virtual int getHighDPIFactor(void) const = 0;
-	virtual bool isFullscreen(void) const = 0;
+		virtual int getHighDPIFactor(void) const = 0;
+		virtual bool isFullscreen(void) const = 0;
 
-	virtual bool getIsClosing(void) const = 0;
+		virtual bool getIsClosing(void) const = 0;
 
-	virtual IFrameBuffer *getFrameBuffer(void) const = 0;
-protected:
-	uint64_t		_now, _last;
-	int			 _width, _height;
-	WindowMode		_windowMode;
-	int			 _contextWidth, _contextHeight, _highDPIFactor;
-	bool			_close;
-};
+		virtual IFrameBuffer *getFrameBuffer(void) const = 0;
+	protected:
+		uint64_t		_now, _last;
+		int			 _width, _height;
+		WindowMode		_windowMode;
+		int			 _contextWidth, _contextHeight, _highDPIFactor;
+		bool			_close;
+	};
 
 }

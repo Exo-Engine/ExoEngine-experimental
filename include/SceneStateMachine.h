@@ -27,10 +27,10 @@
 #include "StateMachine.h"
 #include "ResourceManager.h"
 
-namespace	ExoEngine
+namespace ExoEngine
 {
-	class	Scene;
-	class	SceneStateMachine : public StateMachine<>
+	class Scene;
+	class SceneStateMachine : public StateMachine<>
 	{
 		public:
 			SceneStateMachine(ResourceManager* resourceManager);

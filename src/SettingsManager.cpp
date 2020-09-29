@@ -27,129 +27,129 @@
 #include "Log.h"
 #include <vector>
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-Setting::Setting(const std::string& name) : _name(name)
-{
-}
-
-Setting::~Setting(void)
-{
-}
-
-void				Setting::setName(const std::string& name)
-{
-	_name = name;
-}
-
-const std::string&	Setting::getName(void) const
-{
-	return (_name);
-}
-
-void				Setting::addProperty(const std::string& name, const std::string& value)
-{
-	_properties[name] = value;
-}
-
-const std::string&	Setting::getProperty(const std::string& name)
-{
-	return (_properties.at(name));
-}
-
-void				Setting::addChild(Setting* setting)
-{
-	_childs.push_back(setting);
-}
-
-size_t				Setting::getNbChilds(void) const
-{
-	return (_childs.size());
-}
-
-Setting*			Setting::getChild(size_t index)
-{
-	return (_childs[index]);
-}
-
-void				Setting::setValue(const std::string& value)
-{
-	_value = value;
-}
-
-const std::string&	Setting::getValue(void) const
-{
-	return (_value);
-}
-
-SettingsManager::SettingsManager(void)
-{
-}
-
-SettingsManager::~SettingsManager(void)
-{
-}
-
-void		SettingsManager::load(const std::string& file)
-{
-	xmlDocPtr	doc;
-	xmlNodePtr	root;
-
-	doc = xmlParseFile(file.c_str());
-	if (!doc)
-		throw (std::invalid_argument("cannot read xml file '" + file + "'"));
-	root = xmlDocGetRootElement(doc);
-	if (!root)
+	Setting::Setting(const std::string& name) : _name(name)
 	{
-		xmlFreeDoc(doc);
-		throw (std::invalid_argument("cannot get root node on '" + file + "'"));
 	}
 
-	if (root->type == XML_ELEMENT_NODE && !xmlStrcmp(root->name, (const xmlChar*)"settings"))
+	Setting::~Setting(void)
 	{
-		for (xmlNodePtr currentNode = root->children; currentNode; currentNode = currentNode->next)
+	}
+
+	void				Setting::setName(const std::string& name)
+	{
+		_name = name;
+	}
+
+	const std::string& Setting::getName(void) const
+	{
+		return (_name);
+	}
+
+	void				Setting::addProperty(const std::string& name, const std::string& value)
+	{
+		_properties[name] = value;
+	}
+
+	const std::string& Setting::getProperty(const std::string& name)
+	{
+		return (_properties.at(name));
+	}
+
+	void				Setting::addChild(Setting* setting)
+	{
+		_childs.push_back(setting);
+	}
+
+	size_t				Setting::getNbChilds(void) const
+	{
+		return (_childs.size());
+	}
+
+	Setting* Setting::getChild(size_t index)
+	{
+		return (_childs[index]);
+	}
+
+	void				Setting::setValue(const std::string& value)
+	{
+		_value = value;
+	}
+
+	const std::string& Setting::getValue(void) const
+	{
+		return (_value);
+	}
+
+	SettingsManager::SettingsManager(void)
+	{
+	}
+
+	SettingsManager::~SettingsManager(void)
+	{
+	}
+
+	void		SettingsManager::load(const std::string& file)
+	{
+		xmlDocPtr	doc;
+		xmlNodePtr	root;
+
+		doc = xmlParseFile(file.c_str());
+		if (!doc)
+			throw (std::invalid_argument("cannot read xml file '" + file + "'"));
+		root = xmlDocGetRootElement(doc);
+		if (!root)
 		{
-			if (currentNode->type == XML_ELEMENT_NODE)
+			xmlFreeDoc(doc);
+			throw (std::invalid_argument("cannot get root node on '" + file + "'"));
+		}
+
+		if (root->type == XML_ELEMENT_NODE && !xmlStrcmp(root->name, (const xmlChar*)"settings"))
+		{
+			for (xmlNodePtr currentNode = root->children; currentNode; currentNode = currentNode->next)
 			{
-				load(currentNode, nullptr);
+				if (currentNode->type == XML_ELEMENT_NODE)
+				{
+					load(currentNode, nullptr);
+				}
 			}
 		}
+
+		xmlFreeDoc(doc);
 	}
 
-	xmlFreeDoc(doc);
-}
-
-void		SettingsManager::unload(void)
-{
-}
-
-Setting*	SettingsManager::get(const std::string& setting)
-{
-	return (_settings.at(setting));
-}
-
-void		SettingsManager::load(xmlNodePtr node, Setting* parentSetting)
-{
-	Setting	*setting;
-
-	//	create setting object
-	setting = new Setting(std::string((const char*)node->name));
-	if (!parentSetting)
-		_settings[setting->getName()] = setting;
-	else
-		parentSetting->addChild(setting);
-
-	//	add properties
-	for (xmlAttrPtr property = node->properties; property; property = property->next)
+	void		SettingsManager::unload(void)
 	{
-		setting->addProperty(std::string((const char*)property->name), std::string((const char*)property->children->content));
 	}
 
-	//	load childs
-	for (xmlNodePtr currentNode = node->children; currentNode; currentNode = currentNode->next)
+	Setting* SettingsManager::get(const std::string& setting)
 	{
-		switch (currentNode->type)
+		return (_settings.at(setting));
+	}
+
+	void		SettingsManager::load(xmlNodePtr node, Setting* parentSetting)
+	{
+		Setting* setting;
+
+		//	create setting object
+		setting = new Setting(std::string((const char*)node->name));
+		if (!parentSetting)
+			_settings[setting->getName()] = setting;
+		else
+			parentSetting->addChild(setting);
+
+		//	add properties
+		for (xmlAttrPtr property = node->properties; property; property = property->next)
 		{
+			setting->addProperty(std::string((const char*)property->name), std::string((const char*)property->children->content));
+		}
+
+		//	load childs
+		for (xmlNodePtr currentNode = node->children; currentNode; currentNode = currentNode->next)
+		{
+			switch (currentNode->type)
+			{
 			case XML_ELEMENT_NODE:
 			{
 				load(currentNode, setting);
@@ -165,6 +165,8 @@ void		SettingsManager::load(xmlNodePtr node, Setting* parentSetting)
 			{
 				break;
 			}
+			}
 		}
 	}
+
 }

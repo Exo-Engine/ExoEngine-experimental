@@ -27,29 +27,29 @@
 #include <string>
 #include <glm/glm.hpp>
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-class IShader
-{
-public:
-	IShader(void)
-	{ }
+	class IShader
+	{
+	public:
+		IShader(void)
+		{ }
 
-	virtual ~IShader(void)
-	{	}
+		virtual ~IShader(void)
+		{	}
 
-	virtual void bind() const = 0;
-	virtual void unbind() const = 0;
+		virtual void bind() const = 0;
+		virtual void unbind() const = 0;
 
-	// Setters
-	virtual void setMat4(const std::string &name, const glm::mat4 &value) const = 0;
-	virtual void setVec3(const std::string &name, const glm::vec3 &value) const = 0;
-	virtual void setVec3(const std::string &name, float x, float y, float z) const = 0;
-	virtual void setVec2(const std::string &name, const glm::vec2 &value) const = 0;
-	virtual void setVec2(const std::string &name, float x, float y) const = 0;
-	virtual void setFloat(const std::string &name, const float &value) const = 0;
-	virtual void setInt(const std::string &name, const int &value) const = 0;
-};
+		// Setters
+		virtual void setMat4(const std::string &name, const glm::mat4 &value) const = 0;
+		virtual void setVec3(const std::string &name, const glm::vec3 &value) const = 0;
+		virtual void setVec3(const std::string &name, float x, float y, float z) const = 0;
+		virtual void setVec2(const std::string &name, const glm::vec2 &value) const = 0;
+		virtual void setVec2(const std::string &name, float x, float y) const = 0;
+		virtual void setFloat(const std::string &name, const float &value) const = 0;
+		virtual void setInt(const std::string &name, const int &value) const = 0;
+	};
 
 }

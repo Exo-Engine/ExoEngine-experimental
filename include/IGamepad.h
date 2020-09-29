@@ -31,56 +31,56 @@
 
 #define GAMEPAD_DEAD_ZONE 8000
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-class IGamepad
-{
-public:
-	IGamepad(void)
-	: leftStick(0.0f, 0.0f), rightStick(0.0f, 0.0f), triggerLeft(0.0f), triggerRight(0.0f), _real(true)
+	class IGamepad
 	{
-		for (unsigned int i{ 0 }; i < GAMEPAD_BUTTON_MAX; i++)
-			_buffer[i] = false;
-	}
+	public:
+		IGamepad(void)
+		: leftStick(0.0f, 0.0f), rightStick(0.0f, 0.0f), triggerLeft(0.0f), triggerRight(0.0f), _real(true)
+		{
+			for (unsigned int i{ 0 }; i < GAMEPAD_BUTTON_MAX; i++)
+				_buffer[i] = false;
+		}
 
-	virtual ~IGamepad(void)
-	{	}
+		virtual ~IGamepad(void)
+		{	}
 
-	virtual void keyDown(const GamepadButtons &id) = 0;
-	virtual void keyUp(const GamepadButtons &id) = 0;
+		virtual void keyDown(const GamepadButtons &id) = 0;
+		virtual void keyUp(const GamepadButtons &id) = 0;
 
-	virtual bool isKeyDown(const GamepadButtons &id) const = 0;
-	virtual bool lastIsKeyDown(const GamepadButtons &id) const = 0;
+		virtual bool isKeyDown(const GamepadButtons &id) const = 0;
+		virtual bool lastIsKeyDown(const GamepadButtons &id) const = 0;
 
-	void reset(void)
-	{
-		leftStick = {0, 0};
-		rightStick = {0, 0};
+		void reset(void)
+		{
+			leftStick = {0, 0};
+			rightStick = {0, 0};
 
-		triggerLeft = 0.0f;
-		triggerRight = 0.0f;
+			triggerLeft = 0.0f;
+			triggerRight = 0.0f;
 
-		for (unsigned int i{ 0 }; i < GAMEPAD_BUTTON_MAX; i++)
-			_buffer[i] = false;
+			for (unsigned int i{ 0 }; i < GAMEPAD_BUTTON_MAX; i++)
+				_buffer[i] = false;
 
-		updateLastBuffer();
-	}
+			updateLastBuffer();
+		}
 
-	void updateLastBuffer(void)
-	{
-		memcpy(_lastBuffer, _buffer, sizeof(_buffer));
-	}
+		void updateLastBuffer(void)
+		{
+			memcpy(_lastBuffer, _buffer, sizeof(_buffer));
+		}
 
-	void setIsGamepad(bool val) { _real = val; }
-	bool IsGamepad(void) { return _real; }
-protected:
-	bool _buffer[GAMEPAD_BUTTON_MAX];
-	bool _lastBuffer[GAMEPAD_BUTTON_MAX];
-public:
-	glm::vec2 leftStick, rightStick;
-	float triggerLeft, triggerRight;
-	bool _real;
-};
+		void setIsGamepad(bool val) { _real = val; }
+		bool IsGamepad(void) { return _real; }
+	protected:
+		bool _buffer[GAMEPAD_BUTTON_MAX];
+		bool _lastBuffer[GAMEPAD_BUTTON_MAX];
+	public:
+		glm::vec2 leftStick, rightStick;
+		float triggerLeft, triggerRight;
+		bool _real;
+	};
 
 }

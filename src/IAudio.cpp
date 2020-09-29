@@ -24,10 +24,12 @@
 
 #include "IAudio.h"
 
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-IAudio::IAudio(void)
-{	}
+	IAudio::IAudio(void)
+	{	}
 
-IAudio::~IAudio(void)
-{	}
+	IAudio::~IAudio(void)
+	{	}
+
+}

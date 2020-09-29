@@ -28,26 +28,26 @@
 #include "Enums.h"
 #include "IResource.h"
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-class ITexture : public ExoEngine::IResource
-{
-public:
-	ITexture(void)
-	{ }
+	class ITexture : public ExoEngine::IResource
+	{
+	public:
+		ITexture(void)
+		{ }
 
-	virtual ~ITexture(void)
-	{ }
+		virtual ~ITexture(void)
+		{ }
 
-	virtual void bind(int unit = 0) const = 0;
-	virtual void unbind() const = 0;
+		virtual void bind(int unit = 0) const = 0;
+		virtual void unbind() const = 0;
 
-	// Getters
-	virtual int getEngineId(void) const = 0;
+		// Getters
+		virtual int getEngineId(void) const = 0;
 
-	virtual int getWidth(void) const = 0;
-	virtual int getHeight(void) const = 0;
-};
+		virtual int getWidth(void) const = 0;
+		virtual int getHeight(void) const = 0;
+	};
 
 }

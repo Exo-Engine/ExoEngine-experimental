@@ -24,65 +24,67 @@
 
 #include "AlarmQueue.h"
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-AlarmQueue::AlarmQueue(TaskQueue &taskQueue) : _taskQueue(taskQueue)
-{
-}
-
-AlarmQueue::~AlarmQueue(void)
-{
-	_alarms.clear();
-}
-
-void	AlarmQueue::add(const Alarm &alarm)
-{
-	try
+	AlarmQueue::AlarmQueue(TaskQueue& taskQueue) : _taskQueue(taskQueue)
 	{
-		_mutex.lock();
 	}
-	catch (const std::exception &)
+
+	AlarmQueue::~AlarmQueue(void)
 	{
-		return ;
+		_alarms.clear();
 	}
-	for (auto list = _alarms.begin(); list != _alarms.end(); list++)
-		if (alarm <= *list)
+
+	void	AlarmQueue::add(const Alarm& alarm)
+	{
+		try
 		{
-			_alarms.insert(list--, alarm);
-			_mutex.unlock();
-			return ;
+			_mutex.lock();
 		}
-	_alarms.push_back(alarm);
-	_mutex.unlock();
-}
-
-void	AlarmQueue::manage(void)
-{
-	auto now = std::chrono::high_resolution_clock::now();
-
-	try
-	{
-		_mutex.lock();
-	}
-	catch (const std::exception &)
-	{
-		return ;
-	}
-	for (auto list = _alarms.begin(); list != _alarms.end(); list++)
-		if ((*list).elapsed(now))
+		catch (const std::exception&)
 		{
-			_taskQueue.add((*list).getTask());
-			_alarms.erase(list);
-			if (_alarms.size() <= 1)
+			return;
+		}
+		for (auto list = _alarms.begin(); list != _alarms.end(); list++)
+			if (alarm <= *list)
+			{
+				_alarms.insert(list--, alarm);
+				_mutex.unlock();
+				return;
+			}
+		_alarms.push_back(alarm);
+		_mutex.unlock();
+	}
+
+	void	AlarmQueue::manage(void)
+	{
+		auto now = std::chrono::high_resolution_clock::now();
+
+		try
+		{
+			_mutex.lock();
+		}
+		catch (const std::exception&)
+		{
+			return;
+		}
+		for (auto list = _alarms.begin(); list != _alarms.end(); list++)
+			if ((*list).elapsed(now))
+			{
+				_taskQueue.add((*list).getTask());
+				_alarms.erase(list);
+				if (_alarms.size() <= 1)
+				{
+					_mutex.unlock();
+					return;
+				}
+			}
+			else
 			{
 				_mutex.unlock();
-				return ;
+				return;
 			}
-		}
-		else
-		{
-			_mutex.unlock();
-			return ;
-		}
-	_mutex.unlock();
+		_mutex.unlock();
+	}
+
 }

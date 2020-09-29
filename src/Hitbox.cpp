@@ -24,25 +24,27 @@
 
 #include "Hitbox.h"
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-Hitbox::Hitbox(const glm::vec2 &absolute, const hitbox &src, const float &weight) : _pos(src.x, src.y), _size(src.w, src.h)
-{
+	Hitbox::Hitbox(const glm::vec2& absolute, const hitbox& src, const float& weight) : _pos(src.x, src.y), _size(src.w, src.h)
+	{
 
-}
+	}
 
-Hitbox::~Hitbox(void)
-{
+	Hitbox::~Hitbox(void)
+	{
 
-}
+	}
 
-const glm::vec2& Hitbox::getPos(void)
-{
-	return (_pos);
-}
+	const glm::vec2& Hitbox::getPos(void)
+	{
+		return (_pos);
+	}
 
-glm::mat4 Hitbox::getTransform(void)
-{
-	glm::mat4	matrix(1);
-	return (matrix);
+	glm::mat4 Hitbox::getTransform(void)
+	{
+		glm::mat4	matrix(1);
+		return (matrix);
+	}
+
 }

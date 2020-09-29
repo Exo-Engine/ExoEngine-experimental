@@ -27,24 +27,24 @@
 #include <SDL2/SDL_keycode.h>
 #include "IKeyboard.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Keyboard : public ExoRenderer::IKeyboard
-{
-public:
-	Keyboard(void);
-	~Keyboard(void);
+	class Keyboard : public IKeyboard
+	{
+	public:
+		Keyboard(void);
+		~Keyboard(void);
 
-	virtual void keyDown(const ExoRenderer::KeyboardKeys &id);
-	virtual void keyUp(const ExoRenderer::KeyboardKeys &id);
+		virtual void keyDown(const KeyboardKeys &id);
+		virtual void keyUp(const KeyboardKeys &id);
 
-	virtual bool isKeyDown(const ExoRenderer::KeyboardKeys &id) const;
-	virtual bool lastIsKeyDown(const ExoRenderer::KeyboardKeys &id) const;
-	virtual const char* convertKeyboardKeyToChar(const ExoRenderer::KeyboardKeys &key) const;
+		virtual bool isKeyDown(const KeyboardKeys &id) const;
+		virtual bool lastIsKeyDown(const KeyboardKeys &id) const;
+		virtual const char* convertKeyboardKeyToChar(const KeyboardKeys &key) const;
 
-	// Getters
-	ExoRenderer::KeyboardKeys getKeyboardInput(const unsigned int &id) const;
-};
+		// Getters
+		KeyboardKeys getKeyboardInput(const unsigned int &id) const;
+	};
 
 }

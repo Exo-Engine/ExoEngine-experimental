@@ -24,11 +24,11 @@
 
 #pragma once
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	Task
-{
+	class Task
+	{
 	public:
 		Task(void);
 		Task(const Task &src);
@@ -42,6 +42,6 @@ class	Task
 		void	(*_function)(void);
 		void	(*_finishCallback)(void);
 		void	(*_cancelCallback)(void);
-};
+	};
 
 }

@@ -28,24 +28,24 @@
 
 #define MAX_GAMEPAD 4
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-class IGamepadManager
-{
-public:
-	IGamepadManager(void)
-	{	}
+	class IGamepadManager
+	{
+	public:
+		IGamepadManager(void)
+		{	}
 
-	virtual ~IGamepadManager(void)
-	{	}
+		virtual ~IGamepadManager(void)
+		{	}
 
-	virtual void add(int32_t id) = 0;
-	virtual void remove(int32_t id) = 0;
+		virtual void add(int32_t id) = 0;
+		virtual void remove(int32_t id) = 0;
 
-	// Getters
-	virtual unsigned int getGamepadNumber(void) = 0;
-	virtual IGamepad *getGamepad(unsigned int id) = 0;
-};
+		// Getters
+		virtual unsigned int getGamepadNumber(void) = 0;
+		virtual IGamepad *getGamepad(unsigned int id) = 0;
+	};
 
 }

@@ -31,24 +31,24 @@
 #include "ISource.h"
 #include "ISound.h"
 
-namespace	ExoAudio
+namespace ExoEngine
 {
 
-class IAudio
-{
-public:
-	IAudio(void);
-	virtual ~IAudio(void);
+	class IAudio
+	{
+	public:
+		IAudio(void);
+		virtual ~IAudio(void);
 
-	virtual void initialize(void) = 0;
+		virtual void initialize(void) = 0;
 
-	virtual void getDevices(std::vector<std::string> &devices) = 0;
-	virtual void updateListener(const glm::vec3 &position, const glm::vec3 &velocity, float volume) = 0;
-	virtual void updateVolume(float volume) = 0;
+		virtual void getDevices(std::vector<std::string> &devices) = 0;
+		virtual void updateListener(const glm::vec3 &position, const glm::vec3 &velocity, float volume) = 0;
+		virtual void updateVolume(float volume) = 0;
 
-	virtual ISource* createSource(void) = 0;
-	virtual ISound* createSound(const std::string& filePath) = 0;
-	virtual IMusic* createMusic(const std::string& filePath) = 0;
-};
+		virtual ISource* createSource(void) = 0;
+		virtual ISound* createSound(const std::string& filePath) = 0;
+		virtual IMusic* createMusic(const std::string& filePath) = 0;
+	};
 
 }

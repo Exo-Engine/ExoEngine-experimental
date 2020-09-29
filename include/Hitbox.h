@@ -29,23 +29,22 @@
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	PhysicManager;
+	class PhysicManager;
+	class Hitbox
+	{
+		friend class	PhysicManager;
+	public:
+		Hitbox(const glm::vec2 &absolute, const hitbox &src, const float &weight);
+		~Hitbox(void);
 
-class	Hitbox
-{
-	friend class	PhysicManager;
-public:
-	Hitbox(const glm::vec2 &absolute, const hitbox &src, const float &weight);
-	~Hitbox(void);
-
-	const glm::vec2&	getPos(void);
-	glm::mat4			getTransform(void);
-private:
-	glm::vec2				_pos;
-	glm::vec2				_size;
-};
+		const glm::vec2&	getPos(void);
+		glm::mat4			getTransform(void);
+	private:
+		glm::vec2				_pos;
+		glm::vec2				_size;
+	};
 
 }

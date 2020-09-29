@@ -28,51 +28,52 @@
 
 #include <glm/gtx/transform.hpp>
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-Shader* Grid::pShader = nullptr;
-Buffer* Grid::vaoBuffer = nullptr;
-Buffer* Grid::vertexBuffer = nullptr;
+	Shader* Grid::pShader = nullptr;
+	Buffer* Grid::vaoBuffer = nullptr;
+	Buffer* Grid::vertexBuffer = nullptr;
 
-Grid::Grid(int width, int height, glm::vec2 pos)
-: _width(width), _height(height), _pos(pos)
-{
-}
-
-Grid::~Grid(void)
-{
-}
-
-void Grid::render(const glm::mat4& lookAt, const glm::mat4& perspective)
-{
-	vaoBuffer->bind();
-	vertexBuffer->bind();
-
-	pShader->bind();
-	pShader->setMat4("projection", perspective);
-	pShader->setMat4("view", lookAt);
-	pShader->setVec4("color", 1, 1, 1, 1);
-
-	// Loop - origin at center
-	for (unsigned int x = 0; x < _width + 1; x++)
+	Grid::Grid(int width, int height, glm::vec2 pos)
+		: _width(width), _height(height), _pos(pos)
 	{
-		drawLine(x - (_width/2), _pos.y - (_height/2), 1.5708);
 	}
 
-	for (unsigned int y = 0; y < _height + 1; y++)
+	Grid::~Grid(void)
 	{
-		drawLine(_pos.x - (_width/2), y - (_height/2), 0.0f);
 	}
-}
 
-void Grid::drawLine(int x, int y, float angle)
-{
-	static glm::mat4 model;
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0.0f));
-	model = glm::rotate(model, angle, glm::vec3(0, 0, 1));
-	model = glm::scale(model, glm::vec3(_width, _height, 0.0f));
-	pShader->setMat4("model", model);
+	void Grid::render(const glm::mat4& lookAt, const glm::mat4& perspective)
+	{
+		vaoBuffer->bind();
+		vertexBuffer->bind();
 
-	GL_CALL(glDrawArrays(GL_LINES, 0, 2));
+		pShader->bind();
+		pShader->setMat4("projection", perspective);
+		pShader->setMat4("view", lookAt);
+		pShader->setVec4("color", 1, 1, 1, 1);
+
+		// Loop - origin at center
+		for (unsigned int x = 0; x < _width + 1; x++)
+		{
+			drawLine(x - (_width / 2), _pos.y - (_height / 2), 1.5708);
+		}
+
+		for (unsigned int y = 0; y < _height + 1; y++)
+		{
+			drawLine(_pos.x - (_width / 2), y - (_height / 2), 0.0f);
+		}
+	}
+
+	void Grid::drawLine(int x, int y, float angle)
+	{
+		static glm::mat4 model;
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0.0f));
+		model = glm::rotate(model, angle, glm::vec3(0, 0, 1));
+		model = glm::scale(model, glm::vec3(_width, _height, 0.0f));
+		pShader->setMat4("model", model);
+
+		GL_CALL(glDrawArrays(GL_LINES, 0, 2));
+	}
+
 }

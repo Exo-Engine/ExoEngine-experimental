@@ -27,24 +27,24 @@
 #include "OGLCall.h"
 #include "IFrameBuffer.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class	FrameBuffer : public ExoRenderer::IFrameBuffer
-{
-	public:
-		FrameBuffer(void);
-		virtual ~FrameBuffer(void);
+	class FrameBuffer : public IFrameBuffer
+	{
+		public:
+			FrameBuffer(void);
+			virtual ~FrameBuffer(void);
 
-		virtual void	attach(ExoRenderer::ITexture *texture);
-		virtual void	detach(ExoRenderer::ITexture *texture);
-		virtual void	bind(void);
-		virtual void	unbind(void);
-		virtual void	clear(void);
-	private:
-		GLuint		_id;
-		int			_width;
-		int			_height;
-};
+			virtual void	attach(ITexture *texture);
+			virtual void	detach(ITexture *texture);
+			virtual void	bind(void);
+			virtual void	unbind(void);
+			virtual void	clear(void);
+		private:
+			GLuint		_id;
+			int			_width;
+			int			_height;
+	};
 
 }

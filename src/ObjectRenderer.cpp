@@ -24,95 +24,96 @@
 
 #include "ObjectRenderer.h"
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-Shader* ObjectRenderer::pShader = nullptr;
-Buffer* ObjectRenderer::vaoBuffer = nullptr;
-Buffer* ObjectRenderer::vertexBuffer = nullptr;
-Buffer* ObjectRenderer::indexBuffer = nullptr;
-Buffer* ObjectRenderer::uvBuffer = nullptr;
+	Shader* ObjectRenderer::pShader = nullptr;
+	Buffer* ObjectRenderer::vaoBuffer = nullptr;
+	Buffer* ObjectRenderer::vertexBuffer = nullptr;
+	Buffer* ObjectRenderer::indexBuffer = nullptr;
+	Buffer* ObjectRenderer::uvBuffer = nullptr;
 
-ObjectRenderer::ObjectRenderer(void)
-: _pGrid(nullptr), _gridEnabled(false)
-{
-	_pGrid = new Grid(100, 100, {0.0f, 0.0f});
-}
-
-ObjectRenderer::~ObjectRenderer(void)
-{
-	if (_pGrid)
-		delete _pGrid;
-}
-
-void ObjectRenderer::add(const sprite &s)
-{
-	_renderQueue.push_back(s);
-}
-
-void ObjectRenderer::remove(const sprite &s)
-{
-	for (std::deque<sprite>::iterator iterator = _renderQueue.begin(); iterator != _renderQueue.end(); iterator++)
+	ObjectRenderer::ObjectRenderer(void)
+		: _pGrid(nullptr), _gridEnabled(false)
 	{
-		if (&*iterator == &s)
+		_pGrid = new Grid(100, 100, { 0.0f, 0.0f });
+	}
+
+	ObjectRenderer::~ObjectRenderer(void)
+	{
+		if (_pGrid)
+			delete _pGrid;
+	}
+
+	void ObjectRenderer::add(const sprite& s)
+	{
+		_renderQueue.push_back(s);
+	}
+
+	void ObjectRenderer::remove(const sprite& s)
+	{
+		for (std::deque<sprite>::iterator iterator = _renderQueue.begin(); iterator != _renderQueue.end(); iterator++)
 		{
-			_renderQueue.erase(iterator);
-			return ;
+			if (&*iterator == &s)
+			{
+				_renderQueue.erase(iterator);
+				return;
+			}
 		}
 	}
-}
 
-void ObjectRenderer::render(Camera* camera, const glm::mat4& perspective)
-{
-	if (_gridEnabled)
-		_pGrid->render(camera->getLookAt(), perspective);
-
-	prepare(camera, perspective);
-
-	for (sprite& object : _renderQueue)
+	void ObjectRenderer::render(Camera* camera, const glm::mat4& perspective)
 	{
-		renderObject(object, pShader);
+		if (_gridEnabled)
+			_pGrid->render(camera->getLookAt(), perspective);
+
+		prepare(camera, perspective);
+
+		for (sprite& object : _renderQueue)
+		{
+			renderObject(object, pShader);
+		}
 	}
+
+	void ObjectRenderer::setGrid(bool val)
+	{
+		_gridEnabled = val;
+	}
+
+	// Private
+	void ObjectRenderer::prepare(Camera* camera, const glm::mat4& perspective)
+	{
+		pShader->bind();
+		pShader->setMat4("projection", perspective);
+		pShader->setMat4("view", camera->getLookAt());
+
+		// Render
+		vaoBuffer->bind();
+		vertexBuffer->bind();
+		uvBuffer->bind();
+
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	}
+
+	void ObjectRenderer::renderObject(sprite& s, Shader* shader)
+	{
+		static glm::mat4 model;
+
+		s.texture->bind();
+
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(s.position, 0.0f));
+		model = glm::rotate(model, s.angle, glm::vec3(0, 0, 1));
+		model = glm::scale(model, glm::vec3(s.scale, 0.0f));
+		shader->setMat4("model", model);
+
+		shader->setInt("layer", (int)s.layer);
+		shader->setInt("flipHorizontal", s.flip == HORIZONTAL ? -1 : 1);
+		shader->setInt("flipVertical", s.flip == VERTICAL ? -1 : 1);
+
+		shader->setFloat("size", 1);
+
+		GL_CALL(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0));
+	}
+
+
 }
-
-void ObjectRenderer::setGrid(bool val)
-{
-	_gridEnabled = val;
-}
-
-// Private
-void ObjectRenderer::prepare(Camera* camera, const glm::mat4& perspective)
-{
-	pShader->bind();
-	pShader->setMat4("projection", perspective);
-	pShader->setMat4("view", camera->getLookAt());
-
-	// Render
-	vaoBuffer->bind();
-	vertexBuffer->bind();
-	uvBuffer->bind();
-
-	GL_CALL(glEnable(GL_BLEND));
-	GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-}
-
-void ObjectRenderer::renderObject(sprite& s, Shader* shader)
-{
-	static glm::mat4 model;
-
-	s.texture->bind();
-
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(s.position, 0.0f));
-	model = glm::rotate(model, s.angle, glm::vec3(0, 0, 1));
-	model = glm::scale(model, glm::vec3(s.scale, 0.0f));
-	shader->setMat4("model", model);
-
-	shader->setInt("layer", (int)s.layer);
-	shader->setInt("flipHorizontal", s.flip == HORIZONTAL ? -1 : 1);
-	shader->setInt("flipVertical", s.flip == VERTICAL ? -1 : 1);
-
-	shader->setFloat("size", 1);
-
-	GL_CALL(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0));
-}
-

@@ -32,140 +32,140 @@
 #include "State.h"
 #include "Log.h"
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-template	<typename ... Types>
-class	StateMachine
-{
-	public:
-		StateMachine(std::initializer_list<State<Types ...> *> states) : _state(0), _asyncRequest(0), _reloadRequest(false)
-		{
-			int	index = 0;
+	template <typename ... Types>
+	class StateMachine
+	{
+		public:
+			StateMachine(std::initializer_list<State<Types ...> *> states) : _state(0), _asyncRequest(0), _reloadRequest(false)
+			{
+				int	index = 0;
 
-			for
-				(State<Types ...>* state : states)
-			{
-				_states[index] = state;
-				index++;
+				for
+					(State<Types ...>* state : states)
+				{
+					_states[index] = state;
+					index++;
+				}
+				try
+				{
+					_states.at(_state)->load();
+				}
+				catch (const std::exception&)
+				{
+				}
 			}
-			try
+			virtual ~StateMachine(void)
 			{
-				_states.at(_state)->load();
+				try
+				{
+					_states.at(_state)->unload();
+				}
+				catch (const std::exception&)
+				{
+				}
 			}
-			catch (const std::exception&)
+
+			void				switchTo(int state)
 			{
+				if (state == _state)
+					return ;
+				_asyncRequest = state;
+				_states.at(state)->load();
+				_states.at(_state)->unload();
+				_state = state;
 			}
-		}
-		virtual ~StateMachine(void)
-		{
-			try
+			void				switchTo(const std::string &stateName)
+			{
+				for (std::pair<int, State<Types ...>*>& pair : _states)
+					if (pair.second->name() == stateName)
+						return switchTo(pair.first);
+			}
+			void				asyncSwitchTo(int state)
+			{
+				_asyncRequest = state;
+			}
+			void				asyncSwitchTo(const std::string &stateName)
+			{
+				for (const std::pair<int, State<Types ...>*>& pair : _states)
+					if (pair.second->name() == stateName)
+						return asyncSwitchTo(pair.first);
+			}
+
+			void				reload(void)
 			{
 				_states.at(_state)->unload();
+				_states.at(_state)->load();
+				_reloadRequest = false;
 			}
-			catch (const std::exception&)
+			void				asyncReload(void)
 			{
+				_reloadRequest = true;
 			}
-		}
 
-		void				switchTo(int state)
-		{
-			if (state == _state)
-				return ;
-			_asyncRequest = state;
-			_states.at(state)->load();
-			_states.at(_state)->unload();
-			_state = state;
-		}
-		void				switchTo(const std::string &stateName)
-		{
-			for (std::pair<int, State<Types ...>*>& pair : _states)
-				if (pair.second->name() == stateName)
-					return switchTo(pair.first);
-		}
-		void				asyncSwitchTo(int state)
-		{
-			_asyncRequest = state;
-		}
-		void				asyncSwitchTo(const std::string &stateName)
-		{
-			for (const std::pair<int, State<Types ...>*>& pair : _states)
-				if (pair.second->name() == stateName)
-					return asyncSwitchTo(pair.first);
-		}
-
-		void				reload(void)
-		{
-			_states.at(_state)->unload();
-			_states.at(_state)->load();
-			_reloadRequest = false;
-		}
-		void				asyncReload(void)
-		{
-			_reloadRequest = true;
-		}
-
-		virtual void		run(Types ... args)
-		{
-			int	requested;
-
-			if ((requested = _asyncRequest) != _state)
-				switchTo(requested);
-			if (_reloadRequest)
-				reload();
-			_states.at(_state)->run(args...);
-		}
-		int					getStateIndex(void) const
-		{
-			return (_state);
-		}
-		State<Types ...>	*getState(void) const
-		{
-			return (_states.at(_state));
-		}
-
-		void				addState(int index, State<Types ...>* state)
-		{
-			if (_states.find(index) == _states.end())
+			virtual void		run(Types ... args)
 			{
-				_states[index] = state;
-				_state = index;
-				state->load();
+				int	requested;
+
+				if ((requested = _asyncRequest) != _state)
+					switchTo(requested);
+				if (_reloadRequest)
+					reload();
+				_states.at(_state)->run(args...);
 			}
-			else
+			int					getStateIndex(void) const
 			{
-				_states[index] = state;
+				return (_state);
 			}
-		}
-
-		void				removeState(int index)
-		{
-			if (index == _state)
+			State<Types ...>	*getState(void) const
 			{
-				if (!_states.empty())
+				return (_states.at(_state));
+			}
+
+			void				addState(int index, State<Types ...>* state)
+			{
+				if (_states.find(index) == _states.end())
 				{
-					_state = _states.begin()->first;
+					_states[index] = state;
+					_state = index;
+					state->load();
 				}
 				else
 				{
-					_state = 0;
+					_states[index] = state;
 				}
 			}
-			_states.erase(_states.find(index));
-		}
 
-		void				removeState(State<Types ...>* state)
-		{
-			for (const std::pair<int, State<Types ...>*>& pair : _states)
-				if (pair.second == state)
-					return removeState(pair.first);
-		}
+			void				removeState(int index)
+			{
+				if (index == _state)
+				{
+					if (!_states.empty())
+					{
+						_state = _states.begin()->first;
+					}
+					else
+					{
+						_state = 0;
+					}
+				}
+				_states.erase(_states.find(index));
+			}
 
-	private:
-		std::map<int, State<Types ...> *>	_states;
-		std::atomic<int>					_state;
-		std::atomic<int>					_asyncRequest;
-		std::atomic<bool>					_reloadRequest;
-};
+			void				removeState(State<Types ...>* state)
+			{
+				for (const std::pair<int, State<Types ...>*>& pair : _states)
+					if (pair.second == state)
+						return removeState(pair.first);
+			}
+
+		private:
+			std::map<int, State<Types ...> *>	_states;
+			std::atomic<int>					_state;
+			std::atomic<int>					_asyncRequest;
+			std::atomic<bool>					_reloadRequest;
+	};
 
 }

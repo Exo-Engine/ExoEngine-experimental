@@ -28,74 +28,74 @@
 #include "OALAudio.h"
 #include "RendererSDLOpenGL.h"
 
-using namespace	ExoEngine;
-using namespace	ExoRenderer;
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-Engine::Engine(void) :
-	_resourceManager(nullptr),
-	_settingsManager(nullptr)
-{
-	_settingsManager = new SettingsManager();
-}
-
-Engine::Engine(const std::string& settingsFile) : Engine()
-{
-	initialize(settingsFile);
-}
-
-Engine::~Engine(void)
-{
-	if (_resourceManager)
-		delete _resourceManager;
-	if (_settingsManager)
-		delete _settingsManager;
-}
-
-void Engine::initialize(const std::string& settingsFile)
-{
-	std::string	path;
-	Setting*	rendererLibSetting;
-	Setting*	audioLibSetting;
-
-	path = getPath(settingsFile);
-	_settingsManager->load(settingsFile);
-	try
+	Engine::Engine(void) :
+		_resourceManager(nullptr),
+		_settingsManager(nullptr)
 	{
-		rendererLibSetting = _settingsManager->get("libGraphic");
-	}
-	catch (const std::exception&)
-	{
-		_log.error << "missing libRenderer in settings file '" << settingsFile << "'" << std::endl;
-	}
-	try
-	{
-		audioLibSetting = _settingsManager->get("libAudio");
-	}
-	catch (const std::exception&)
-	{
-		_log.error << "missing libAudio in settings file '" << settingsFile << "'" << std::endl;
+		_settingsManager = new SettingsManager();
 	}
 
-	_resourceManager = new ResourceManager(getRenderer(), getAudio());
-}
+	Engine::Engine(const std::string& settingsFile) : Engine()
+	{
+		initialize(settingsFile);
+	}
 
-ResourceManager* Engine::getResourceManager(void) const
-{
-	return _resourceManager;
-}
+	Engine::~Engine(void)
+	{
+		if (_resourceManager)
+			delete _resourceManager;
+		if (_settingsManager)
+			delete _settingsManager;
+	}
 
-SettingsManager* Engine::getSettingsManager(void) const
-{
-	return _settingsManager;
-}
+	void Engine::initialize(const std::string& settingsFile)
+	{
+		std::string	path;
+		Setting* rendererLibSetting;
+		Setting* audioLibSetting;
 
-ExoRenderer::IRenderer*	Engine::getRenderer(void) const
-{
-	return &ExoRendererSDLOpenGL::RendererSDLOpenGL::Get();
-}
+		path = getPath(settingsFile);
+		_settingsManager->load(settingsFile);
+		try
+		{
+			rendererLibSetting = _settingsManager->get("libGraphic");
+		}
+		catch (const std::exception&)
+		{
+			_log.error << "missing libRenderer in settings file '" << settingsFile << "'" << std::endl;
+		}
+		try
+		{
+			audioLibSetting = _settingsManager->get("libAudio");
+		}
+		catch (const std::exception&)
+		{
+			_log.error << "missing libAudio in settings file '" << settingsFile << "'" << std::endl;
+		}
 
-ExoAudio::IAudio* Engine::getAudio(void) const
-{
-	return &ExoAudioOpenAL::OALAudio::Get();
+		_resourceManager = new ResourceManager(getRenderer(), getAudio());
+	}
+
+	ResourceManager* Engine::getResourceManager(void) const
+	{
+		return _resourceManager;
+	}
+
+	SettingsManager* Engine::getSettingsManager(void) const
+	{
+		return _settingsManager;
+	}
+
+	IRenderer* Engine::getRenderer(void) const
+	{
+		return &RendererSDLOpenGL::Get();
+	}
+
+	IAudio* Engine::getAudio(void) const
+	{
+		return &OALAudio::Get();
+	}
+
 }

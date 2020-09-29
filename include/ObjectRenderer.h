@@ -34,36 +34,36 @@
 
 #include "Axis.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class ObjectRenderer
-{
-public:
-	ObjectRenderer(void);
-	virtual ~ObjectRenderer(void);
+	class ObjectRenderer
+	{
+	public:
+		ObjectRenderer(void);
+		virtual ~ObjectRenderer(void);
 
-	void add(const ExoRenderer::sprite &s);
-	void remove(const ExoRenderer::sprite &s);
-	void render(Camera* camera, const glm::mat4& perspective);
+		void add(const sprite &s);
+		void remove(const sprite &s);
+		void render(Camera* camera, const glm::mat4& perspective);
 
-	// Setters
-	void setGrid(bool val);
-private:
-	void prepare(Camera* camera, const glm::mat4& perspective);
-	static void renderObject(ExoRenderer::sprite& s, Shader* shader);
-public:
-	static Shader* pShader;
-	static Buffer* vaoBuffer;
-	static Buffer* vertexBuffer;
-	static Buffer* indexBuffer;
-	static Buffer* uvBuffer;
-private:
-	bool _gridEnabled;
-	bool _axisEnabled;
+		// Setters
+		void setGrid(bool val);
+	private:
+		void prepare(Camera* camera, const glm::mat4& perspective);
+		static void renderObject(sprite& s, Shader* shader);
+	public:
+		static Shader* pShader;
+		static Buffer* vaoBuffer;
+		static Buffer* vertexBuffer;
+		static Buffer* indexBuffer;
+		static Buffer* uvBuffer;
+	private:
+		bool _gridEnabled;
+		bool _axisEnabled;
 
-	std::deque<ExoRenderer::sprite> _renderQueue;
-	Grid	*_pGrid;
-};
+		std::deque<sprite> _renderQueue;
+		Grid	*_pGrid;
+	};
 
 }

@@ -33,24 +33,24 @@
 #include "Shader.h"
 #include "Buffer.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Axis : public ExoRenderer::IAxis
-{
-	public:
-		Axis(void);
-		virtual ~Axis(void);
+	class Axis : public IAxis
+	{
+		public:
+			Axis(void);
+			virtual ~Axis(void);
 
-		void render(const glm::mat4& lookAt, const glm::mat4& perspective);
-	private:
-	void drawAxis(int x, int y, float angle, const glm::vec3 &color, const glm::mat4& lookAt, const glm::mat4& perspective);
-	public:
-		static Shader* pShader;
+			void render(const glm::mat4& lookAt, const glm::mat4& perspective);
+		private:
+		void drawAxis(int x, int y, float angle, const glm::vec3 &color, const glm::mat4& lookAt, const glm::mat4& perspective);
+		public:
+			static Shader* pShader;
 
-		// Triangle
-		static Buffer* vaoBuffer;
-		static Buffer* vertexBuffer;
-};
+			// Triangle
+			static Buffer* vaoBuffer;
+			static Buffer* vertexBuffer;
+	};
 
 }

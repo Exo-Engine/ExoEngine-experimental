@@ -30,19 +30,19 @@
 #include "ISound.h"
 #include "OggLoader.h"
 
-namespace	ExoAudioOpenAL
+namespace ExoEngine
 {
 
-class OALSound : public ExoAudio::ISound
-{
-public:
-	OALSound(const std::string &filePath);
-	virtual ~OALSound(void);
+	class OALSound : public ISound
+	{
+	public:
+		OALSound(const std::string &filePath);
+		virtual ~OALSound(void);
 
-	// Getters
-	ALuint getBuffer(void) const;
-private:
-	ALuint _id;
-};
+		// Getters
+		ALuint getBuffer(void) const;
+	private:
+		ALuint _id;
+	};
 
 }

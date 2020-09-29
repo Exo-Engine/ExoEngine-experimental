@@ -26,24 +26,23 @@
 #include "Texture.h"
 #include <stdexcept>
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-FrameBuffer::FrameBuffer(void) :
-	_width(-1), _height(-1)
-{
-	GL_CALL(glGenFramebuffers(1, &_id));
-}
-
-FrameBuffer::~FrameBuffer(void)
-{
-	glDeleteFramebuffers(1, &_id);
-}
-
-void	FrameBuffer::attach(ITexture *texture)
-{
-	switch (((Texture *)texture)->getFormat())
+	FrameBuffer::FrameBuffer(void) :
+		_width(-1), _height(-1)
 	{
+		GL_CALL(glGenFramebuffers(1, &_id));
+	}
+
+	FrameBuffer::~FrameBuffer(void)
+	{
+		glDeleteFramebuffers(1, &_id);
+	}
+
+	void	FrameBuffer::attach(ITexture* texture)
+	{
+		switch (((Texture*)texture)->getFormat())
+		{
 		case RGB:
 		case RGBA:
 			GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, _id));
@@ -53,21 +52,21 @@ void	FrameBuffer::attach(ITexture *texture)
 			GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, _id));
 			GL_CALL(glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture->getEngineId(), 0));
 			break;
+		}
+		if (_width == -1)
+		{
+			_width = texture->getWidth();
+			_height = texture->getHeight();
+		}
+		else if (texture->getWidth() != _width ||
+			texture->getHeight() != _height)
+			throw (std::invalid_argument("texture size differes from framebuffer size"));
 	}
-	if (_width == -1)
-	{
-		_width = texture->getWidth();
-		_height = texture->getHeight();
-	}
-	else if (texture->getWidth() != _width ||
-		texture->getHeight() != _height)
-		throw (std::invalid_argument("texture size differes from framebuffer size"));
-}
 
-void	FrameBuffer::detach(ITexture *texture)
-{
-	switch (((Texture *)texture)->getFormat())
+	void	FrameBuffer::detach(ITexture* texture)
 	{
+		switch (((Texture*)texture)->getFormat())
+		{
 		case RGB:
 		case RGBA:
 			GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, _id));
@@ -77,25 +76,27 @@ void	FrameBuffer::detach(ITexture *texture)
 			GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, _id));
 			GL_CALL(glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, 0, 0));
 			break;
+		}
 	}
-}
 
-void	FrameBuffer::bind(void)
-{
-	if (_width == -1)
-		throw (std::logic_error("no texture binded to framebuffer"));
-	GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, _id));
-	GL_CALL(glViewport(0, 0, _width, _height));
-}
+	void	FrameBuffer::bind(void)
+	{
+		if (_width == -1)
+			throw (std::logic_error("no texture binded to framebuffer"));
+		GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, _id));
+		GL_CALL(glViewport(0, 0, _width, _height));
+	}
 
-void	FrameBuffer::unbind(void)
-{
-	GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
-}
+	void	FrameBuffer::unbind(void)
+	{
+		GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+	}
 
-void	FrameBuffer::clear(void)
-{
-	bind();
-	GL_CALL(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-	GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	void	FrameBuffer::clear(void)
+	{
+		bind();
+		GL_CALL(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+		GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	}
+
 }

@@ -32,29 +32,29 @@
 #include "Texture.h"
 #include "OGLCall.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class ArrayTexture: public ExoRenderer::IArrayTexture
-{
-public:
-	ArrayTexture(void);
-	ArrayTexture(int width, int height, std::vector<std::string>& textures, ExoRenderer::TextureFilter filter);
-	virtual ~ArrayTexture(void);
+	class ArrayTexture: public IArrayTexture
+	{
+	public:
+		ArrayTexture(void);
+		ArrayTexture(int width, int height, std::vector<std::string>& textures, TextureFilter filter);
+		virtual ~ArrayTexture(void);
 
-	virtual void initialize(int width, int height, std::vector<std::string>& textures, ExoRenderer::TextureFilter filter);
+		virtual void initialize(int width, int height, std::vector<std::string>& textures, TextureFilter filter);
 
-	virtual void bind(int unit = 0) const;
-	virtual void unbind(void) const;
+		virtual void bind(int unit = 0) const;
+		virtual void unbind(void) const;
 
-	// Getters
-	unsigned int getBuffer(void) const;
+		// Getters
+		unsigned int getBuffer(void) const;
 
-	const GLuint	&getId(void) const;
-private:
-	static void applyFilter(const ExoRenderer::TextureFilter& filter);
-private:
-	GLuint	_id;
-};
+		const GLuint	&getId(void) const;
+	private:
+		static void applyFilter(const TextureFilter& filter);
+	private:
+		GLuint	_id;
+	};
 
 }

@@ -34,28 +34,28 @@
 
 #define OGG_DEFAULT_BUFFER_SIZE 4096
 
-namespace	ExoAudio
+namespace ExoEngine
 {
 
-class OggLoader
-{
-public:
-	OggLoader(const std::string &filePath);
-	~OggLoader(void);
+	class OggLoader
+	{
+	public:
+		OggLoader(const std::string &filePath);
+		~OggLoader(void);
 
-	void readAll(std::vector<char> &buffer, int nbSamples = OGG_DEFAULT_BUFFER_SIZE);
-	char* readSample(std::vector<short> &samples, int nbSamples = OGG_DEFAULT_BUFFER_SIZE);
+		void readAll(std::vector<char> &buffer, int nbSamples = OGG_DEFAULT_BUFFER_SIZE);
+		char* readSample(std::vector<short> &samples, int nbSamples = OGG_DEFAULT_BUFFER_SIZE);
 
-	// Getters
-	int getFormat(void) const;
-	int getSampleRate(void) const;
-	int getTotalRead(void) const;
-private:
-	OggVorbis_File	_stream;
-	FILE*			_file;
-	int			 _format;
-	int			 _sampleRate;
-	ALsizei	     _totalRead;
-};
+		// Getters
+		int getFormat(void) const;
+		int getSampleRate(void) const;
+		int getTotalRead(void) const;
+	private:
+		OggVorbis_File	_stream;
+		FILE*			_file;
+		int			 _format;
+		int			 _sampleRate;
+		ALsizei	     _totalRead;
+	};
 
 }

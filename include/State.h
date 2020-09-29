@@ -26,41 +26,41 @@
 
 #include <string>
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-template	<typename ... Types>
-class	StateMachine;
+	template	<typename ... Types>
+	class	StateMachine;
 
-template	<typename ... Types>
-class	State
-{
-	public:
-		State(StateMachine<Types ...> &stateMachine, const std::string &name) :
-			_stateMachine(stateMachine),
-			_name(name)
-		{
-		}
-		virtual ~State(void)
-		{
-		}
+	template	<typename ... Types>
+	class	State
+	{
+		public:
+			State(StateMachine<Types ...> &stateMachine, const std::string &name) :
+				_stateMachine(stateMachine),
+				_name(name)
+			{
+			}
+			virtual ~State(void)
+			{
+			}
 
-		StateMachine<Types ...>&	getStateMachine(void) const
-		{
-			return (_stateMachine);
-		}
+			StateMachine<Types ...>&	getStateMachine(void) const
+			{
+				return (_stateMachine);
+			}
 
-		virtual void	load(void) = 0;
-		virtual void	unload(void) = 0;
-		virtual void	run(Types ... args) = 0;
+			virtual void	load(void) = 0;
+			virtual void	unload(void) = 0;
+			virtual void	run(Types ... args) = 0;
 
-		const std::string	&name(void) const
-		{
-			return (_name);
-		}
-	private:
-		StateMachine<Types ...>&	_stateMachine;
-		std::string					_name;
-};
+			const std::string	&name(void) const
+			{
+				return (_name);
+			}
+		private:
+			StateMachine<Types ...>&	_stateMachine;
+			std::string					_name;
+	};
 
 }

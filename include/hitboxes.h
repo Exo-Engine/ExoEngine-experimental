@@ -29,22 +29,22 @@
 
 #include "IResource.h"
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-struct hitbox
-{
-	float x, y;
-	float w, h;
-};
+	struct hitbox
+	{
+		float x, y;
+		float w, h;
+	};
 
-struct hitboxes : public IResource
-{
-	std::vector<hitbox> list;
+	struct hitboxes : public IResource
+	{
+		std::vector<hitbox> list;
 
-	hitboxes(const std::vector<hitbox> &list)
-	: list(list)
-	{	}
-};
+		hitboxes(const std::vector<hitbox> &list)
+		: list(list)
+		{	}
+	};
 
 }

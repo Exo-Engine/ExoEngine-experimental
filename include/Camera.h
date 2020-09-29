@@ -27,21 +27,21 @@
 #include "ICamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Camera : public ExoRenderer::ICamera
-{
-public:
-	Camera(void);
-	~Camera(void);
+	class Camera : public ICamera
+	{
+	public:
+		Camera(void);
+		~Camera(void);
 
-	virtual void update(ExoRenderer::IMouse* mouse, ExoRenderer::IKeyboard* keyboard, ExoRenderer::IGamepad* gamepad);
+		virtual void update(IMouse* mouse, IKeyboard* keyboard, IGamepad* gamepad);
 
-	// Getters
-	glm::mat4 getLookAt(void);
-private:
-	glm::mat4 _lookAt;
-};
+		// Getters
+		glm::mat4 getLookAt(void);
+	private:
+		glm::mat4 _lookAt;
+	};
 
 }

@@ -26,27 +26,29 @@
 
 #include "SceneStateMachine.h"
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-Scene::Scene(SceneStateMachine &stateMachine, const std::string& name) :
-	State<>(stateMachine, name)
-{
-}
+	Scene::Scene(SceneStateMachine& stateMachine, const std::string& name) :
+		State<>(stateMachine, name)
+	{
+	}
 
-Scene::~Scene(void)
-{
-}
+	Scene::~Scene(void)
+	{
+	}
 
-void	Scene::run(void)
-{
-	handleEvents();
-	draw();
-}
+	void	Scene::run(void)
+	{
+		handleEvents();
+		draw();
+	}
 
-void	Scene::draw(void)
-{
-}
+	void	Scene::draw(void)
+	{
+	}
 
-void	Scene::handleEvents(void)
-{
+	void	Scene::handleEvents(void)
+	{
+	}
+
 }

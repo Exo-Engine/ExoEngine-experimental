@@ -31,67 +31,67 @@
 
 #include "IMouse.h"
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-class MousePicker
-{
-	public:
-		MousePicker(void)
-		: _ray(0, 0, 0)
-		{
-		}
-		virtual ~MousePicker(void)
-		{
-		}
+	class MousePicker
+	{
+		public:
+			MousePicker(void)
+			: _ray(0, 0, 0)
+			{
+			}
+			virtual ~MousePicker(void)
+			{
+			}
 
-		void update(IMouse *mouse, int displayW, int displayH, const glm::mat4 &lookAt, const glm::mat4 &perspective)
-		{
-			glm::vec2 normalizedCoords = getNormalizedCoords(mouse->x, mouse->y, displayW, displayH);
-			glm::vec4 clipCoords = glm::vec4(normalizedCoords.x, normalizedCoords.y, -1.0f, 1.0f);
-			glm::vec4 eyeCoords = toEyeCoords(clipCoords, perspective);
-			_ray = toWorldCoords(lookAt, eyeCoords);
-		}
+			void update(IMouse *mouse, int displayW, int displayH, const glm::mat4 &lookAt, const glm::mat4 &perspective)
+			{
+				glm::vec2 normalizedCoords = getNormalizedCoords(mouse->x, mouse->y, displayW, displayH);
+				glm::vec4 clipCoords = glm::vec4(normalizedCoords.x, normalizedCoords.y, -1.0f, 1.0f);
+				glm::vec4 eyeCoords = toEyeCoords(clipCoords, perspective);
+				_ray = toWorldCoords(lookAt, eyeCoords);
+			}
 
-		// Getters
-		glm::vec3 getPointOnRay(ICamera* camera, float distance)
-		{
-			glm::vec3	start =	camera->getPosition();
-			glm::vec3	scaledRay = glm::vec3(_ray.x * distance, _ray.y * distance, _ray.z * distance);
+			// Getters
+			glm::vec3 getPointOnRay(ICamera* camera, float distance)
+			{
+				glm::vec3	start =	camera->getPosition();
+				glm::vec3	scaledRay = glm::vec3(_ray.x * distance, _ray.y * distance, _ray.z * distance);
 
-			return start + scaledRay;
-		}
+				return start + scaledRay;
+			}
 
-		const glm::vec3 &getRay(void) const
-		{
-			return _ray;
-		}
-	private:
-		static glm::vec2 getNormalizedCoords(float mouseX, float mouseY, int displayW, int displayH)
-		{
-			glm::vec2 result;
-			result.x = (2.0f * mouseX) / displayW - 1.0f;
-			result.y = (2.0f * mouseY) / displayH - 1.0f;
-			return result;
-		}
+			const glm::vec3 &getRay(void) const
+			{
+				return _ray;
+			}
+		private:
+			static glm::vec2 getNormalizedCoords(float mouseX, float mouseY, int displayW, int displayH)
+			{
+				glm::vec2 result;
+				result.x = (2.0f * mouseX) / displayW - 1.0f;
+				result.y = (2.0f * mouseY) / displayH - 1.0f;
+				return result;
+			}
 
-		static glm::vec4 toEyeCoords(const glm::vec4 &clipCoords, const glm::mat4 &projectionMatrix)
-		{
-			glm::mat4 invertedProjection = glm::inverse(projectionMatrix);
-			glm::vec4 eyeCoords = invertedProjection * clipCoords;
-			return glm::vec4(eyeCoords.x, -eyeCoords.y, -1.0f, 0.0f);
-		}
+			static glm::vec4 toEyeCoords(const glm::vec4 &clipCoords, const glm::mat4 &projectionMatrix)
+			{
+				glm::mat4 invertedProjection = glm::inverse(projectionMatrix);
+				glm::vec4 eyeCoords = invertedProjection * clipCoords;
+				return glm::vec4(eyeCoords.x, -eyeCoords.y, -1.0f, 0.0f);
+			}
 
-		static glm::vec3 toWorldCoords(const glm::mat4 &viewMatrix, const glm::vec4 &eyeCoords)
-		{
-			glm::mat4 invertedView = glm::inverse(viewMatrix);
-			glm::vec4 worldRay = invertedView * eyeCoords;
-			glm::vec3 mouseRay = worldRay;
-			glm::normalize(mouseRay);
-			return worldRay;
-		}
-	private:
-		glm::vec3 _ray;
-};
+			static glm::vec3 toWorldCoords(const glm::mat4 &viewMatrix, const glm::vec4 &eyeCoords)
+			{
+				glm::mat4 invertedView = glm::inverse(viewMatrix);
+				glm::vec4 worldRay = invertedView * eyeCoords;
+				glm::vec3 mouseRay = worldRay;
+				glm::normalize(mouseRay);
+				return worldRay;
+			}
+		private:
+			glm::vec3 _ray;
+	};
 
 }

@@ -27,49 +27,51 @@
 #include <chrono>
 #include "Log.h"
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-Runner::Runner(TaskQueue &queue) : _queue(queue), _thread(&Runner::loop, this), _ended(false)
-{
-	_thread.detach();
-}
-
-Runner::~Runner(void)
-{
-}
-
-bool	Runner::ended(void)
-{
-	return (_ended);
-}
-
-void	Runner::loop(void)
-{
-	bool	handled;
-	Task	task;
-
-	while (1)
+	Runner::Runner(TaskQueue& queue) : _queue(queue), _thread(&Runner::loop, this), _ended(false)
 	{
-		if (_queue.joining())
-		{
-			_ended = true;
-			return ;
-		}
-		try
-		{
-			task = _queue.getTask();
-			handled = true;
-		}
-		catch (const std::exception &)
-		{
-			handled = false;
-		}
-		if (handled)
-		{
-			task.launch();
-			task.finish();
-		}
-		else
-			std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(1));
+		_thread.detach();
 	}
+
+	Runner::~Runner(void)
+	{
+	}
+
+	bool	Runner::ended(void)
+	{
+		return (_ended);
+	}
+
+	void	Runner::loop(void)
+	{
+		bool	handled;
+		Task	task;
+
+		while (1)
+		{
+			if (_queue.joining())
+			{
+				_ended = true;
+				return;
+			}
+			try
+			{
+				task = _queue.getTask();
+				handled = true;
+			}
+			catch (const std::exception&)
+			{
+				handled = false;
+			}
+			if (handled)
+			{
+				task.launch();
+				task.finish();
+			}
+			else
+				std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(1));
+		}
+	}
+
 }

@@ -27,68 +27,68 @@
 #include <vector>
 #include <string>
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class Message
-{
-	public:
-		Message(void);
-		Message(const Message &src);
-		Message(const std::string &src);
-		Message(const void *ptr, size_t size);
-		Message(size_t size);
-		template	<typename T>
-		Message(const T &src) : Message((const void *)&src, sizeof(T))
-		{
-		}
-		~Message(void);
+	class Message
+	{
+		public:
+			Message(void);
+			Message(const Message &src);
+			Message(const std::string &src);
+			Message(const void *ptr, size_t size);
+			Message(size_t size);
+			template	<typename T>
+			Message(const T &src) : Message((const void *)&src, sizeof(T))
+			{
+			}
+			~Message(void);
 
-		Message	&append(const Message &src);
-		Message	&append(const std::string &src);
-		Message	&append(const void *ptr, size_t size);
-		template	<typename T>
-		Message	&append(const T &src)
-		{
-			return (append((void *)&src, sizeof(T)));
-		}
+			Message	&append(const Message &src);
+			Message	&append(const std::string &src);
+			Message	&append(const void *ptr, size_t size);
+			template	<typename T>
+			Message	&append(const T &src)
+			{
+				return (append((void *)&src, sizeof(T)));
+			}
 
-		Message	&operator=(const Message &src);
-		Message	&operator=(const std::string &src);
-		template	<typename T>
-		Message	&operator=(const T &src)
-		{
-			return ((*this = Message((void *)&src, sizeof(T))));
-		}
+			Message	&operator=(const Message &src);
+			Message	&operator=(const std::string &src);
+			template	<typename T>
+			Message	&operator=(const T &src)
+			{
+				return ((*this = Message((void *)&src, sizeof(T))));
+			}
 
-		Message	&operator+=(const Message &src);
-		Message	&operator+=(const std::string &src);
-		template	<typename T>
-		Message	&operator+=(const T &src)
-		{
-			return ((*this += Message((void *)&src, sizeof(T))));
-		}
+			Message	&operator+=(const Message &src);
+			Message	&operator+=(const std::string &src);
+			template	<typename T>
+			Message	&operator+=(const T &src)
+			{
+				return ((*this += Message((void *)&src, sizeof(T))));
+			}
 
-		Message	operator+(const Message &src) const;
-		Message	operator+(const std::string &src) const;
-		template	<typename T>
-		Message	operator+(const T &src)
-		{
-			return ((*this + Message((void *)&src, sizeof(T))));
-		}
+			Message	operator+(const Message &src) const;
+			Message	operator+(const std::string &src) const;
+			template	<typename T>
+			Message	operator+(const T &src)
+			{
+				return ((*this + Message((void *)&src, sizeof(T))));
+			}
 
-		uint8_t	&operator[](size_t idx);
+			uint8_t	&operator[](size_t idx);
 
-		void	resize(size_t size);
-		void	clear(void);
+			void	resize(size_t size);
+			void	clear(void);
 
-		const void	*getPtr(void) const;
-		size_t		getSize(void) const;
+			const void	*getPtr(void) const;
+			size_t		getSize(void) const;
 
-		std::string	to_string(void) const;
-	private:
-		std::vector<uint8_t>	_message;
-};
+			std::string	to_string(void) const;
+		private:
+			std::vector<uint8_t>	_message;
+	};
 
 }
 

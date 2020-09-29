@@ -29,57 +29,56 @@
 
 #include <glm/gtx/transform.hpp>
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-Shader* Axis::pShader = nullptr;
-Buffer* Axis::vaoBuffer = nullptr;
-Buffer* Axis::vertexBuffer = nullptr;
+	Shader* Axis::pShader = nullptr;
+	Buffer* Axis::vaoBuffer = nullptr;
+	Buffer* Axis::vertexBuffer = nullptr;
 
-Axis::Axis(void)
-: IAxis()
-{
-}
+	Axis::Axis(void)
+		: IAxis()
+	{
+	}
 
-Axis::~Axis(void)
-{
-}
+	Axis::~Axis(void)
+	{
+	}
 
-void Axis::render(const glm::mat4& lookAt, const glm::mat4& perspective)
-{
-	// X - Red
-	drawAxis(1, 0, 0, glm::vec3(1, 0, 0), lookAt, perspective);
+	void Axis::render(const glm::mat4& lookAt, const glm::mat4& perspective)
+	{
+		// X - Red
+		drawAxis(1, 0, 0, glm::vec3(1, 0, 0), lookAt, perspective);
 
-	// Y - Green
-	drawAxis(0, 1, 1.5708, glm::vec3(0, 1, 0), lookAt, perspective);
-}
+		// Y - Green
+		drawAxis(0, 1, 1.5708, glm::vec3(0, 1, 0), lookAt, perspective);
+	}
 
-// Private
-void Axis::drawAxis(int x, int y, float angle, const glm::vec3 &color, const glm::mat4& lookAt, const glm::mat4& perspective)
-{
-	// Line
-	Grid::vaoBuffer->bind();
-	Grid::vertexBuffer->bind();
+	// Private
+	void Axis::drawAxis(int x, int y, float angle, const glm::vec3& color, const glm::mat4& lookAt, const glm::mat4& perspective)
+	{
+		// Line
+		Grid::vaoBuffer->bind();
+		Grid::vertexBuffer->bind();
 
-	Grid::pShader->bind();
-	Grid::pShader->setMat4("projection", perspective);
-	Grid::pShader->setMat4("view", lookAt);
-	Grid::pShader->setVec4("color", glm::vec4(color, 1));
+		Grid::pShader->bind();
+		Grid::pShader->setMat4("projection", perspective);
+		Grid::pShader->setMat4("view", lookAt);
+		Grid::pShader->setVec4("color", glm::vec4(color, 1));
 
-	static glm::mat4 model;
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(_pos.x, _pos.y, 0.0f));
-	model = glm::rotate(model, angle, glm::vec3(0, 0, 1));
-	Grid::pShader->setMat4("model", model);
+		static glm::mat4 model;
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(_pos.x, _pos.y, 0.0f));
+		model = glm::rotate(model, angle, glm::vec3(0, 0, 1));
+		Grid::pShader->setMat4("model", model);
 
-	GL_CALL(glDrawArrays(GL_LINES, 0, 2));
+		GL_CALL(glDrawArrays(GL_LINES, 0, 2));
 
-	// Geometry
-	pShader->bind();
-	pShader->setMat4("projection", perspective);
-	pShader->setMat4("view", lookAt);
-	pShader->setVec4("color", glm::vec4(color, 1));
+		// Geometry
+		pShader->bind();
+		pShader->setMat4("projection", perspective);
+		pShader->setMat4("view", lookAt);
+		pShader->setVec4("color", glm::vec4(color, 1));
 
-	switch (_type) {
+		switch (_type) {
 		case AxisType::SCALE: {
 			ObjectRenderer::vaoBuffer->bind();
 			ObjectRenderer::vertexBuffer->bind();
@@ -101,5 +100,7 @@ void Axis::drawAxis(int x, int y, float angle, const glm::vec3 &color, const glm
 
 			GL_CALL(glDrawArrays(GL_TRIANGLES, 0, 3));
 			break;
+		}
 	}
+
 }

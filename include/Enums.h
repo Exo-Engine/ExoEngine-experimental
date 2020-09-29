@@ -24,7 +24,7 @@
 
 #pragma once
 
-namespace ExoRenderer
+namespace ExoEngine
 {
 
 	// Buffer

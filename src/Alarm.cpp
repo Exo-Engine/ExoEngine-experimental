@@ -24,62 +24,64 @@
 
 #include "Alarm.h"
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-Alarm::Alarm(const Task &task, const std::chrono::time_point<std::chrono::high_resolution_clock> &time) : _time(time), _task(task)
-{
-}
+	Alarm::Alarm(const Task& task, const std::chrono::time_point<std::chrono::high_resolution_clock>& time) : _time(time), _task(task)
+	{
+	}
 
-Alarm::Alarm(const Task &task, const std::chrono::high_resolution_clock::duration &time) : _task(task)
-{
-	_time = std::chrono::high_resolution_clock::now() + time;
-}
+	Alarm::Alarm(const Task& task, const std::chrono::high_resolution_clock::duration& time) : _task(task)
+	{
+		_time = std::chrono::high_resolution_clock::now() + time;
+	}
 
-Alarm::~Alarm(void)
-{
-}
+	Alarm::~Alarm(void)
+	{
+	}
 
-const Task	&Alarm::getTask(void) const
-{
-	return (_task);
-}
+	const Task& Alarm::getTask(void) const
+	{
+		return (_task);
+	}
 
-bool	Alarm::elapsed(void) const
-{
-	return (std::chrono::high_resolution_clock::now() >= _time);
-}
+	bool	Alarm::elapsed(void) const
+	{
+		return (std::chrono::high_resolution_clock::now() >= _time);
+	}
 
-bool	Alarm::elapsed(const std::chrono::time_point<std::chrono::high_resolution_clock> &now) const
-{
-	return (now >= _time);
-}
+	bool	Alarm::elapsed(const std::chrono::time_point<std::chrono::high_resolution_clock>& now) const
+	{
+		return (now >= _time);
+	}
 
-bool	Alarm::operator<(const Alarm &b) const
-{
-	return (_time < b._time);
-}
+	bool	Alarm::operator<(const Alarm& b) const
+	{
+		return (_time < b._time);
+	}
 
-bool	Alarm::operator>(const Alarm &b) const
-{
-	return (_time > b._time);
-}
+	bool	Alarm::operator>(const Alarm& b) const
+	{
+		return (_time > b._time);
+	}
 
-bool	Alarm::operator<=(const Alarm &b) const
-{
-	return (_time <= b._time);
-}
+	bool	Alarm::operator<=(const Alarm& b) const
+	{
+		return (_time <= b._time);
+	}
 
-bool	Alarm::operator>=(const Alarm &b) const
-{
-	return (_time >= b._time);
-}
+	bool	Alarm::operator>=(const Alarm& b) const
+	{
+		return (_time >= b._time);
+	}
 
-bool	Alarm::operator==(const Alarm &b) const
-{
-	return (_time == b._time);
-}
+	bool	Alarm::operator==(const Alarm& b) const
+	{
+		return (_time == b._time);
+	}
 
-bool	Alarm::operator!=(const Alarm &b) const
-{
-	return (_time != b._time);
+	bool	Alarm::operator!=(const Alarm& b) const
+	{
+		return (_time != b._time);
+	}
+
 }

@@ -26,19 +26,18 @@
 
 #include "State.h"
 
-namespace	ExoEngine
+namespace ExoEngine
 {
-	class	SceneStateMachine;
-	class	Scene : public State<>
+	class SceneStateMachine;
+	class Scene : public State<>
 	{
-		public:
-			Scene(SceneStateMachine &stateMachine, const std::string& name);
-			virtual ~Scene(void);
+	public:
+		Scene(SceneStateMachine &stateMachine, const std::string& name);
+		virtual ~Scene(void);
 
-			virtual void	run(void);
+		virtual void	run(void);
 
-			virtual void	draw(void);
-			virtual void	handleEvents(void);
-		private:
+		virtual void	draw(void);
+		virtual void	handleEvents(void);
 	};
 }

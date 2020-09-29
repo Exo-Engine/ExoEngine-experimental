@@ -27,65 +27,67 @@
 #include <iostream>
 #include <libxml/parser.h>
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-Local::Local(void)
-{	}
+	Local::Local(void)
+	{	}
 
-Local::~Local(void)
-{	}
+	Local::~Local(void)
+	{	}
 
-void Local::loadLocal(const std::string &lang)
-{
-	_words.clear();
-	_currentLang = lang;
-
-	// Load XML
-	xmlDocPtr doc;
-	xmlNodePtr root;
-
-	doc = xmlParseFile(std::string("resources/langs/" + _currentLang + ".xml").c_str());
-	if (doc == NULL)
+	void Local::loadLocal(const std::string& lang)
 	{
-		_currentLang = "en"; // By Default
+		_words.clear();
+		_currentLang = lang;
+
+		// Load XML
+		xmlDocPtr doc;
+		xmlNodePtr root;
+
 		doc = xmlParseFile(std::string("resources/langs/" + _currentLang + ".xml").c_str());
-	}
-
-	root = xmlDocGetRootElement(doc);
-	if (!root)
-	{
-		xmlFreeDoc(doc);
-		throw (std::invalid_argument("cannot get root node on 'resources/langs/" + _currentLang + ".xml'"));
-	}
-
-	// Read XML
-	if (root->type == XML_ELEMENT_NODE && xmlStrcmp(root->name, (const xmlChar*)"resources") == 0)
-	{
-		for (auto currentNode = root->children; currentNode; currentNode = currentNode->next)
+		if (doc == NULL)
 		{
-			if (currentNode->type == XML_ELEMENT_NODE)
+			_currentLang = "en"; // By Default
+			doc = xmlParseFile(std::string("resources/langs/" + _currentLang + ".xml").c_str());
+		}
+
+		root = xmlDocGetRootElement(doc);
+		if (!root)
+		{
+			xmlFreeDoc(doc);
+			throw (std::invalid_argument("cannot get root node on 'resources/langs/" + _currentLang + ".xml'"));
+		}
+
+		// Read XML
+		if (root->type == XML_ELEMENT_NODE && xmlStrcmp(root->name, (const xmlChar*)"resources") == 0)
+		{
+			for (auto currentNode = root->children; currentNode; currentNode = currentNode->next)
 			{
-				if (!xmlStrcmp(currentNode->name, (const xmlChar*)"string"))
+				if (currentNode->type == XML_ELEMENT_NODE)
 				{
-					_words.insert(std::pair<std::string,std::string>(
-						(char*)xmlGetProp(currentNode,(const xmlChar *)"name"),
-						(char*)xmlNodeGetContent(currentNode)
-					));
+					if (!xmlStrcmp(currentNode->name, (const xmlChar*)"string"))
+					{
+						_words.insert(std::pair<std::string, std::string>(
+							(char*)xmlGetProp(currentNode, (const xmlChar*)"name"),
+							(char*)xmlNodeGetContent(currentNode)
+							));
+					}
+					else
+						_log.warning << "unknown language type '" << currentNode->name << "'" << std::endl;
 				}
-				else
-					_log.warning << "unknown language type '" << currentNode->name << "'" << std::endl;
 			}
 		}
+
+		xmlFreeDoc(doc);
 	}
 
-	xmlFreeDoc(doc);
-}
+	const std::string& Local::get(const std::string& id)
+	{
+		auto it = _words.find(id);
+		if (it != _words.end())
+			return it->second;
+		else
+			return id;
+	}
 
-const std::string &Local::get(const std::string &id)
-{
-	auto it = _words.find(id);
-	if (it != _words.end())
-		return it->second;
-	else
-		return id;
 }

@@ -31,42 +31,42 @@
 #include <glm/glm.hpp>
 #include "IShader.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Shader: public ExoRenderer::IShader
-{
-public:
-	Shader(void);
-	Shader(const std::string& filePath);
-	Shader(const std::vector<std::string>& shaderSource);
-	~Shader(void);
+	class Shader: public IShader
+	{
+	public:
+		Shader(void);
+		Shader(const std::string& filePath);
+		Shader(const std::vector<std::string>& shaderSource);
+		~Shader(void);
 
-	void initialize(const std::string& filePath);
-	void initialize(const std::vector<std::string>& shaderSource);
+		void initialize(const std::string& filePath);
+		void initialize(const std::vector<std::string>& shaderSource);
 
-	virtual void bind(void) const;
-	virtual void unbind(void) const;
+		virtual void bind(void) const;
+		virtual void unbind(void) const;
 
-	// Setters
-	virtual void setMat4(const std::string& name, const glm::mat4& value) const;
-	virtual void setVec4(const std::string& name, const glm::vec4& value) const;
-	virtual void setVec4(const std::string& name, float x, float y, float z, float w) const;
-	virtual void setVec3(const std::string& name, const glm::vec3& value) const;
-	virtual void setVec3(const std::string& name, float x, float y, float z) const;
-	virtual void setVec2(const std::string& name, const glm::vec2& value) const;
-	virtual void setVec2(const std::string& name, float x, float y) const;
-	virtual void setFloat(const std::string& name, const float& value) const;
-	virtual void setInt(const std::string& name, const int& value) const;
+		// Setters
+		virtual void setMat4(const std::string& name, const glm::mat4& value) const;
+		virtual void setVec4(const std::string& name, const glm::vec4& value) const;
+		virtual void setVec4(const std::string& name, float x, float y, float z, float w) const;
+		virtual void setVec3(const std::string& name, const glm::vec3& value) const;
+		virtual void setVec3(const std::string& name, float x, float y, float z) const;
+		virtual void setVec2(const std::string& name, const glm::vec2& value) const;
+		virtual void setVec2(const std::string& name, float x, float y) const;
+		virtual void setFloat(const std::string& name, const float& value) const;
+		virtual void setInt(const std::string& name, const int& value) const;
 
-	// Getters
-	GLuint getShader(void) const;
-private:
-	void loadShader(const std::string& filePath, std::string& vertexShaderCode, std::string& fragmentShaderCode);
-	void loadShader(const std::vector<std::string>& shaderSource, std::string& vertexShaderCode, std::string& fragmentShaderCode);
-	unsigned int compileShader(const std::string& shaderCode, const GLenum& type);
-private:
-	GLuint _programId;
-};
+		// Getters
+		GLuint getShader(void) const;
+	private:
+		void loadShader(const std::string& filePath, std::string& vertexShaderCode, std::string& fragmentShaderCode);
+		void loadShader(const std::vector<std::string>& shaderSource, std::string& vertexShaderCode, std::string& fragmentShaderCode);
+		unsigned int compileShader(const std::string& shaderCode, const GLenum& type);
+	private:
+		GLuint _programId;
+	};
 
 }

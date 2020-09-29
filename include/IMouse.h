@@ -28,57 +28,57 @@
 #include <cstring>
 #include "Enums.h"
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-class IMouse
-{
-public:
-	IMouse(void)
-	: x(0), y(0), wheelX(0), wheelY(0)
+	class IMouse
 	{
-		for (unsigned int i{ 0 }; i < MOUSE_BUTTON_MAX; i++)
-			_buffer[i] = false;
-	}
+	public:
+		IMouse(void)
+		: x(0), y(0), wheelX(0), wheelY(0)
+		{
+			for (unsigned int i{ 0 }; i < MOUSE_BUTTON_MAX; i++)
+				_buffer[i] = false;
+		}
 
-	virtual ~IMouse(void)
-	{	}
+		virtual ~IMouse(void)
+		{	}
 
-	virtual void keyDown(const MouseButtons &id) = 0;
-	virtual void keyUp(const MouseButtons &id) = 0;
+		virtual void keyDown(const MouseButtons &id) = 0;
+		virtual void keyUp(const MouseButtons &id) = 0;
 
-	virtual bool isKeyDown(const MouseButtons &id) const = 0;
-	virtual bool lastIsKeyDown(const MouseButtons &id) const = 0;
+		virtual bool isKeyDown(const MouseButtons &id) const = 0;
+		virtual bool lastIsKeyDown(const MouseButtons &id) const = 0;
 
-	void reset(void)
-	{
-		for (unsigned int i{ 0 }; i < MOUSE_BUTTON_MAX; i++)
-			_buffer[i] = false;
+		void reset(void)
+		{
+			for (unsigned int i{ 0 }; i < MOUSE_BUTTON_MAX; i++)
+				_buffer[i] = false;
 
-		x = 0;
-		y = 0;
-		updateLastBuffer();
-	}
+			x = 0;
+			y = 0;
+			updateLastBuffer();
+		}
 
-	void updateLastBuffer(void)
-	{
-		memcpy(_lastBuffer, _buffer, sizeof(_buffer));
+		void updateLastBuffer(void)
+		{
+			memcpy(_lastBuffer, _buffer, sizeof(_buffer));
 
-		// Position
-		lastX = x;
-		lastY = y;
+			// Position
+			lastX = x;
+			lastY = y;
 
-		// Reset wheel, data per frame
-		wheelX = 0;
-		wheelY = 0;
-	}
-public:
-	uint16_t x, y;
-	uint16_t lastX, lastY;
-	int wheelX, wheelY;
-protected:
-	bool _buffer[MOUSE_BUTTON_MAX];
-	bool _lastBuffer[MOUSE_BUTTON_MAX];
-};
+			// Reset wheel, data per frame
+			wheelX = 0;
+			wheelY = 0;
+		}
+	public:
+		uint16_t x, y;
+		uint16_t lastX, lastY;
+		int wheelX, wheelY;
+	protected:
+		bool _buffer[MOUSE_BUTTON_MAX];
+		bool _lastBuffer[MOUSE_BUTTON_MAX];
+	};
 
 }

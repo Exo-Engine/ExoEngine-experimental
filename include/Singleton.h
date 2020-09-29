@@ -24,39 +24,39 @@
 
 #pragma once
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-template <class T>
-class Singleton
-{
-public :
-	static T& Get(void)
+	template <class T>
+	class Singleton
 	{
-		if (!SInst)
-			SInst = new T;
+	public :
+		static T& Get(void)
+		{
+			if (!SInst)
+				SInst = new T;
  
-		return *SInst;
-	}
+			return *SInst;
+		}
  
-	static void Destroy(void)
-	{
-		delete SInst;
-		SInst = nullptr;
-	}
+		static void Destroy(void)
+		{
+			delete SInst;
+			SInst = nullptr;
+		}
  
-protected :
-	Singleton(void) {}
-	~Singleton(void) {}
+	protected :
+		Singleton(void) {}
+		~Singleton(void) {}
  
-private :
-	static T* SInst;
+	private :
+		static T* SInst;
  
-	Singleton(Singleton&);
-	void operator =(Singleton&);
-};
+		Singleton(Singleton&);
+		void operator =(Singleton&);
+	};
  
-// Static variable
-template <class T> T* Singleton<T>::SInst = nullptr;
+	// Static variable
+	template <class T> T* Singleton<T>::SInst = nullptr;
 
 }

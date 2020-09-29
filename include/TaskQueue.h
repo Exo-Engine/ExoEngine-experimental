@@ -32,11 +32,11 @@
 
 #define TASK_QUEUE_SIZE	1024
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	TaskQueue
-{
+	class TaskQueue
+	{
 	friend	Runner;
 	public:
 		TaskQueue(uint8_t nThreads);
@@ -52,6 +52,6 @@ class	TaskQueue
 		CircularBuffer<Task, TASK_QUEUE_SIZE>	_tasks;
 		std::mutex										_mutex;
 		std::atomic<bool>								_joining;
-};
+	};
 
 }

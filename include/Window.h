@@ -39,56 +39,56 @@
 #include "Mouse.h"
 #include "GamepadManager.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Window : public ExoRenderer::IWindow
-{
-public:
-	Window(const std::string& title, uint32_t width, uint32_t height, const ExoRenderer::WindowMode &mode, bool resizable, GamepadManager &gamepad);
-	~Window(void);
+	class Window : public IWindow
+	{
+	public:
+		Window(const std::string& title, uint32_t width, uint32_t height, const WindowMode &mode, bool resizable, GamepadManager &gamepad);
+		~Window(void);
 
-	void handleEvents(Keyboard& keyboard, Mouse& mouse, GamepadManager& gamepad);
-	void clearScreen(void);
-	void swap(void);
+		void handleEvents(Keyboard& keyboard, Mouse& mouse, GamepadManager& gamepad);
+		void clearScreen(void);
+		void swap(void);
 
-	// Setters
-	virtual void setWindowSize(int w, int h);
-	virtual void setWindowMode(const ExoRenderer::WindowMode &mode);
-	virtual void setVsync(bool vsync);
+		// Setters
+		virtual void setWindowSize(int w, int h);
+		virtual void setWindowMode(const WindowMode &mode);
+		virtual void setVsync(bool vsync);
 
-	void		handleThread(void);
-	virtual ExoRenderer::IFrameBuffer	*getFrameBuffer(void) const;
+		void		handleThread(void);
+		virtual IFrameBuffer	*getFrameBuffer(void) const;
 
-	// Getters
-	virtual double getDelta(void) const;
-	virtual float getWidth(void) const;
-	virtual float getHeight(void) const;
+		// Getters
+		virtual double getDelta(void) const;
+		virtual float getWidth(void) const;
+		virtual float getHeight(void) const;
 
-	virtual int getContextWidth(void) const;
-	virtual int getContextHeight(void) const;
+		virtual int getContextWidth(void) const;
+		virtual int getContextHeight(void) const;
 
-	virtual int getHighDPIFactor(void) const;
-	virtual bool isFullscreen(void) const;
+		virtual int getHighDPIFactor(void) const;
+		virtual bool isFullscreen(void) const;
 
-	virtual bool getIsClosing(void) const;
-	Texture		 *_frameTexture;
-private:
-	void initialize(const std::string& title, uint32_t width, uint32_t height, const ExoRenderer::WindowMode &mode, bool resizable, GamepadManager& gamepad);
-	void initPostProcessing(void);
-private:
-	SDL_Window*	 _window;
-	SDL_Event		_event;
-	SDL_GLContext	_context;
-	SDL_GLContext	_threadContext;
+		virtual bool getIsClosing(void) const;
+		Texture		 *_frameTexture;
+	private:
+		void initialize(const std::string& title, uint32_t width, uint32_t height, const WindowMode &mode, bool resizable, GamepadManager& gamepad);
+		void initPostProcessing(void);
+	private:
+		SDL_Window*	 _window;
+		SDL_Event		_event;
+		SDL_GLContext	_context;
+		SDL_GLContext	_threadContext;
 
-	// Post Processing
-	FrameBuffer	 *_pFrameBuffer;
+		// Post Processing
+		FrameBuffer	 *_pFrameBuffer;
 
-	Shader			_postProcessing;
-	Buffer			_postVertexArrayObject;
-	Buffer			_postArrayBuffer;
-	Buffer			_postUVMappingBuffer;
-};
+		Shader			_postProcessing;
+		Buffer			_postVertexArrayObject;
+		Buffer			_postArrayBuffer;
+		Buffer			_postUVMappingBuffer;
+	};
 
 }

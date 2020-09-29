@@ -31,34 +31,34 @@
 #include "OALSound.h"
 #include "OALMusic.h"
 
-namespace	ExoAudioOpenAL
+namespace ExoEngine
 {
 
-class OALSource : public ExoAudio::ISource
-{
-public:
-	OALSource(void);
-	virtual ~OALSource(void);
+	class OALSource : public ISource
+	{
+	public:
+		OALSource(void);
+		virtual ~OALSource(void);
 
-	virtual void play(void) const;
-	virtual void stop(void) const;
-	virtual void rewind(void) const;
+		virtual void play(void) const;
+		virtual void stop(void) const;
+		virtual void rewind(void) const;
 
-	virtual void streamingUpdate(void) const;
+		virtual void streamingUpdate(void) const;
 
-	// Getters
-	virtual ISource::SourceState getState(void);
-	ALuint getSource(void) const;
+		// Getters
+		virtual ISource::SourceState getState(void);
+		ALuint getSource(void) const;
 
-	// Setters
-	virtual void setAudio(const ExoAudio::ISound* sound);
-	virtual void setAudio(const ExoAudio::IMusic* music);
-	virtual void setPosition(const glm::vec3 &position);
-	virtual void setVolume(float volume);
-	virtual void setPitch(float pitch);
-private:
-	OALMusic *_pMusic; // For streaming
-	ALuint _id;
-};
+		// Setters
+		virtual void setAudio(const ISound* sound);
+		virtual void setAudio(const IMusic* music);
+		virtual void setPosition(const glm::vec3 &position);
+		virtual void setVolume(float volume);
+		virtual void setPitch(float pitch);
+	private:
+		OALMusic *_pMusic; // For streaming
+		ALuint _id;
+	};
 
 }

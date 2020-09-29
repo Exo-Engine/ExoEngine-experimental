@@ -24,10 +24,12 @@
 
 #include "ISound.h"
 
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-ISound::ISound(void)
-{	}
+	ISound::ISound(void)
+	{	}
 
-ISound::~ISound(void)
-{	}
+	ISound::~ISound(void)
+	{	}
+
+}

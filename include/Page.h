@@ -26,11 +26,11 @@
 
 #include "Scene.h"
 #include "Dynamic.h"
-#include "IWidget.h"
 
 #include <libxml/parser.h>
 
-namespace	ExoEngine
+/*
+namespace ExoEngine
 {
 	class	ResourceManager;
 	class	Page : public Scene
@@ -64,3 +64,4 @@ namespace	ExoEngine
 			ResourceManager*								_resourceManager;
 	};
 }
+*/

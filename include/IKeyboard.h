@@ -29,43 +29,43 @@
 
 #include "Enums.h"
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-class IKeyboard
-{
-public:
-	IKeyboard(void)
+	class IKeyboard
 	{
-		for (unsigned int i{ 0 }; i < KEY_MAX; i++)
-			_buffer[i] = false;
-	}
+	public:
+		IKeyboard(void)
+		{
+			for (unsigned int i{ 0 }; i < KEY_MAX; i++)
+				_buffer[i] = false;
+		}
 
-	virtual ~IKeyboard(void)
-	{	}
+		virtual ~IKeyboard(void)
+		{	}
 
-	virtual void keyDown(const KeyboardKeys &id) = 0;
-	virtual void keyUp(const KeyboardKeys &id) = 0;
+		virtual void keyDown(const KeyboardKeys &id) = 0;
+		virtual void keyUp(const KeyboardKeys &id) = 0;
 
-	virtual bool isKeyDown(const KeyboardKeys &id) const = 0;
-	virtual bool lastIsKeyDown(const KeyboardKeys &id) const = 0;
-	virtual const char* convertKeyboardKeyToChar(const KeyboardKeys &key) const = 0;
+		virtual bool isKeyDown(const KeyboardKeys &id) const = 0;
+		virtual bool lastIsKeyDown(const KeyboardKeys &id) const = 0;
+		virtual const char* convertKeyboardKeyToChar(const KeyboardKeys &key) const = 0;
 
-	void reset(void)
-	{
-		for (unsigned int i{ 0 }; i < KEY_MAX; i++)
-			_buffer[i] = false;
+		void reset(void)
+		{
+			for (unsigned int i{ 0 }; i < KEY_MAX; i++)
+				_buffer[i] = false;
 
-		updateLastBuffer();
-	}
+			updateLastBuffer();
+		}
 
-	void updateLastBuffer(void)
-	{
-		memcpy(_lastBuffer, _buffer, sizeof(_buffer));
-	}
-protected:
-	bool _buffer[KEY_MAX];
-	bool _lastBuffer[KEY_MAX];
-};
+		void updateLastBuffer(void)
+		{
+			memcpy(_lastBuffer, _buffer, sizeof(_buffer));
+		}
+	protected:
+		bool _buffer[KEY_MAX];
+		bool _lastBuffer[KEY_MAX];
+	};
 
 }

@@ -25,140 +25,142 @@
 #include "World.h"
 #include "ResourceManager.h"
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-World::World(void) : _mapName(""), _mapMusic(""), _cameraType(-1), _cameraPos(0, 0, 0)
-{
-}
-
-World::~World(void)
-{
-	lock();
-	clear();
-	unlock();
-}
-
-void						World::clear(void)
-{
-	lock();
-	for (auto object = _objectsMap.begin(); object != _objectsMap.end(); object++)
-		delete object->second;
-	_objectsMap.clear();
-	unlock();
-}
-
-void						World::add(Object *object)
-{
-	lock();
-	try
+	World::World(void) : _mapName(""), _mapMusic(""), _cameraType(-1), _cameraPos(0, 0, 0)
 	{
-		_objectsMap[object->getId()] = object;
 	}
-	catch (const std::exception &e)
+
+	World::~World(void)
 	{
-		_log.error << "cannot add object to world: " << e.what() << std::endl;
+		lock();
+		clear();
+		unlock();
 	}
-	unlock();
-}
 
-void						World::removeObject(size_t id)
-{
-	removeObject(getObject(id));
-}
-
-void						World::removeObject(Object *object)
-{
-	lock();
-	_log.debug << "unloading object " << object->getId() << std::endl;
-	_objectsMap.erase(object->getId());
-	delete object;
-	unlock();
-}
-
-Object						*World::getObject(size_t id)
-{
-	Object	*object;
-
-	lock();
-	try
+	void						World::clear(void)
 	{
-		object = _objectsMap.at(id);
+		lock();
+		for (auto object = _objectsMap.begin(); object != _objectsMap.end(); object++)
+			delete object->second;
+		_objectsMap.clear();
+		unlock();
 	}
-	catch (const std::exception &)
+
+	void						World::add(Object* object)
 	{
-		object = nullptr;
+		lock();
+		try
+		{
+			_objectsMap[object->getId()] = object;
+		}
+		catch (const std::exception& e)
+		{
+			_log.error << "cannot add object to world: " << e.what() << std::endl;
+		}
+		unlock();
 	}
-	unlock();
-	return (object);
-}
 
-std::map<size_t, Object *>	&World::getObjects(void)
-{
-	return (_objectsMap);
-}
-
-void						World::addPlayer(size_t id, const std::string &name)
-{
-	lock();
-	try
+	void						World::removeObject(size_t id)
 	{
-		_playersMap[id] = name;
+		removeObject(getObject(id));
 	}
-	catch (const std::exception &e)
+
+	void						World::removeObject(Object* object)
 	{
-		_log.error << "cannot add player to world: " << e.what() << std::endl;
+		lock();
+		_log.debug << "unloading object " << object->getId() << std::endl;
+		_objectsMap.erase(object->getId());
+		delete object;
+		unlock();
 	}
-	unlock();
-}
 
-void						World::removePlayer(size_t id)
-{
-	lock();
-	_playersMap.erase(_playersMap.find(id));
-	unlock();
-}
+	Object* World::getObject(size_t id)
+	{
+		Object* object;
 
-const std::string			&World::getPlayer(size_t id)
-{
-	return (_playersMap.at(id));
-}
+		lock();
+		try
+		{
+			object = _objectsMap.at(id);
+		}
+		catch (const std::exception&)
+		{
+			object = nullptr;
+		}
+		unlock();
+		return (object);
+	}
 
-void						World::setName(const std::string &name)
-{
-	_mapName = name;
-}
+	std::map<size_t, Object*>& World::getObjects(void)
+	{
+		return (_objectsMap);
+	}
 
-void						World::setMusic(const std::string &music)
-{
-	_mapMusic = music;
-}
+	void						World::addPlayer(size_t id, const std::string& name)
+	{
+		lock();
+		try
+		{
+			_playersMap[id] = name;
+		}
+		catch (const std::exception& e)
+		{
+			_log.error << "cannot add player to world: " << e.what() << std::endl;
+		}
+		unlock();
+	}
 
-const std::string			&World::getName(void) const
-{
-	return _mapName;
-}
+	void						World::removePlayer(size_t id)
+	{
+		lock();
+		_playersMap.erase(_playersMap.find(id));
+		unlock();
+	}
 
-const std::string			&World::getMusic(void) const
-{
-	return _mapMusic;
-}
+	const std::string& World::getPlayer(size_t id)
+	{
+		return (_playersMap.at(id));
+	}
 
-void						 World::setCameraType(int type)
-{
-	_cameraType = type;
-}
+	void						World::setName(const std::string& name)
+	{
+		_mapName = name;
+	}
 
-int							World::getCameraType(void) const
-{
-	return _cameraType;
-}
+	void						World::setMusic(const std::string& music)
+	{
+		_mapMusic = music;
+	}
 
-void						 World::setCameraPos(const glm::vec3 &pos)
-{
-	_cameraPos = pos;
-}
+	const std::string& World::getName(void) const
+	{
+		return _mapName;
+	}
 
-const glm::vec3				&World::getCameraPos(void) const
-{
-	return _cameraPos;
+	const std::string& World::getMusic(void) const
+	{
+		return _mapMusic;
+	}
+
+	void						 World::setCameraType(int type)
+	{
+		_cameraType = type;
+	}
+
+	int							World::getCameraType(void) const
+	{
+		return _cameraType;
+	}
+
+	void						 World::setCameraPos(const glm::vec3& pos)
+	{
+		_cameraPos = pos;
+	}
+
+	const glm::vec3& World::getCameraPos(void) const
+	{
+		return _cameraPos;
+	}
+
 }

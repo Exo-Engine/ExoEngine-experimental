@@ -26,28 +26,30 @@
 
 #include <SDL2/SDL_error.h>
 
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-SDLException::SDLException(void)
-{
-	_error = SDL_GetError();
-}
+	SDLException::SDLException(void)
+	{
+		_error = SDL_GetError();
+	}
 
-SDLException::SDLException(const char *error)
-{
-	_error = error;
-}
+	SDLException::SDLException(const char* error)
+	{
+		_error = error;
+	}
 
-SDLException::~SDLException(void)
-{
-}
+	SDLException::~SDLException(void)
+	{
+	}
 
-const char*	SDLException::what() const noexcept
-{
-	return (_error);
-}
+	const char* SDLException::what() const noexcept
+	{
+		return (_error);
+	}
 
-SDLException	&SDLException::operator=(const std::exception &)
-{
-	return (*this);
+	SDLException& SDLException::operator=(const std::exception&)
+	{
+		return (*this);
+	}
+
 }

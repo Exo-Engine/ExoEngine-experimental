@@ -28,48 +28,48 @@
 #include "IArrayTexture.h"
 #include <memory>
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-enum FlipSprite {
-	DEFAULT,
-	HORIZONTAL,
-	VERTICAL
-};
+	enum FlipSprite {
+		DEFAULT,
+		HORIZONTAL,
+		VERTICAL
+	};
 
-struct sprite
-{
-	// Variables
-	glm::vec2 position;
-	glm::vec2 scale;
-	float angle;
-	int layer;
-	FlipSprite flip;
-
-	std::shared_ptr<IArrayTexture> texture;
-	std::shared_ptr<IArrayTexture> normalMapTexture;
-
-	// Constructor
-	sprite()
-	: position(glm::vec2(0.0f)), scale(glm::vec2(1.0f)), angle(0.0f), layer(0), texture(nullptr), normalMapTexture(nullptr)
+	struct sprite
 	{
-	}
+		// Variables
+		glm::vec2 position;
+		glm::vec2 scale;
+		float angle;
+		int layer;
+		FlipSprite flip;
 
-	sprite(std::shared_ptr<IArrayTexture> texture, std::shared_ptr<IArrayTexture> normalMapTexture, int layer = 0)
-	: position(glm::vec2(0.0f)), scale(glm::vec2(1.0f)), angle(0.0f), layer(layer), flip(FlipSprite::DEFAULT), texture(texture), normalMapTexture(normalMapTexture)
-	{	}
+		std::shared_ptr<IArrayTexture> texture;
+		std::shared_ptr<IArrayTexture> normalMapTexture;
 
-	sprite	&operator=(const sprite &b)
-	{
-		position = b.position;
-		scale = b.scale;
-		angle = b.angle;
-		layer = b.layer;
-		flip = b.flip;
-		texture = b.texture;
-		normalMapTexture = b.normalMapTexture;
-		return (*this);
-	}
-};
+		// Constructor
+		sprite()
+		: position(glm::vec2(0.0f)), scale(glm::vec2(1.0f)), angle(0.0f), layer(0), texture(nullptr), normalMapTexture(nullptr)
+		{
+		}
+
+		sprite(std::shared_ptr<IArrayTexture> texture, std::shared_ptr<IArrayTexture> normalMapTexture, int layer = 0)
+		: position(glm::vec2(0.0f)), scale(glm::vec2(1.0f)), angle(0.0f), layer(layer), flip(FlipSprite::DEFAULT), texture(texture), normalMapTexture(normalMapTexture)
+		{	}
+
+		sprite	&operator=(const sprite &b)
+		{
+			position = b.position;
+			scale = b.scale;
+			angle = b.angle;
+			layer = b.layer;
+			flip = b.flip;
+			texture = b.texture;
+			normalMapTexture = b.normalMapTexture;
+			return (*this);
+		}
+	};
 
 }

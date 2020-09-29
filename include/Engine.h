@@ -28,26 +28,26 @@
 #include "ResourceManager.h"
 #include "SettingsManager.h"
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	Engine
-{
-	public:
-		Engine(void);
-		Engine(const std::string& settingsFile);
-		virtual ~Engine(void);
+	class Engine
+	{
+		public:
+			Engine(void);
+			Engine(const std::string& settingsFile);
+			virtual ~Engine(void);
 
-		void					initialize(const std::string& settingsFile);
+			void					initialize(const std::string& settingsFile);
 
-		ResourceManager*		getResourceManager(void) const;
-		SettingsManager*		getSettingsManager(void) const;
-		ExoRenderer::IRenderer*	getRenderer(void) const;
-		ExoAudio::IAudio*		getAudio(void) const;
+			ResourceManager*		getResourceManager(void) const;
+			SettingsManager*		getSettingsManager(void) const;
+			IRenderer*	getRenderer(void) const;
+			IAudio*		getAudio(void) const;
 
-	private:
-		ResourceManager*					_resourceManager;
-		SettingsManager*					_settingsManager;
-};
+		private:
+			ResourceManager* _resourceManager;
+			SettingsManager* _settingsManager;
+	};
 
 }

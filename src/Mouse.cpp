@@ -25,50 +25,51 @@
 #include <SDL2/SDL_mouse.h>
 #include "Mouse.h"
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-Mouse::Mouse(void)
-{	}
+	Mouse::Mouse(void)
+	{	}
 
-Mouse::~Mouse(void)
-{	}
+	Mouse::~Mouse(void)
+	{	}
 
-void Mouse::keyDown(const MouseButtons &id)
-{
-	if (id < (MouseButtons)MOUSE_BUTTON_MAX)
-		_buffer[id] = true;
-}
+	void Mouse::keyDown(const MouseButtons& id)
+	{
+		if (id < (MouseButtons)MOUSE_BUTTON_MAX)
+			_buffer[id] = true;
+	}
 
-void Mouse::keyUp(const MouseButtons &id)
-{
-	if (id < (MouseButtons)MOUSE_BUTTON_MAX)
-		_buffer[id] = false;
-}
+	void Mouse::keyUp(const MouseButtons& id)
+	{
+		if (id < (MouseButtons)MOUSE_BUTTON_MAX)
+			_buffer[id] = false;
+	}
 
-bool Mouse::isKeyDown(const MouseButtons &id) const
-{
-	if (id < (MouseButtons)MOUSE_BUTTON_MAX)
-		return _buffer[id];
-	else
-		return false;
-}
+	bool Mouse::isKeyDown(const MouseButtons& id) const
+	{
+		if (id < (MouseButtons)MOUSE_BUTTON_MAX)
+			return _buffer[id];
+		else
+			return false;
+	}
 
-bool Mouse::lastIsKeyDown(const MouseButtons &id) const
-{
-	if (id < (MouseButtons)MOUSE_BUTTON_MAX)
-		return _lastBuffer[id];
-	else
-		return false;
-}
+	bool Mouse::lastIsKeyDown(const MouseButtons& id) const
+	{
+		if (id < (MouseButtons)MOUSE_BUTTON_MAX)
+			return _lastBuffer[id];
+		else
+			return false;
+	}
 
-// Getters
-MouseButtons Mouse::getMouseInput(const unsigned int &id) const
-{
-	switch (id) {
+	// Getters
+	MouseButtons Mouse::getMouseInput(const unsigned int& id) const
+	{
+		switch (id) {
 		case SDL_BUTTON_LEFT:		return MouseButtons::BUTTON_LEFT;
 		case SDL_BUTTON_RIGHT:		return MouseButtons::BUTTON_RIGHT;
 		case SDL_BUTTON_MIDDLE:	 return MouseButtons::BUTTON_MIDDLE;
 		default:					return MouseButtons::MOUSE_BUTTON_UNKNOW;
+		}
 	}
+
 }

@@ -30,14 +30,14 @@
 #include "ITexture.h"
 #include "OGLCall.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Texture: public ExoRenderer::ITexture
-{
+	class Texture: public ITexture
+	{
 	public:
-		Texture(unsigned int width, unsigned int height, ExoRenderer::TextureFormat format, ExoRenderer::TextureFilter filter);
-		Texture(const std::string& filePath, ExoRenderer::TextureFilter filter);
+		Texture(unsigned int width, unsigned int height, TextureFormat format, TextureFilter filter);
+		Texture(const std::string& filePath, TextureFilter filter);
 		virtual ~Texture(void);
 
 		virtual void	bind(int unit = 0) const;
@@ -46,7 +46,7 @@ class Texture: public ExoRenderer::ITexture
 		// Getters
 		virtual int		getEngineId(void) const;
 		GLuint			getBuffer(void) const;
-		ExoRenderer::TextureFormat	getFormat(void) const;
+		TextureFormat	getFormat(void) const;
 
 		// Static
 		static SDL_Surface*	generateDefaultTexture();
@@ -55,11 +55,11 @@ class Texture: public ExoRenderer::ITexture
 		virtual int getWidth(void) const;
 		virtual int getHeight(void) const;
 	private:
-		static void		applyFilter(const ExoRenderer::TextureFilter& filter);
+		static void		applyFilter(const TextureFilter& filter);
 		GLuint			_id;
-		ExoRenderer::TextureFormat	_format;
+		TextureFormat	_format;
 		int				_width;
 		int				_height;
-};
+	};
 
 }

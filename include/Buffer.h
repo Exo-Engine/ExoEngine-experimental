@@ -27,29 +27,29 @@
 #include "Enums.h"
 #include "OGLCall.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Buffer
-{
-public:
-	Buffer(void);
-	Buffer(unsigned long count, unsigned int size, const void* data, ExoRenderer::BufferType type, ExoRenderer::BufferDraw usage, unsigned char attribArray, bool normalized);
-	virtual ~Buffer(void);
+	class Buffer
+	{
+	public:
+		Buffer(void);
+		Buffer(unsigned long count, unsigned int size, const void* data, BufferType type, BufferDraw usage, unsigned char attribArray, bool normalized);
+		virtual ~Buffer(void);
 
-	virtual void initialize(unsigned long count, unsigned int size, const void* data, ExoRenderer::BufferType type, ExoRenderer::BufferDraw usage, unsigned char attribArray, bool normalized);
-	virtual void updateSubData(unsigned long count, const void* data);
+		virtual void initialize(unsigned long count, unsigned int size, const void* data, BufferType type, BufferDraw usage, unsigned char attribArray, bool normalized);
+		virtual void updateSubData(unsigned long count, const void* data);
 
-	virtual void bind(void) const;
-	virtual void unbind(void) const;
+		virtual void bind(void) const;
+		virtual void unbind(void) const;
 
-	// Getters
-	GLuint getBuffer(void) const;
-private:
-	unsigned long _count;
-	ExoRenderer::BufferType _type;
+		// Getters
+		GLuint getBuffer(void) const;
+	private:
+		unsigned long _count;
+		BufferType _type;
 
-	GLuint _id;
-};
+		GLuint _id;
+	};
 
 }

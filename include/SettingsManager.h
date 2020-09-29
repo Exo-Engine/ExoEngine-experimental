@@ -29,51 +29,51 @@
 #include <map>
 #include <string>
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	Setting
-{
-	public:
-		Setting(const std::string& name);
-		virtual ~Setting(void);
+	class	Setting
+	{
+		public:
+			Setting(const std::string& name);
+			virtual ~Setting(void);
 
-		void				setName(const std::string& name);
-		const std::string&	getName(void) const;
+			void				setName(const std::string& name);
+			const std::string&	getName(void) const;
 
-		void				addProperty(const std::string& name, const std::string& value);
-		const std::string&	getProperty(const std::string& name);
+			void				addProperty(const std::string& name, const std::string& value);
+			const std::string&	getProperty(const std::string& name);
 
-		void				addChild(Setting* setting);
-		size_t				getNbChilds(void) const;
-		Setting*			getChild(size_t index);
+			void				addChild(Setting* setting);
+			size_t				getNbChilds(void) const;
+			Setting*			getChild(size_t index);
 
-		void				setValue(const std::string& value);
-		const std::string&	getValue(void) const;
-	private:
-		std::string							_name;
-		std::vector<Setting*>				_childs;
-		std::map<std::string, std::string>	_properties;
-		std::string							_value;
-};
+			void				setValue(const std::string& value);
+			const std::string&	getValue(void) const;
+		private:
+			std::string							_name;
+			std::vector<Setting*>				_childs;
+			std::map<std::string, std::string>	_properties;
+			std::string							_value;
+	};
 
-class	SettingsManager
-{
-	public:
-		SettingsManager(void);
-		virtual ~SettingsManager(void);
+	class	SettingsManager
+	{
+		public:
+			SettingsManager(void);
+			virtual ~SettingsManager(void);
 
-		void	load(const std::string& file);
-		void	unload(void);
-		void	save(const std::string& file);
+			void	load(const std::string& file);
+			void	unload(void);
+			void	save(const std::string& file);
 
-		Setting*	get(const std::string& setting);
+			Setting*	get(const std::string& setting);
 
-	private:
+		private:
 
-		void	load(xmlNodePtr node, Setting* parentSetting);
+			void	load(xmlNodePtr node, Setting* parentSetting);
 
-		std::map<std::string, Setting*>	_settings;
-};
+			std::map<std::string, Setting*>	_settings;
+	};
 
 }

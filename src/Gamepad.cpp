@@ -26,62 +26,61 @@
 #include <iostream>
 #include "Gamepad.h"
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-Gamepad::Gamepad(Sint32 id)
-: _pGameController(nullptr)
-{
-	_pGameController = SDL_GameControllerOpen(id);
-}
-
-Gamepad::~Gamepad(void)
-{
-	if (_pGameController != NULL)
+	Gamepad::Gamepad(Sint32 id)
+		: _pGameController(nullptr)
 	{
-		if (SDL_WasInit(SDL_INIT_EVERYTHING))
-			SDL_GameControllerClose(_pGameController);
-		_pGameController = nullptr;
+		_pGameController = SDL_GameControllerOpen(id);
 	}
-}
 
-void Gamepad::keyDown(const GamepadButtons &id)
-{
-	if (id < (GamepadButtons)GAMEPAD_BUTTON_MAX)
-		_buffer[id] = true;
-}
+	Gamepad::~Gamepad(void)
+	{
+		if (_pGameController != NULL)
+		{
+			if (SDL_WasInit(SDL_INIT_EVERYTHING))
+				SDL_GameControllerClose(_pGameController);
+			_pGameController = nullptr;
+		}
+	}
 
-void Gamepad::keyUp(const GamepadButtons &id)
-{
-	if (id < (GamepadButtons)GAMEPAD_BUTTON_MAX)
-		_buffer[id] = false;
-}
+	void Gamepad::keyDown(const GamepadButtons& id)
+	{
+		if (id < (GamepadButtons)GAMEPAD_BUTTON_MAX)
+			_buffer[id] = true;
+	}
 
-bool Gamepad::isKeyDown(const GamepadButtons &id) const
-{
-	if (id < (GamepadButtons)GAMEPAD_BUTTON_MAX)
-		return _buffer[id];
-	else
-		return false;
-}
+	void Gamepad::keyUp(const GamepadButtons& id)
+	{
+		if (id < (GamepadButtons)GAMEPAD_BUTTON_MAX)
+			_buffer[id] = false;
+	}
 
-bool Gamepad::lastIsKeyDown(const GamepadButtons &id) const
-{
-	if (id < (GamepadButtons)GAMEPAD_BUTTON_MAX)
-		return _lastBuffer[id];
-	else
-		return false;
-}
+	bool Gamepad::isKeyDown(const GamepadButtons& id) const
+	{
+		if (id < (GamepadButtons)GAMEPAD_BUTTON_MAX)
+			return _buffer[id];
+		else
+			return false;
+	}
 
-// Getters
-SDL_GameController *Gamepad::getController(void)
-{
-	return _pGameController;
-}
+	bool Gamepad::lastIsKeyDown(const GamepadButtons& id) const
+	{
+		if (id < (GamepadButtons)GAMEPAD_BUTTON_MAX)
+			return _lastBuffer[id];
+		else
+			return false;
+	}
 
-GamepadButtons Gamepad::getGamepadInput(const unsigned int &id)
-{
-	switch (id) {
+	// Getters
+	SDL_GameController* Gamepad::getController(void)
+	{
+		return _pGameController;
+	}
+
+	GamepadButtons Gamepad::getGamepadInput(const unsigned int& id)
+	{
+		switch (id) {
 		case SDL_CONTROLLER_BUTTON_A:				return GamepadButtons::BUTTON_A;
 		case SDL_CONTROLLER_BUTTON_B:				return GamepadButtons::BUTTON_B;
 		case SDL_CONTROLLER_BUTTON_X:				return GamepadButtons::BUTTON_X;
@@ -99,5 +98,7 @@ GamepadButtons Gamepad::getGamepadInput(const unsigned int &id)
 		case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:		return GamepadButtons::BUTTON_DPAD_RIGHT;
 		case SDL_CONTROLLER_BUTTON_MAX:			 return GamepadButtons::GAMEPAD_BUTTON_MAX;
 		default:									return GamepadButtons::GAMEPAD_BUTTON_UNKNOW;
+		}
 	}
+
 }

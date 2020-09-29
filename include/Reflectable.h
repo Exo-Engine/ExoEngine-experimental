@@ -42,7 +42,7 @@
 #define REFLECT_ATTRIBUTES_END()		\
 	}
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
 namespace	reflection

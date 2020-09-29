@@ -27,26 +27,26 @@
 #include <SDL2/SDL.h>
 #include "IGamepad.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Gamepad : public ExoRenderer::IGamepad
-{
-public:
-	Gamepad(Sint32 id);
-	virtual ~Gamepad(void);
+	class Gamepad : public IGamepad
+	{
+	public:
+		Gamepad(Sint32 id);
+		virtual ~Gamepad(void);
 
-	virtual void keyDown(const ExoRenderer::GamepadButtons &id);
-	virtual void keyUp(const ExoRenderer::GamepadButtons &id);
+		virtual void keyDown(const GamepadButtons &id);
+		virtual void keyUp(const GamepadButtons &id);
 
-	virtual bool isKeyDown(const ExoRenderer::GamepadButtons &id) const;
-	virtual bool lastIsKeyDown(const ExoRenderer::GamepadButtons &id) const;
+		virtual bool isKeyDown(const GamepadButtons &id) const;
+		virtual bool lastIsKeyDown(const GamepadButtons &id) const;
 
-	// Getters
-	SDL_GameController *getController(void);
-	static ExoRenderer::GamepadButtons getGamepadInput(const unsigned int &id);
-private:
-	SDL_GameController *_pGameController;
-};
+		// Getters
+		SDL_GameController *getController(void);
+		static GamepadButtons getGamepadInput(const unsigned int &id);
+	private:
+		SDL_GameController *_pGameController;
+	};
 
 }

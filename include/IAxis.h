@@ -26,34 +26,34 @@
 
 #include <glm/vec2.hpp>
 
-namespace	ExoRenderer
+namespace ExoEngine
 {
 
-enum class AxisType {
-	TRANSLATION,
-	SCALE
-};
+	enum class AxisType {
+		TRANSLATION,
+		SCALE
+	};
 
-class IAxis
-{
-public:
-	IAxis()
-	: _type(AxisType::TRANSLATION), _pos(0, 0)
-	{ }
+	class IAxis
+	{
+	public:
+		IAxis()
+		: _type(AxisType::TRANSLATION), _pos(0, 0)
+		{ }
 
-	virtual ~IAxis(void)
-	{ }
+		virtual ~IAxis(void)
+		{ }
 
-	// Getters
-	const AxisType &getType(void) const { return _type; }
-	const glm::vec2 &getPosition(void) const { return _pos; }
+		// Getters
+		const AxisType &getType(void) const { return _type; }
+		const glm::vec2 &getPosition(void) const { return _pos; }
 
-	// Setters
-	void setType(const AxisType &type) { _type = type; };
-	void setPosition(const glm::vec2 &position) { _pos = position; }
-protected:
-	AxisType _type;
-	glm::vec2 _pos;
-};
+		// Setters
+		void setType(const AxisType &type) { _type = type; };
+		void setPosition(const glm::vec2 &position) { _pos = position; }
+	protected:
+		AxisType _type;
+		glm::vec2 _pos;
+	};
 
 }

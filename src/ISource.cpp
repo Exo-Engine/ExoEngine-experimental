@@ -24,11 +24,13 @@
 
 #include "ISource.h"
 
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-ISource::ISource(void)
-{	}
+	ISource::ISource(void)
+	{	}
 
 
-ISource::~ISource(void)
-{	}
+	ISource::~ISource(void)
+	{	}
+
+}

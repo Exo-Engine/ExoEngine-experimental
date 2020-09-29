@@ -25,47 +25,46 @@
 #include "Keyboard.h"
 #include <SDL2/SDL_keyboard.h>
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-Keyboard::Keyboard()
-{	}
+	Keyboard::Keyboard()
+	{	}
 
-Keyboard::~Keyboard()
-{	}
+	Keyboard::~Keyboard()
+	{	}
 
-void Keyboard::keyDown(const KeyboardKeys &id)
-{
-	if (id < KEY_MAX)
-		_buffer[id] = true;
-}
-
-void Keyboard::keyUp(const KeyboardKeys &id)
-{
-	if (id < KEY_MAX)
-		_buffer[id] = false;
-}
-
-bool Keyboard::isKeyDown(const KeyboardKeys &id) const
-{
-	if (id < KEY_MAX)
-		return _buffer[id];
-	else
-		return false;
-}
-
-bool Keyboard::lastIsKeyDown(const KeyboardKeys &id) const
-{
-	if (id < KEY_MAX)
-		return _lastBuffer[id];
-	else
-		return false;
-}
-
-const char* Keyboard::convertKeyboardKeyToChar(const KeyboardKeys &key) const
-{
-	switch (key)
+	void Keyboard::keyDown(const KeyboardKeys& id)
 	{
+		if (id < KEY_MAX)
+			_buffer[id] = true;
+	}
+
+	void Keyboard::keyUp(const KeyboardKeys& id)
+	{
+		if (id < KEY_MAX)
+			_buffer[id] = false;
+	}
+
+	bool Keyboard::isKeyDown(const KeyboardKeys& id) const
+	{
+		if (id < KEY_MAX)
+			return _buffer[id];
+		else
+			return false;
+	}
+
+	bool Keyboard::lastIsKeyDown(const KeyboardKeys& id) const
+	{
+		if (id < KEY_MAX)
+			return _lastBuffer[id];
+		else
+			return false;
+	}
+
+	const char* Keyboard::convertKeyboardKeyToChar(const KeyboardKeys& key) const
+	{
+		switch (key)
+		{
 		case KEY_0:case KEY_KP_0:			return "0";
 		case KEY_1:case KEY_KP_1:			return "1";
 		case KEY_2:case KEY_KP_2:			return "2";
@@ -109,14 +108,14 @@ const char* Keyboard::convertKeyboardKeyToChar(const KeyboardKeys &key) const
 		case KEY_COMMA:					 return ",";
 		case KEY_MINUS:case KEY_KP_MINUS:	return "-";
 		default:							return "";
+		}
 	}
-}
 
-// Getters
-KeyboardKeys Keyboard::getKeyboardInput(const unsigned int &id) const
-{
-	// Mapping for QWERTY
-	switch (id) {
+	// Getters
+	KeyboardKeys Keyboard::getKeyboardInput(const unsigned int& id) const
+	{
+		// Mapping for QWERTY
+		switch (id) {
 		case SDLK_0:			return KeyboardKeys::KEY_0;
 		case SDLK_1:			return KeyboardKeys::KEY_1;
 		case SDLK_2:			return KeyboardKeys::KEY_2;
@@ -199,5 +198,7 @@ KeyboardKeys Keyboard::getKeyboardInput(const unsigned int &id) const
 		case SDLK_MINUS:		return KeyboardKeys::KEY_MINUS;
 		case SDLK_KP_MINUS:	 return KeyboardKeys::KEY_KP_MINUS;
 		default:				return KeyboardKeys::KEY_UNKNOW;
+		}
 	}
+
 }

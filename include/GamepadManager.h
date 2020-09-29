@@ -29,38 +29,38 @@
 
 #include <vector>
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class GamepadManager : public ExoRenderer::IGamepadManager
-{
-public:
-	GamepadManager(void);
-	virtual ~GamepadManager(void);
+	class GamepadManager : public IGamepadManager
+	{
+	public:
+		GamepadManager(void);
+		virtual ~GamepadManager(void);
 
-	virtual void add(int32_t id);
-	virtual void remove(int32_t id);
+		virtual void add(int32_t id);
+		virtual void remove(int32_t id);
 
-	void update(void);
+		void update(void);
 
-	void keyDown(int32_t gamepadId, const ExoRenderer::GamepadButtons &id);
-	void keyUp(int32_t gamepadId, const ExoRenderer::GamepadButtons &id);
+		void keyDown(int32_t gamepadId, const GamepadButtons &id);
+		void keyUp(int32_t gamepadId, const GamepadButtons &id);
 
-	void leftStickX(int32_t gamepadId, float x);
-	void leftStickY(int32_t gamepadId, float y);
+		void leftStickX(int32_t gamepadId, float x);
+		void leftStickY(int32_t gamepadId, float y);
 
-	void rightStickX(int32_t gamepadId, float x);
-	void rightStickY(int32_t gamepadId, float y);
+		void rightStickX(int32_t gamepadId, float x);
+		void rightStickY(int32_t gamepadId, float y);
 
-	void triggerLeft(int32_t gamepadId, float value);
-	void triggerRight(int32_t gamepadId, float value);
+		void triggerLeft(int32_t gamepadId, float value);
+		void triggerRight(int32_t gamepadId, float value);
 
-	// Getters
-	virtual unsigned int getGamepadNumber(void);
-	virtual ExoRenderer::IGamepad *getGamepad(unsigned int id);
-private:
-	Gamepad*				_fakeGamepad; // Always with default data, if gamepad list is empty
-	std::vector<Gamepad*> _gamepadList;
-};
+		// Getters
+		virtual unsigned int getGamepadNumber(void);
+		virtual IGamepad *getGamepad(unsigned int id);
+	private:
+		Gamepad*				_fakeGamepad; // Always with default data, if gamepad list is empty
+		std::vector<Gamepad*> _gamepadList;
+	};
 
 }

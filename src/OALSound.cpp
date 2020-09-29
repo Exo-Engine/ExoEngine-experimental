@@ -26,37 +26,38 @@
 
 #include <stdexcept>
 
-using namespace	ExoAudioOpenAL;
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-OALSound::OALSound(const std::string &filePath)
-: _id(0)
-{
-	// Create OpenAL Buffer
-	alGenBuffers(1, &_id);
+	OALSound::OALSound(const std::string& filePath)
+		: _id(0)
+	{
+		// Create OpenAL Buffer
+		alGenBuffers(1, &_id);
 
-	// Load
-	std::vector<char> buffer;
-	OggLoader* pOggLoader = new OggLoader(filePath);
-	pOggLoader->readAll(buffer);
+		// Load
+		std::vector<char> buffer;
+		OggLoader* pOggLoader = new OggLoader(filePath);
+		pOggLoader->readAll(buffer);
 
-	// Filling the OpenAL buffer with the read data
-	alBufferData(_id, pOggLoader->getFormat(), &buffer[0], (ALsizei)buffer.size(), pOggLoader->getSampleRate());
+		// Filling the OpenAL buffer with the read data
+		alBufferData(_id, pOggLoader->getFormat(), &buffer[0], (ALsizei)buffer.size(), pOggLoader->getSampleRate());
 
-	delete pOggLoader;
-	pOggLoader = nullptr;
+		delete pOggLoader;
+		pOggLoader = nullptr;
 
-	if (alGetError() != AL_NO_ERROR)
-		throw (std::invalid_argument("OpenAL error when loading " + filePath));
-}
+		if (alGetError() != AL_NO_ERROR)
+			throw (std::invalid_argument("OpenAL error when loading " + filePath));
+	}
 
-OALSound::~OALSound(void)
-{
-	alDeleteBuffers(1, &_id);
-}
+	OALSound::~OALSound(void)
+	{
+		alDeleteBuffers(1, &_id);
+	}
 
-// Getters
-ALuint OALSound::getBuffer(void) const
-{
-	return _id;
+	// Getters
+	ALuint OALSound::getBuffer(void) const
+	{
+		return _id;
+	}
+
 }

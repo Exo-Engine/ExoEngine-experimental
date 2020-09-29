@@ -24,169 +24,170 @@
 
 #include "GamepadManager.h"
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-GamepadManager::GamepadManager(void)
-{
-	_fakeGamepad = new Gamepad(-1);
-	_fakeGamepad->setIsGamepad(false);
-}
-
-GamepadManager::~GamepadManager(void)
-{
-	if (_fakeGamepad)
-		delete _fakeGamepad;
-
-	while (!_gamepadList.empty())
+	GamepadManager::GamepadManager(void)
 	{
-		delete _gamepadList.back();
-		_gamepadList.pop_back();
+		_fakeGamepad = new Gamepad(-1);
+		_fakeGamepad->setIsGamepad(false);
 	}
-	_gamepadList.clear();
-}
+
+	GamepadManager::~GamepadManager(void)
+	{
+		if (_fakeGamepad)
+			delete _fakeGamepad;
+
+		while (!_gamepadList.empty())
+		{
+			delete _gamepadList.back();
+			_gamepadList.pop_back();
+		}
+		_gamepadList.clear();
+	}
 
 
-void GamepadManager::add(int32_t id)
-{
-	if (SDL_IsGameController(id))
-		_gamepadList.push_back(new Gamepad(id));
-}
-
-void GamepadManager::remove(int32_t id)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
+	void GamepadManager::add(int32_t id)
+	{
 		if (SDL_IsGameController(id))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == id)
+			_gamepadList.push_back(new Gamepad(id));
+	}
+
+	void GamepadManager::remove(int32_t id)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(id))
 			{
-				delete _gamepadList[i];
-				_gamepadList.erase(_gamepadList.begin() + i);
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == id)
+				{
+					delete _gamepadList[i];
+					_gamepadList.erase(_gamepadList.begin() + i);
+					break;
+				}
 			}
-		}
-}
+	}
 
-void GamepadManager::update(void)
-{
-	for (auto& gamepad : _gamepadList)
-		gamepad->updateLastBuffer();
-}
+	void GamepadManager::update(void)
+	{
+		for (auto& gamepad : _gamepadList)
+			gamepad->updateLastBuffer();
+	}
 
-void GamepadManager::keyDown(int32_t gamepadId, const GamepadButtons &id)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
-		if (SDL_IsGameController(gamepadId))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+	void GamepadManager::keyDown(int32_t gamepadId, const GamepadButtons& id)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(gamepadId))
 			{
-				_gamepadList[i]->keyDown(id);
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+				{
+					_gamepadList[i]->keyDown(id);
+					break;
+				}
 			}
-		}
-}
+	}
 
-void GamepadManager::keyUp(int32_t gamepadId, const GamepadButtons &id)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
-		if (SDL_IsGameController(gamepadId))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+	void GamepadManager::keyUp(int32_t gamepadId, const GamepadButtons& id)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(gamepadId))
 			{
-				_gamepadList[i]->keyUp(id);
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+				{
+					_gamepadList[i]->keyUp(id);
+					break;
+				}
 			}
-		}
-}
+	}
 
-void GamepadManager::leftStickX(int32_t gamepadId, float x)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
-		if (SDL_IsGameController(gamepadId))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+	void GamepadManager::leftStickX(int32_t gamepadId, float x)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(gamepadId))
 			{
-				_gamepadList[i]->leftStick.x = x;
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+				{
+					_gamepadList[i]->leftStick.x = x;
+					break;
+				}
 			}
-		}
-}
+	}
 
-void GamepadManager::leftStickY(int32_t gamepadId, float y)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
-		if (SDL_IsGameController(gamepadId))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+	void GamepadManager::leftStickY(int32_t gamepadId, float y)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(gamepadId))
 			{
-				_gamepadList[i]->leftStick.y = y;
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+				{
+					_gamepadList[i]->leftStick.y = y;
+					break;
+				}
 			}
-		}
-}
+	}
 
-void GamepadManager::rightStickX(int32_t gamepadId, float x)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
-		if (SDL_IsGameController(gamepadId))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+	void GamepadManager::rightStickX(int32_t gamepadId, float x)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(gamepadId))
 			{
-				_gamepadList[i]->rightStick.x = x;
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+				{
+					_gamepadList[i]->rightStick.x = x;
+					break;
+				}
 			}
-		}
-}
+	}
 
-void GamepadManager::rightStickY(int32_t gamepadId, float y)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
-		if (SDL_IsGameController(gamepadId))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+	void GamepadManager::rightStickY(int32_t gamepadId, float y)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(gamepadId))
 			{
-				_gamepadList[i]->rightStick.y = y;
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+				{
+					_gamepadList[i]->rightStick.y = y;
+					break;
+				}
 			}
-		}
-}
+	}
 
-void GamepadManager::triggerLeft(int32_t gamepadId, float value)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
-		if (SDL_IsGameController(gamepadId))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+	void GamepadManager::triggerLeft(int32_t gamepadId, float value)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(gamepadId))
 			{
-				_gamepadList[i]->triggerLeft = value;
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+				{
+					_gamepadList[i]->triggerLeft = value;
+					break;
+				}
 			}
-		}
-}
+	}
 
-void GamepadManager::triggerRight(int32_t gamepadId, float value)
-{
-	for (int i = 0; i < _gamepadList.size(); i++)
-		if (SDL_IsGameController(gamepadId))
-		{
-			if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+	void GamepadManager::triggerRight(int32_t gamepadId, float value)
+	{
+		for (int i = 0; i < _gamepadList.size(); i++)
+			if (SDL_IsGameController(gamepadId))
 			{
-				_gamepadList[i]->triggerRight = value;
-				break;
+				if (SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(_gamepadList[i]->getController())) == gamepadId)
+				{
+					_gamepadList[i]->triggerRight = value;
+					break;
+				}
 			}
-		}
-}
+	}
 
-// Getters
-unsigned int GamepadManager::getGamepadNumber(void)
-{
-	return (unsigned int)_gamepadList.size();
-}
+	// Getters
+	unsigned int GamepadManager::getGamepadNumber(void)
+	{
+		return (unsigned int)_gamepadList.size();
+	}
 
-IGamepad *GamepadManager::getGamepad(unsigned int id)
-{
-	if (id < _gamepadList.size())
-		return _gamepadList[id];
-	else
-		return _fakeGamepad;
+	IGamepad* GamepadManager::getGamepad(unsigned int id)
+	{
+		if (id < _gamepadList.size())
+			return _gamepadList[id];
+		else
+			return _fakeGamepad;
+	}
+
 }

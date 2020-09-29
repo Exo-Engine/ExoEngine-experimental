@@ -47,114 +47,114 @@
 # pragma warning(disable : 4996)
 #endif
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class Log
-{
-	public:
+	class Log
+	{
+		public:
 
-		Log(const std::string &file);
-		~Log();
+			Log(const std::string &file);
+			~Log();
 
-		Log		&operator<<(std::ostream& (*pf)(std::ostream&));
+			Log		&operator<<(std::ostream& (*pf)(std::ostream&));
 
-		template	<typename T>
-		Log		&operator<<(const T &s)
-		{
-			_mutex.lock();
-			if (_start == true)
+			template	<typename T>
+			Log		&operator<<(const T &s)
 			{
-				std::string	prefix;
-				time_t		t = time(0);
-
-				prefix.resize(20);
-				prefix.resize(strftime(const_cast<char *>(prefix.c_str()), prefix.length(), "%G%m%d_%H%M%S", localtime(&t)));
-				try
+				_mutex.lock();
+				if (_start == true)
 				{
-#ifdef LOG_TERM
-					std::cout << "[" << prefix << "] " << s;
-#endif
-					_file << "[" << prefix << "] " << s;
-				}
-				catch (const std::exception &)
-				{
-					_mutex.unlock();
-					throw ;
-				}
-				_start = false;
-			}
-			else
-			{
-				try
-				{
-#ifdef LOG_TERM
-					std::cout << s;
-#endif
-					_file << s;
-				}
-				catch (const std::exception &)
-				{
-					_mutex.unlock();
-					throw ;
-				}
-			}
-			_mutex.unlock();
-			return (*this);
-		}
+					std::string	prefix;
+					time_t		t = time(0);
 
-	private:
-
-		class	LogLeveled
-		{
-			public:
-				LogLeveled(Log &log, const std::string &name, const uint8_t &color, const bool &start);
-				~LogLeveled(void);
-
-				LogLeveled		&operator<<(std::ostream& (*pf)(std::ostream&));
-
-				template		<typename T>
-				LogLeveled		&operator<<(const T &s)
-				{
-					if (_enabled)
+					prefix.resize(20);
+					prefix.resize(strftime(const_cast<char *>(prefix.c_str()), prefix.length(), "%G%m%d_%H%M%S", localtime(&t)));
+					try
 					{
-						if (_start)
-#ifdef LOG_COLORS
-							_log << "[\e[38;5;" << (int)_color << "m" << _name << "\e[0m" << "] " << s;
-#else
-							_log << "[" << _name << "] " << s;
-#endif
-						else
-							_log << s;
+	#ifdef LOG_TERM
+						std::cout << "[" << prefix << "] " << s;
+	#endif
+						_file << "[" << prefix << "] " << s;
 					}
-					return (*this);
+					catch (const std::exception &)
+					{
+						_mutex.unlock();
+						throw ;
+					}
+					_start = false;
 				}
+				else
+				{
+					try
+					{
+	#ifdef LOG_TERM
+						std::cout << s;
+	#endif
+						_file << s;
+					}
+					catch (const std::exception &)
+					{
+						_mutex.unlock();
+						throw ;
+					}
+				}
+				_mutex.unlock();
+				return (*this);
+			}
 
-				void	disable(void);
-				void	enable(void);
+		private:
 
-			private:
-				Log&		_log;
-				std::string	_name;
-				uint8_t		_color;
-				const bool&	_start;
-				bool		_enabled;
-		};
+			class	LogLeveled
+			{
+				public:
+					LogLeveled(Log &log, const std::string &name, const uint8_t &color, const bool &start);
+					~LogLeveled(void);
 
-	public:
+					LogLeveled		&operator<<(std::ostream& (*pf)(std::ostream&));
 
-		LogLeveled		error;
-		LogLeveled		warning;
-		LogLeveled		info;
-		LogLeveled		debug;
-		LogLeveled		meeseeks;
+					template		<typename T>
+					LogLeveled		&operator<<(const T &s)
+					{
+						if (_enabled)
+						{
+							if (_start)
+	#ifdef LOG_COLORS
+								_log << "[\e[38;5;" << (int)_color << "m" << _name << "\e[0m" << "] " << s;
+	#else
+								_log << "[" << _name << "] " << s;
+	#endif
+							else
+								_log << s;
+						}
+						return (*this);
+					}
 
-	private:
+					void	disable(void);
+					void	enable(void);
 
-		std::ofstream	_file;
-		bool			_start;
-		std::mutex		_mutex;
-};
+				private:
+					Log&		_log;
+					std::string	_name;
+					uint8_t		_color;
+					const bool&	_start;
+					bool		_enabled;
+			};
+
+		public:
+
+			LogLeveled		error;
+			LogLeveled		warning;
+			LogLeveled		info;
+			LogLeveled		debug;
+			LogLeveled		meeseeks;
+
+		private:
+
+			std::ofstream	_file;
+			bool			_start;
+			std::mutex		_mutex;
+	};
 
 extern Log	_log;
 

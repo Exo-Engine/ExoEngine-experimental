@@ -43,66 +43,65 @@
 
 #include <vector>
 
-namespace ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class RendererSDLOpenGL : public ExoRenderer::IRenderer
-{
-public:
+	class RendererSDLOpenGL : public IRenderer
+	{
+	public:
 
-	//	Singleton methods
-	static RendererSDLOpenGL&	Get(void);
-	static void				 Destroy(void);
+		//	Singleton methods
+		static RendererSDLOpenGL&	Get(void);
+		static void				 Destroy(void);
 
-	//	class methods
-	virtual void initialize(const std::string& title, const int width, const int height, const ExoRenderer::WindowMode &mode, bool resizable);
-	virtual void resize();
+		//	class methods
+		virtual void initialize(const std::string& title, const int width, const int height, const WindowMode &mode, bool resizable);
+		virtual void resize();
 
-	virtual ExoRenderer::ICamera		*createCamera(void);
-	virtual ExoRenderer::IAxis			*createAxis(void);
-	virtual ExoRenderer::ITexture		*createTexture(const std::string& filePath, ExoRenderer::TextureFilter filter = ExoRenderer::TextureFilter::LINEAR);
-	virtual ExoRenderer::ITexture		*createTexture(unsigned int width, unsigned int height, ExoRenderer::TextureFormat format = ExoRenderer::TextureFormat::RGBA, ExoRenderer::TextureFilter filter = ExoRenderer::TextureFilter::LINEAR);
-	virtual ExoRenderer::IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, ExoRenderer::TextureFilter filter = ExoRenderer::TextureFilter::LINEAR);
-	virtual ExoRenderer::IFrameBuffer	*createFrameBuffer(void);
+		virtual ICamera		*createCamera(void);
+		virtual IAxis			*createAxis(void);
+		virtual ITexture		*createTexture(const std::string& filePath, TextureFilter filter = TextureFilter::LINEAR);
+		virtual ITexture		*createTexture(unsigned int width, unsigned int height, TextureFormat format = TextureFormat::RGBA, TextureFilter filter = TextureFilter::LINEAR);
+		virtual IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, TextureFilter filter = TextureFilter::LINEAR);
+		virtual IFrameBuffer	*createFrameBuffer(void);
 
-	virtual void add(ExoRenderer::sprite &s);
-	virtual void remove(ExoRenderer::sprite &s);
+		virtual void add(sprite &s);
+		virtual void remove(sprite &s);
 
-	virtual void swap(void);
+		virtual void swap(void);
 
-	// Getters
-	virtual ExoRenderer::IWindow *getWindow(void);
+		// Getters
+		virtual IWindow *getWindow(void);
 
-	virtual ExoRenderer::IKeyboard *getKeyboard(void);
-	virtual ExoRenderer::IMouse *getMouse(void);
-	virtual ExoRenderer::IGamepadManager *getGamepadManager(void);
-	virtual unsigned int getTime(void) const;
+		virtual IKeyboard *getKeyboard(void);
+		virtual IMouse *getMouse(void);
+		virtual IGamepadManager *getGamepadManager(void);
+		virtual unsigned int getTime(void) const;
 
-	// Setters
-	virtual void setMousePicker(ExoRenderer::MousePicker* picker);
-	virtual void setAxis(ExoRenderer::IAxis* axis);
-	virtual void setGridEnable(bool val);
-private:
-	RendererSDLOpenGL(void);
-	virtual ~RendererSDLOpenGL(void);
+		// Setters
+		virtual void setMousePicker(MousePicker* picker);
+		virtual void setAxis(IAxis* axis);
+		virtual void setGridEnable(bool val);
+	private:
+		RendererSDLOpenGL(void);
+		virtual ~RendererSDLOpenGL(void);
 
-	void createBuffers(void);
-	void loadShaders(void);
+		void createBuffers(void);
+		void loadShaders(void);
 
-	virtual void draw(void);
-private:
-	Window* _pWindow;
+		virtual void draw(void);
+	private:
+		Window* _pWindow;
 
-	Keyboard _keyboard;
-	Mouse _mouse;
-	GamepadManager _gamepad;
+		Keyboard _keyboard;
+		Mouse _mouse;
+		GamepadManager _gamepad;
 
-	ObjectRenderer* _pObjectRenderer;
+		ObjectRenderer* _pObjectRenderer;
 
-	glm::mat4 _perspective, _orthographic;
-	int _scissorBit[4];
+		glm::mat4 _perspective;
 
-	std::thread::id _mainThread;
-};
+		std::thread::id _mainThread;
+	};
 
 }

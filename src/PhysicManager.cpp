@@ -26,41 +26,43 @@
 
 #include <thread>
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-PhysicManager::PhysicManager(void)
-{
+	PhysicManager::PhysicManager(void)
+	{
 
-}
+	}
 
-PhysicManager::~PhysicManager(void)
-{
+	PhysicManager::~PhysicManager(void)
+	{
 
-}
+	}
 
-void	PhysicManager::add(Hitbox *hitbox)
-{
+	void	PhysicManager::add(Hitbox* hitbox)
+	{
 
-}
+	}
 
-void	PhysicManager::remove(Hitbox *hitbox)
-{
+	void	PhysicManager::remove(Hitbox* hitbox)
+	{
 
-}
+	}
 
-void	PhysicManager::run(void)
-{
-	static std::chrono::high_resolution_clock::time_point	prev;
-	std::chrono::high_resolution_clock::time_point			now;
-	static const double										speed = (float)1 / (float)60;
-	double													diff;
+	void	PhysicManager::run(void)
+	{
+		static std::chrono::high_resolution_clock::time_point	prev;
+		std::chrono::high_resolution_clock::time_point			now;
+		static const double										speed = (float)1 / (float)60;
+		double													diff;
 
-	now = std::chrono::high_resolution_clock::now();
-	diff = (double)std::chrono::duration_cast<std::chrono::microseconds>(now - prev).count() / 1000000;
-	if (diff < speed)
-		std::this_thread::sleep_for(std::chrono::microseconds((size_t)((speed - diff) * 1000000)));
-	now = std::chrono::high_resolution_clock::now();
-	diff = (double)std::chrono::duration_cast<std::chrono::microseconds>(now - prev).count() / 1000000;
+		now = std::chrono::high_resolution_clock::now();
+		diff = (double)std::chrono::duration_cast<std::chrono::microseconds>(now - prev).count() / 1000000;
+		if (diff < speed)
+			std::this_thread::sleep_for(std::chrono::microseconds((size_t)((speed - diff) * 1000000)));
+		now = std::chrono::high_resolution_clock::now();
+		diff = (double)std::chrono::duration_cast<std::chrono::microseconds>(now - prev).count() / 1000000;
 
-	prev = now;
+		prev = now;
+	}
+
 }

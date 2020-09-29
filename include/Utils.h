@@ -26,7 +26,7 @@
 
 #include <string>
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 	std::string		getPath(const std::string &file);
 

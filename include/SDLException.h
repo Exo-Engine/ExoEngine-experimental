@@ -26,24 +26,24 @@
 
 #include <exception>
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class	SDLException : public std::exception
-{
-	public:
-		SDLException(void);
-		virtual	~SDLException(void);
+	class SDLException : public std::exception
+	{
+		public:
+			SDLException(void);
+			virtual	~SDLException(void);
 
-		virtual const char*	what() const noexcept;
+			virtual const char*	what() const noexcept;
 
-		SDLException	&operator=(const std::exception &);
+			SDLException	&operator=(const std::exception &);
 
-	protected:
-		SDLException(const char *error);
+		protected:
+			SDLException(const char *error);
 
-	private:
-		const char	*_error;
-};
+		private:
+			const char	*_error;
+	};
 
 }

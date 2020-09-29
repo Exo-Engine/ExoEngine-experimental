@@ -24,57 +24,58 @@
 
 #include "OALMusic.h"
 
-using namespace	ExoAudioOpenAL;
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-OALMusic::OALMusic(const std::string &filePath)
-: _pOggLoader(nullptr)
-{
-	// Create OpenAL Buffer
-	alGenBuffers(2, _id);
-
-	// Load
-	_pOggLoader = new OggLoader(filePath);
-
-	std::vector<ALshort> samples(44100);
-	alBufferData(_id[0], _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
-	samples.empty();
-	alBufferData(_id[1], _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
-}
-
-OALMusic::~OALMusic(void)
-{
-	if (_pOggLoader)
-		delete _pOggLoader;
-
-	alDeleteBuffers(2, _id);
-}
-
-void OALMusic::streamingUpdate(ALuint source)
-{
-	ALint status;
-	alGetSourcei(source, AL_SOURCE_STATE, &status);
-
-	if (status == AL_PLAYING)
+	OALMusic::OALMusic(const std::string& filePath)
+		: _pOggLoader(nullptr)
 	{
-		ALint nbProcessed;
-		alGetSourcei(source, AL_BUFFERS_PROCESSED, &nbProcessed);
+		// Create OpenAL Buffer
+		alGenBuffers(2, _id);
 
-		for (ALint i = 0; i < nbProcessed; ++i)
+		// Load
+		_pOggLoader = new OggLoader(filePath);
+
+		std::vector<ALshort> samples(44100);
+		alBufferData(_id[0], _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
+		samples.empty();
+		alBufferData(_id[1], _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
+	}
+
+	OALMusic::~OALMusic(void)
+	{
+		if (_pOggLoader)
+			delete _pOggLoader;
+
+		alDeleteBuffers(2, _id);
+	}
+
+	void OALMusic::streamingUpdate(ALuint source)
+	{
+		ALint status;
+		alGetSourcei(source, AL_SOURCE_STATE, &status);
+
+		if (status == AL_PLAYING)
 		{
-			ALuint bufferId;
-			alSourceUnqueueBuffers(source, 1, &bufferId);
+			ALint nbProcessed;
+			alGetSourcei(source, AL_BUFFERS_PROCESSED, &nbProcessed);
 
-			std::vector<ALshort> samples(44100);
-			alBufferData(bufferId, _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
+			for (ALint i = 0; i < nbProcessed; ++i)
+			{
+				ALuint bufferId;
+				alSourceUnqueueBuffers(source, 1, &bufferId);
 
-			alSourceQueueBuffers(source, 1, &bufferId);
+				std::vector<ALshort> samples(44100);
+				alBufferData(bufferId, _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
+
+				alSourceQueueBuffers(source, 1, &bufferId);
+			}
 		}
 	}
-}
 
-// Getters
-ALuint* OALMusic::getBuffers(void)
-{
-	return _id;
+	// Getters
+	ALuint* OALMusic::getBuffers(void)
+	{
+		return _id;
+	}
+
 }

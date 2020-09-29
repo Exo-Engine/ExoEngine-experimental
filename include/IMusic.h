@@ -26,14 +26,14 @@
 
 #include <string>
 
-namespace	ExoAudio
+namespace ExoEngine
 {
 
-class IMusic
-{
-public:
-	IMusic(void);
-	virtual ~IMusic(void);
-};
+	class IMusic
+	{
+	public:
+		IMusic(void);
+		virtual ~IMusic(void);
+	};
 
 }

@@ -26,23 +26,23 @@
 
 #include "IMouse.h"
 
-namespace	ExoRendererSDLOpenGL
+namespace ExoEngine
 {
 
-class Mouse : public ExoRenderer::IMouse
-{
-public:
-	Mouse(void);
-	virtual ~Mouse(void);
+	class Mouse : public IMouse
+	{
+	public:
+		Mouse(void);
+		virtual ~Mouse(void);
 
-	virtual void keyDown(const ExoRenderer::MouseButtons &id);
-	virtual void keyUp(const ExoRenderer::MouseButtons &id);
+		virtual void keyDown(const MouseButtons &id);
+		virtual void keyUp(const MouseButtons &id);
 
-	virtual bool isKeyDown(const ExoRenderer::MouseButtons &id) const;
-	virtual bool lastIsKeyDown(const ExoRenderer::MouseButtons &id) const;
+		virtual bool isKeyDown(const MouseButtons &id) const;
+		virtual bool lastIsKeyDown(const MouseButtons &id) const;
 
-	// Getters
-	ExoRenderer::MouseButtons getMouseInput(const unsigned int &id) const;
-};
+		// Getters
+		MouseButtons getMouseInput(const unsigned int &id) const;
+	};
 
 }

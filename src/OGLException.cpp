@@ -26,37 +26,39 @@
 
 #include <utility>
 
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-OGLException::OGLException(GLenum error)
-{
-}
+	OGLException::OGLException(GLenum error)
+	{
+	}
 
-OGLException::~OGLException(void)
-{
-}
+	OGLException::~OGLException(void)
+	{
+	}
 
-static std::pair<GLenum, const char*>	openglErrors[] = {
-	{GL_NO_ERROR, "GL_NO_ERROR"},
-	{GL_INVALID_ENUM, "GL_INVALID_ENUM"},
-	{GL_INVALID_VALUE, "GL_INVALID_VALUE"},
-	{GL_INVALID_OPERATION, "GL_INVALID_OPERATION"},
-	{GL_STACK_OVERFLOW, "GL_STACK_OVERFLOW"},
-	{GL_STACK_UNDERFLOW, "GL_STACK_UNDERFLOW"},
-	{GL_OUT_OF_MEMORY, "GL_OUT_OF_MEMORY"},
-	{GL_TRUE, "GL_TRUE"},
-	{GL_FALSE, "GL_FALSE"}
-};
+	static std::pair<GLenum, const char*>	openglErrors[] = {
+		{GL_NO_ERROR, "GL_NO_ERROR"},
+		{GL_INVALID_ENUM, "GL_INVALID_ENUM"},
+		{GL_INVALID_VALUE, "GL_INVALID_VALUE"},
+		{GL_INVALID_OPERATION, "GL_INVALID_OPERATION"},
+		{GL_STACK_OVERFLOW, "GL_STACK_OVERFLOW"},
+		{GL_STACK_UNDERFLOW, "GL_STACK_UNDERFLOW"},
+		{GL_OUT_OF_MEMORY, "GL_OUT_OF_MEMORY"},
+		{GL_TRUE, "GL_TRUE"},
+		{GL_FALSE, "GL_FALSE"}
+	};
 
-const char*	OGLException::what() const noexcept
-{
-	for (const std::pair<GLenum, const char*>& openglError : openglErrors)
-		if (openglError.first == _error)
-			return (openglError.second);
-	return ("UNKNOWN");
-}
+	const char* OGLException::what() const noexcept
+	{
+		for (const std::pair<GLenum, const char*>& openglError : openglErrors)
+			if (openglError.first == _error)
+				return (openglError.second);
+		return ("UNKNOWN");
+	}
 
-OGLException	&OGLException::operator=(const std::exception &)
-{
-	return (*this);
+	OGLException& OGLException::operator=(const std::exception&)
+	{
+		return (*this);
+	}
+
 }

@@ -25,39 +25,41 @@
 #include "Task.h"
 #include <string.h>
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-Task::Task(void) : _function(nullptr), _finishCallback(nullptr), _cancelCallback(nullptr)
-{
-}
+	Task::Task(void) : _function(nullptr), _finishCallback(nullptr), _cancelCallback(nullptr)
+	{
+	}
 
-Task::Task(const Task &src)
-{
-	memcpy(this, &src, sizeof(Task));
-}
+	Task::Task(const Task& src)
+	{
+		memcpy(this, &src, sizeof(Task));
+	}
 
-Task::Task(void (*function)(void), void (*finishCallback)(void), void (*cancelCallback)(void)) : _function(function), _finishCallback(finishCallback), _cancelCallback(cancelCallback)
-{
-}
+	Task::Task(void (*function)(void), void (*finishCallback)(void), void (*cancelCallback)(void)) : _function(function), _finishCallback(finishCallback), _cancelCallback(cancelCallback)
+	{
+	}
 
-Task::~Task(void)
-{
-}
+	Task::~Task(void)
+	{
+	}
 
-void	Task::launch(void) const
-{
-	if (_function)
-		_function();
-}
+	void	Task::launch(void) const
+	{
+		if (_function)
+			_function();
+	}
 
-void	Task::finish(void) const
-{
-	if (_finishCallback)
-		_finishCallback();
-}
+	void	Task::finish(void) const
+	{
+		if (_finishCallback)
+			_finishCallback();
+	}
 
-void	Task::cancel(void) const
-{
-	if (_cancelCallback)
-		_cancelCallback();
+	void	Task::cancel(void) const
+	{
+		if (_cancelCallback)
+			_cancelCallback();
+	}
+
 }

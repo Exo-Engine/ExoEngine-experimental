@@ -26,95 +26,96 @@
 
 #include <stdexcept>
 
-using namespace	ExoAudioOpenAL;
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-static OALAudio*	g_instance = nullptr;
+	static OALAudio* g_instance = nullptr;
 
-OALAudio&	OALAudio::Get(void)
-{
-	if (!g_instance)
-		g_instance = new OALAudio();
-	return (*g_instance);
-}
-
-OALAudio::OALAudio(void)
-: _pDevice(nullptr), _pContext(nullptr)
-{	}
-
-OALAudio::~OALAudio(void)
-{
-	alcMakeContextCurrent(nullptr);
-	alcDestroyContext(_pContext);
-	alcCloseDevice(_pDevice);
-}
-
-void OALAudio::initialize(void)
-{
-	_pDevice = alcOpenDevice(nullptr); // Default device
-	if (!_pDevice)
-		throw (std::runtime_error("OpenAL error when opening the default device"));
-
-	_pContext = alcCreateContext(_pDevice, nullptr);
-	if (!_pContext)
-		throw (std::runtime_error("OpenAL error when creating the context"));
-
-	// Activate context
-	if (!alcMakeContextCurrent(_pContext))
-		throw (std::runtime_error("OpenAL error when activating the context"));
-
-	// Static orientation for 2D, look at Z
-	ALfloat Orientation[] = {0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f};
-	alListenerfv(AL_ORIENTATION, Orientation);
-
-	// Default position
-	alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
-	alListener3f(AL_VELOCITY, 0.0f, 0.0f, 0.0f);
-	alListenerf(AL_GAIN, 1.0f);
-}
-
-void OALAudio::getDevices(std::vector<std::string> &devices)
-{
-	// Clear list
-	devices.clear();
-
-	// Get all devices
-	const ALCchar* deviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
-
-	// Write in vector
-	if (deviceList)
+	OALAudio& OALAudio::Get(void)
 	{
-		while (strlen(deviceList) > 0)
+		if (!g_instance)
+			g_instance = new OALAudio();
+		return (*g_instance);
+	}
+
+	OALAudio::OALAudio(void)
+		: _pDevice(nullptr), _pContext(nullptr)
+	{	}
+
+	OALAudio::~OALAudio(void)
+	{
+		alcMakeContextCurrent(nullptr);
+		alcDestroyContext(_pContext);
+		alcCloseDevice(_pDevice);
+	}
+
+	void OALAudio::initialize(void)
+	{
+		_pDevice = alcOpenDevice(nullptr); // Default device
+		if (!_pDevice)
+			throw (std::runtime_error("OpenAL error when opening the default device"));
+
+		_pContext = alcCreateContext(_pDevice, nullptr);
+		if (!_pContext)
+			throw (std::runtime_error("OpenAL error when creating the context"));
+
+		// Activate context
+		if (!alcMakeContextCurrent(_pContext))
+			throw (std::runtime_error("OpenAL error when activating the context"));
+
+		// Static orientation for 2D, look at Z
+		ALfloat Orientation[] = { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f };
+		alListenerfv(AL_ORIENTATION, Orientation);
+
+		// Default position
+		alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
+		alListener3f(AL_VELOCITY, 0.0f, 0.0f, 0.0f);
+		alListenerf(AL_GAIN, 1.0f);
+	}
+
+	void OALAudio::getDevices(std::vector<std::string>& devices)
+	{
+		// Clear list
+		devices.clear();
+
+		// Get all devices
+		const ALCchar* deviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+
+		// Write in vector
+		if (deviceList)
 		{
-			devices.push_back(deviceList);
-			deviceList += strlen(deviceList) + 1;
+			while (strlen(deviceList) > 0)
+			{
+				devices.push_back(deviceList);
+				deviceList += strlen(deviceList) + 1;
+			}
 		}
 	}
-}
 
-void OALAudio::updateListener(const glm::vec3 &position, const glm::vec3 &velocity, float volume)
-{
-	alListener3f(AL_POSITION, position.x, position.y, position.z);
-	alListener3f(AL_VELOCITY, velocity.x, velocity.y, velocity.z);
-	alListenerf(AL_GAIN, volume == 0.0f ? 0.000001f : volume);
-}
+	void OALAudio::updateListener(const glm::vec3& position, const glm::vec3& velocity, float volume)
+	{
+		alListener3f(AL_POSITION, position.x, position.y, position.z);
+		alListener3f(AL_VELOCITY, velocity.x, velocity.y, velocity.z);
+		alListenerf(AL_GAIN, volume == 0.0f ? 0.000001f : volume);
+	}
 
-void OALAudio::updateVolume(float volume)
-{
-	alListenerf(AL_GAIN, volume == 0.0f ? 0.000001f : volume);
-}
+	void OALAudio::updateVolume(float volume)
+	{
+		alListenerf(AL_GAIN, volume == 0.0f ? 0.000001f : volume);
+	}
 
-ISource* OALAudio::createSource(void)
-{
-	return new OALSource();
-}
+	ISource* OALAudio::createSource(void)
+	{
+		return new OALSource();
+	}
 
-ISound* OALAudio::createSound(const std::string& filePath)
-{
-	return new OALSound(filePath);
-}
+	ISound* OALAudio::createSound(const std::string& filePath)
+	{
+		return new OALSound(filePath);
+	}
 
-IMusic* OALAudio::createMusic(const std::string& filePath)
-{
-	return new OALMusic(filePath);
+	IMusic* OALAudio::createMusic(const std::string& filePath)
+	{
+		return new OALMusic(filePath);
+	}
+
 }

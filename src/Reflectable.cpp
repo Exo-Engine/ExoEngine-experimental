@@ -24,48 +24,50 @@
 
 #include "Reflectable.h"
 
-using namespace	ExoEngine;
+namespace ExoEngine {
 
-reflection::IReflectable::IReflectable(void)
-{
-}
-
-reflection::IReflectable::~IReflectable(void)
-{
-}
-
-void	reflection::IReflectable::read(Message& src)
-{
-	read(src, 0);
-}
-
-reflection::ReflectableClass::ReflectableClass(void)
-{
-}
-reflection::ReflectableClass::~ReflectableClass(void)
-{
-}
-
-void	reflection::ReflectableClass::write(Message& dst)
-{
-	for (auto member = _members.begin(); member != _members.end(); member++)
+	reflection::IReflectable::IReflectable(void)
 	{
-		(*member)->write(dst);
 	}
-}
 
-size_t	reflection::ReflectableClass::read(Message& src, size_t index)
-{
-	for (auto member = _members.begin(); member != _members.end(); member++)
+	reflection::IReflectable::~IReflectable(void)
 	{
-		try
+	}
+
+	void	reflection::IReflectable::read(Message& src)
+	{
+		read(src, 0);
+	}
+
+	reflection::ReflectableClass::ReflectableClass(void)
+	{
+	}
+	reflection::ReflectableClass::~ReflectableClass(void)
+	{
+	}
+
+	void	reflection::ReflectableClass::write(Message& dst)
+	{
+		for (auto member = _members.begin(); member != _members.end(); member++)
 		{
-			index = (*member)->read(src, index);
-		}
-		catch (const std::exception &)
-		{
-			throw ;
+			(*member)->write(dst);
 		}
 	}
-	return (index);
+
+	size_t	reflection::ReflectableClass::read(Message& src, size_t index)
+	{
+		for (auto member = _members.begin(); member != _members.end(); member++)
+		{
+			try
+			{
+				index = (*member)->read(src, index);
+			}
+			catch (const std::exception&)
+			{
+				throw;
+			}
+		}
+		return (index);
+	}
+
 }

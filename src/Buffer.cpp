@@ -25,23 +25,22 @@
 #include "Buffer.h"
 #include "Texture.h"
 
-using namespace ExoRenderer;
-using namespace ExoRendererSDLOpenGL;
+namespace ExoEngine {
 
-Buffer::Buffer(void)
-: _id(0)
-{	}
+	Buffer::Buffer(void)
+		: _id(0)
+	{	}
 
-Buffer::Buffer(unsigned long count, unsigned int size, const void* data, BufferType type, BufferDraw usage, unsigned char attribArray, bool normalized)
-: _id(0)
-{
-	initialize(count, size, data, type, usage, attribArray, normalized);
-}
-
-Buffer::~Buffer(void)
-{
-	switch (_type)
+	Buffer::Buffer(unsigned long count, unsigned int size, const void* data, BufferType type, BufferDraw usage, unsigned char attribArray, bool normalized)
+		: _id(0)
 	{
+		initialize(count, size, data, type, usage, attribArray, normalized);
+	}
+
+	Buffer::~Buffer(void)
+	{
+		switch (_type)
+		{
 		case BufferType::VERTEXARRAY:
 			glDeleteVertexArrays(1, &_id);
 			break;
@@ -51,16 +50,16 @@ Buffer::~Buffer(void)
 		default:
 			glDeleteBuffers(1, &_id);
 			break;
+		}
 	}
-}
 
-void Buffer::initialize(unsigned long count, unsigned int size, const void* data, BufferType type, BufferDraw usage, unsigned char attribArray, bool normalized)
-{
-	_count = count;
-	_type = type;
-
-	switch (_type)
+	void Buffer::initialize(unsigned long count, unsigned int size, const void* data, BufferType type, BufferDraw usage, unsigned char attribArray, bool normalized)
 	{
+		_count = count;
+		_type = type;
+
+		switch (_type)
+		{
 		case BufferType::VERTEXARRAY:
 			GL_CALL(glGenVertexArrays(1, &_id));
 			GL_CALL(glBindVertexArray(_id));
@@ -82,23 +81,23 @@ void Buffer::initialize(unsigned long count, unsigned int size, const void* data
 			GL_CALL(glGenRenderbuffers(1, &_id));
 			GL_CALL(glBindRenderbuffer(GL_RENDERBUFFER, _id));
 			break;
+		}
 	}
-}
 
-void Buffer::updateSubData(unsigned long count, const void* data)
-{
-	if (_type == BufferType::ARRAYBUFFER || _type == BufferType::INDEXBUFFER)
+	void Buffer::updateSubData(unsigned long count, const void* data)
 	{
-		bind();
-		GL_CALL(glBufferSubData(GL_ARRAY_BUFFER, 0, count * sizeof(GL_FLOAT), data));
-		unbind();
+		if (_type == BufferType::ARRAYBUFFER || _type == BufferType::INDEXBUFFER)
+		{
+			bind();
+			GL_CALL(glBufferSubData(GL_ARRAY_BUFFER, 0, count * sizeof(GL_FLOAT), data));
+			unbind();
+		}
 	}
-}
 
-void Buffer::bind(void) const
-{
-	switch (_type)
+	void Buffer::bind(void) const
 	{
+		switch (_type)
+		{
 		case BufferType::VERTEXARRAY:
 			GL_CALL(glBindVertexArray(_id));
 			break;
@@ -111,13 +110,13 @@ void Buffer::bind(void) const
 		case BufferType::RENDERBUFFER:
 			GL_CALL(glBindRenderbuffer(GL_RENDERBUFFER, _id));
 			break;
+		}
 	}
-}
 
-void Buffer::unbind(void) const
-{
-	switch (_type)
+	void Buffer::unbind(void) const
 	{
+		switch (_type)
+		{
 		case BufferType::VERTEXARRAY:
 			GL_CALL(glBindVertexArray(0));
 			break;
@@ -130,11 +129,13 @@ void Buffer::unbind(void) const
 		case BufferType::RENDERBUFFER:
 			GL_CALL(glBindRenderbuffer(GL_RENDERBUFFER, 0));
 			break;
+		}
 	}
-}
 
-// Getters
-GLuint Buffer::getBuffer(void) const
-{
-	return _id;
+	// Getters
+	GLuint Buffer::getBuffer(void) const
+	{
+		return _id;
+	}
+
 }

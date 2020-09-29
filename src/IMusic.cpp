@@ -24,10 +24,12 @@
 
 #include "IMusic.h"
 
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-IMusic::IMusic()
-{	}
+	IMusic::IMusic()
+	{	}
 
-IMusic::~IMusic()
-{	}
+	IMusic::~IMusic()
+	{	}
+
+}

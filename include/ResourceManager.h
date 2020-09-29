@@ -38,54 +38,54 @@
 
 #include "Log.h"
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class ResourceManager : public IResource
-{
-	public:
-		ResourceManager(ExoRenderer::IRenderer* renderer, ExoAudio::IAudio* audio);
-		virtual ~ResourceManager(void);
+	class ResourceManager : public IResource
+	{
+		public:
+			ResourceManager(IRenderer* renderer, IAudio* audio);
+			virtual ~ResourceManager(void);
 
-		ExoRenderer::IRenderer*	getRenderer(void) const;
+			IRenderer*	getRenderer(void) const;
 
-		void load(const std::string &file);
+			void load(const std::string &file);
 
-		const std::string	&getProperty(const std::string &name);
+			const std::string	&getProperty(const std::string &name);
 
-		const std::shared_ptr<IResource>& get(const std::string& name);
+			const std::shared_ptr<IResource>& get(const std::string& name);
 
-		template <typename T>
-		std::shared_ptr<T> get(const std::string& name)
-		{
-			auto res = _resources.find(name);
-			if (res != _resources.end())
-				return (std::dynamic_pointer_cast<T>(res->second));
+			template <typename T>
+			std::shared_ptr<T> get(const std::string& name)
+			{
+				auto res = _resources.find(name);
+				if (res != _resources.end())
+					return (std::dynamic_pointer_cast<T>(res->second));
 
-			return nullptr;
-		}
+				return nullptr;
+			}
 
-	private:
+		private:
 
-		void	loadProperties(xmlNodePtr node);
+			void	loadProperties(xmlNodePtr node);
 
-		void	loadTexture(const std::string &path, xmlNodePtr node);
-		void	loadArrayTexture(const std::string &path, xmlNodePtr node);
-		void	loadSound(const std::string &path, xmlNodePtr node);
-		void	loadSubResource(const std::string &path, xmlNodePtr node);
-		void	loadHitboxes(const std::string &path, xmlNodePtr node);
-		void	loadReference(const std::string &path, xmlNodePtr node);
+			void	loadTexture(const std::string &path, xmlNodePtr node);
+			void	loadArrayTexture(const std::string &path, xmlNodePtr node);
+			void	loadSound(const std::string &path, xmlNodePtr node);
+			void	loadSubResource(const std::string &path, xmlNodePtr node);
+			void	loadHitboxes(const std::string &path, xmlNodePtr node);
+			void	loadReference(const std::string &path, xmlNodePtr node);
 
-		template	<typename T>
-		void	add(const std::string &name, const std::shared_ptr<T> &resource)
-		{
-			_resources[name] = std::dynamic_pointer_cast<IResource>(resource);
-		}
+			template	<typename T>
+			void	add(const std::string &name, const std::shared_ptr<T> &resource)
+			{
+				_resources[name] = std::dynamic_pointer_cast<IResource>(resource);
+			}
 
-		ExoRenderer::IRenderer*								_renderer;
-		ExoAudio::IAudio*									_audio;
-		std::map<std::string, std::shared_ptr<IResource>>	_resources;
-		std::map<std::string, std::string>					_properties;
-};
+			IRenderer*								_renderer;
+			IAudio*									_audio;
+			std::map<std::string, std::shared_ptr<IResource>>	_resources;
+			std::map<std::string, std::string>					_properties;
+	};
 
 }

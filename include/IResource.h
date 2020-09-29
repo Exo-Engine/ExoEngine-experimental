@@ -23,17 +23,17 @@
  */
 
 #ifndef IRESOURCE_H
-# define IRESOURCE_H
+#define IRESOURCE_H
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class IResource
-{
-public:
-	IResource(void) { }
-	virtual ~IResource(void) { }
-};
+	class IResource
+	{
+	public:
+		IResource(void) { }
+		virtual ~IResource(void) { }
+	};
 
 }
 

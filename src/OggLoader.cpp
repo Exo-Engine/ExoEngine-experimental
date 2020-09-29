@@ -26,76 +26,78 @@
 
 #include <stdexcept>
 
-using namespace	ExoAudio;
+namespace ExoEngine {
 
-OggLoader::OggLoader(const std::string &filePath)
-: _file(nullptr), _format(0), _sampleRate(0), _totalRead(0)
-{
-	// Open for binary reading
-	_file = fopen(filePath.c_str(), "rb");
-	if (!_file)
-		 throw (std::invalid_argument("Error: Ogg file " + filePath + " not found!"));
-
-	// Open stream flux
-	if (ov_open(_file, &_stream, nullptr, 0) < 0)
-		throw (std::invalid_argument("Error: ogg-vorbis flux corrupted"));
-
-	// Check the number of channels & the frequency of the sampling rate
-	vorbis_info *pInfos = ov_info(&_stream, -1);
-	_format = pInfos->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-	_sampleRate = (int)pInfos->rate;
-}
-
-OggLoader::~OggLoader(void)
-{
-	ov_clear(&_stream);
-}
-
-void OggLoader::readAll(std::vector<char> &buffer, int nbSamples)
-{
-	long bytes = 0;
-	std::vector<char> array;
-
-	array.resize(nbSamples);
-	do
+	OggLoader::OggLoader(const std::string& filePath)
+		: _file(nullptr), _format(0), _sampleRate(0), _totalRead(0)
 	{
-		bytes = ov_read(&_stream, array.data(), nbSamples, 0, 2, 1, nullptr);
-		buffer.insert(buffer.end(), array.begin(), array.begin() + bytes);
-	} while (bytes > 0);
-}
+		// Open for binary reading
+		_file = fopen(filePath.c_str(), "rb");
+		if (!_file)
+			throw (std::invalid_argument("Error: Ogg file " + filePath + " not found!"));
 
-char* OggLoader::readSample(std::vector<short> &samples, int nbSamples)
-{
-	ALsizei totalSize = nbSamples * sizeof(ALshort);
-	char* samplesPtr = reinterpret_cast<char*>(&samples[0]);
-	_totalRead	= 0;
+		// Open stream flux
+		if (ov_open(_file, &_stream, nullptr, 0) < 0)
+			throw (std::invalid_argument("Error: ogg-vorbis flux corrupted"));
 
-	// Decoding
-	while (_totalRead < totalSize)
-	{
-		int read = (int)ov_read(&_stream, samplesPtr + _totalRead, totalSize - _totalRead, 0, 2, 1, nullptr);
-
-		if (read > 0)
-			_totalRead += read;
-		else // Error when we reading, stop
-			break;
+		// Check the number of channels & the frequency of the sampling rate
+		vorbis_info* pInfos = ov_info(&_stream, -1);
+		_format = pInfos->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+		_sampleRate = (int)pInfos->rate;
 	}
 
-	return samplesPtr;
-}
+	OggLoader::~OggLoader(void)
+	{
+		ov_clear(&_stream);
+	}
 
-// Getters
-int OggLoader::getFormat(void) const
-{
-	return _format;
-}
+	void OggLoader::readAll(std::vector<char>& buffer, int nbSamples)
+	{
+		long bytes = 0;
+		std::vector<char> array;
 
-int OggLoader::getSampleRate(void) const
-{
-	return _sampleRate;
-}
+		array.resize(nbSamples);
+		do
+		{
+			bytes = ov_read(&_stream, array.data(), nbSamples, 0, 2, 1, nullptr);
+			buffer.insert(buffer.end(), array.begin(), array.begin() + bytes);
+		} while (bytes > 0);
+	}
 
-int OggLoader::getTotalRead(void) const
-{
-	return _totalRead;
+	char* OggLoader::readSample(std::vector<short>& samples, int nbSamples)
+	{
+		ALsizei totalSize = nbSamples * sizeof(ALshort);
+		char* samplesPtr = reinterpret_cast<char*>(&samples[0]);
+		_totalRead = 0;
+
+		// Decoding
+		while (_totalRead < totalSize)
+		{
+			int read = (int)ov_read(&_stream, samplesPtr + _totalRead, totalSize - _totalRead, 0, 2, 1, nullptr);
+
+			if (read > 0)
+				_totalRead += read;
+			else // Error when we reading, stop
+				break;
+		}
+
+		return samplesPtr;
+	}
+
+	// Getters
+	int OggLoader::getFormat(void) const
+	{
+		return _format;
+	}
+
+	int OggLoader::getSampleRate(void) const
+	{
+		return _sampleRate;
+	}
+
+	int OggLoader::getTotalRead(void) const
+	{
+		return _totalRead;
+	}
+
 }

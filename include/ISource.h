@@ -29,37 +29,37 @@
 #include "ISound.h"
 #include "IMusic.h"
 
-namespace	ExoAudio
+namespace ExoEngine
 {
 
-class ISource
-{
-public:
-	enum SourceState {
-		INITIAL,
-		STOPPED,
-		PLAYING,
-		PAUSED
+	class ISource
+	{
+	public:
+		enum SourceState {
+			INITIAL,
+			STOPPED,
+			PLAYING,
+			PAUSED
+		};
+	public:
+		ISource(void);
+		virtual ~ISource(void);
+
+		virtual void play(void) const = 0;
+		virtual void stop(void) const = 0;
+		virtual void rewind(void) const = 0;
+
+		virtual void streamingUpdate(void) const = 0;
+
+		// Getters
+		virtual SourceState getState(void) = 0;
+
+		// Setters
+		virtual void setAudio(const ISound* sound) = 0;
+		virtual void setAudio(const IMusic* music) = 0;
+		virtual void setPosition(const glm::vec3 &position) = 0;
+		virtual void setVolume(float volume) = 0;
+		virtual void setPitch(float pitch) = 0;
 	};
-public:
-	ISource(void);
-	virtual ~ISource(void);
-
-	virtual void play(void) const = 0;
-	virtual void stop(void) const = 0;
-	virtual void rewind(void) const = 0;
-
-	virtual void streamingUpdate(void) const = 0;
-
-	// Getters
-	virtual SourceState getState(void) = 0;
-
-	// Setters
-	virtual void setAudio(const ISound* sound) = 0;
-	virtual void setAudio(const IMusic* music) = 0;
-	virtual void setPosition(const glm::vec3 &position) = 0;
-	virtual void setVolume(float volume) = 0;
-	virtual void setPitch(float pitch) = 0;
-};
 
 }

@@ -28,33 +28,33 @@
 #include <ctime>
 #include <chrono>
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	Alarm
-{
-	public:
-		Alarm(const Task &task, const std::chrono::time_point<std::chrono::high_resolution_clock> &time);
-		Alarm(const Task &task, const std::chrono::high_resolution_clock::duration &time);
-		~Alarm(void);
+	class Alarm
+	{
+		public:
+			Alarm(const Task &task, const std::chrono::time_point<std::chrono::high_resolution_clock> &time);
+			Alarm(const Task &task, const std::chrono::high_resolution_clock::duration &time);
+			~Alarm(void);
 
-		const Task	&getTask(void) const;
+			const Task	&getTask(void) const;
 
-		bool	elapsed(void) const;
-		bool	elapsed(const std::chrono::time_point<std::chrono::high_resolution_clock> &now) const;
+			bool	elapsed(void) const;
+			bool	elapsed(const std::chrono::time_point<std::chrono::high_resolution_clock> &now) const;
 
-		bool	operator<(const Alarm &b) const;
-		bool	operator>(const Alarm &b) const;
-		bool	operator<=(const Alarm &b) const;
-		bool	operator>=(const Alarm &b) const;
-		bool	operator==(const Alarm &b) const;
-		bool	operator!=(const Alarm &b) const;
+			bool	operator<(const Alarm &b) const;
+			bool	operator>(const Alarm &b) const;
+			bool	operator<=(const Alarm &b) const;
+			bool	operator>=(const Alarm &b) const;
+			bool	operator==(const Alarm &b) const;
+			bool	operator!=(const Alarm &b) const;
 
-	protected:
-		std::chrono::time_point<std::chrono::high_resolution_clock>	_time;
+		protected:
+			std::chrono::time_point<std::chrono::high_resolution_clock>	_time;
 
-	private:
-		Task														_task;
-};
+		private:
+			Task _task;
+	};
 
 }

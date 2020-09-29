@@ -24,14 +24,18 @@
 
 #include "Utils.h"
 
-std::string		ExoEngine::getPath(const std::string &file)
-{
-	size_t	i;
+namespace ExoEngine {
 
-	for (i = file.length() - 1; i != (size_t)-1 && file[i] != '/'; i--)
-		;
-	if (i)
-		return (std::string(file, 0, i + 1));
-	else
-		return ("");
+	std::string	getPath(const std::string& file)
+	{
+		size_t	i;
+
+		for (i = file.length() - 1; i != (size_t)-1 && file[i] != '/'; i--)
+			;
+		if (i)
+			return (std::string(file, 0, i + 1));
+		else
+			return ("");
+	}
+
 }

@@ -29,21 +29,21 @@
 
 #include <list>
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	AlarmQueue
-{
-	public:
-		AlarmQueue(TaskQueue &taskQueue);
-		~AlarmQueue(void);
+	class	AlarmQueue
+	{
+		public:
+			AlarmQueue(TaskQueue &taskQueue);
+			~AlarmQueue(void);
 
-		void	add(const Alarm &alarm);
-		void	manage(void);
-	private:
-		TaskQueue&			_taskQueue;
-		std::list<Alarm>	_alarms;
-		std::mutex			_mutex;
-};
+			void	add(const Alarm &alarm);
+			void	manage(void);
+		private:
+			TaskQueue&			_taskQueue;
+			std::list<Alarm>	_alarms;
+			std::mutex			_mutex;
+	};
 
 }

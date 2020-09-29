@@ -26,19 +26,19 @@
 
 #include "Hitbox.h"
 
-namespace	ExoEngine
+namespace ExoEngine
 {
 
-class	PhysicManager
-{
-	public:
-		PhysicManager(void);
-		~PhysicManager(void);
+	class PhysicManager
+	{
+		public:
+			PhysicManager(void);
+			~PhysicManager(void);
 
-		void	add(Hitbox *hitbox);
-		void	remove(Hitbox *hitbox);
+			void	add(Hitbox *hitbox);
+			void	remove(Hitbox *hitbox);
 
-		void	run(void);
-};
+			void	run(void);
+	};
 
 }
