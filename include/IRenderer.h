@@ -28,10 +28,10 @@
 
 #include "Enums.h"
 #include "IWindow.h"
-#include "IKeyboard.h"
+#include "Keyboard.h"
 #include "ICamera.h"
 #include "IGamepadManager.h"
-#include "IMouse.h"
+#include "Mouse.h"
 #include "IShader.h"
 #include "ITexture.h"
 #include "IArrayTexture.h"
@@ -71,8 +71,8 @@ namespace ExoEngine
 		ICamera *getCurrentCamera(void) { return _pCurrentCamera; }
 		virtual IWindow *getWindow(void) = 0;
 
-		virtual IKeyboard *getKeyboard(void) = 0;
-		virtual IMouse *getMouse(void) = 0;
+		virtual Keyboard *getKeyboard(void) = 0;
+		virtual Mouse *getMouse(void) = 0;
 		virtual IGamepadManager *getGamepadManager(void) = 0;
 		virtual unsigned int getTime(void) const = 0;
 

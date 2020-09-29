@@ -24,12 +24,15 @@
 
 #pragma once
 
-#include "IMouse.h"
+#include <glm/vec2.hpp>
+#include <cstring>
+
+#include "Enums.h"
 
 namespace ExoEngine
 {
 
-	class Mouse : public IMouse
+	class Mouse
 	{
 	public:
 		Mouse(void);
@@ -41,8 +44,18 @@ namespace ExoEngine
 		virtual bool isKeyDown(const MouseButtons &id) const;
 		virtual bool lastIsKeyDown(const MouseButtons &id) const;
 
+		void reset(void);
+		void updateLastBuffer(void);
+
 		// Getters
 		MouseButtons getMouseInput(const unsigned int &id) const;
+	public:
+		uint16_t x, y;
+		uint16_t lastX, lastY;
+		int wheelX, wheelY;
+	private:
+		bool _buffer[MOUSE_BUTTON_MAX];
+		bool _lastBuffer[MOUSE_BUTTON_MAX];
 	};
 
 }

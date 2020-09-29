@@ -38,7 +38,7 @@ namespace ExoEngine {
 
 	}
 
-	void Camera::update(IMouse* mouse, IKeyboard* keyboard, IGamepad* gamepad)
+	void Camera::update(Mouse* mouse, Keyboard* keyboard, IGamepad* gamepad)
 	{
 		(void)mouse;
 

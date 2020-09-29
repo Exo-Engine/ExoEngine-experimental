@@ -25,8 +25,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "IMouse.h"
-#include "IKeyboard.h"
+#include "Mouse.h"
+#include "Keyboard.h"
 #include "IGamepad.h"
 
 namespace ExoEngine
@@ -41,7 +41,7 @@ namespace ExoEngine
 		virtual ~ICamera(void)
 		{ };
 
-		virtual void update(IMouse* mouse, IKeyboard* keyboard, IGamepad* gamepad) = 0;
+		virtual void update(Mouse* mouse, Keyboard* keyboard, IGamepad* gamepad) = 0;
 		void resetFollowedEntity(void) { _pFollowedEntity = nullptr; _pFollowedEntitySize = nullptr; }
 
 		// Getters

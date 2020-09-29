@@ -26,6 +26,7 @@
 
 #include <string>
 #include <map>
+
 #include "Singleton.h"
 
 namespace ExoEngine

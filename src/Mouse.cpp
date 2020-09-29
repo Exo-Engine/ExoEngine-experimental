@@ -28,7 +28,11 @@
 namespace ExoEngine {
 
 	Mouse::Mouse(void)
-	{	}
+		: x(0), y(0), wheelX(0), wheelY(0)
+	{	
+		for (unsigned int i{ 0 }; i < MOUSE_BUTTON_MAX; i++)
+			_buffer[i] = false;
+	}
 
 	Mouse::~Mouse(void)
 	{	}
@@ -70,6 +74,29 @@ namespace ExoEngine {
 		case SDL_BUTTON_MIDDLE:	 return MouseButtons::BUTTON_MIDDLE;
 		default:					return MouseButtons::MOUSE_BUTTON_UNKNOW;
 		}
+	}
+
+	void Mouse::reset(void)
+	{
+		for (unsigned int i{ 0 }; i < MOUSE_BUTTON_MAX; i++)
+			_buffer[i] = false;
+
+		x = 0;
+		y = 0;
+		updateLastBuffer();
+	}
+
+	void Mouse::updateLastBuffer(void)
+	{
+		memcpy(_lastBuffer, _buffer, sizeof(_buffer));
+
+		// Position
+		lastX = x;
+		lastY = y;
+
+		// Reset wheel, data per frame
+		wheelX = 0;
+		wheelY = 0;
 	}
 
 }

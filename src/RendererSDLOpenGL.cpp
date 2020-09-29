@@ -170,7 +170,7 @@ namespace ExoEngine {
 		if (_pCurrentCamera)
 		{
 			if (_pMousePicker)
-				_pMousePicker->update((IMouse*)&_mouse, _pWindow->getWidth(), _pWindow->getHeight(), ((Camera*)_pCurrentCamera)->getLookAt(), _perspective);
+				_pMousePicker->update((Mouse*)&_mouse, _pWindow->getWidth(), _pWindow->getHeight(), ((Camera*)_pCurrentCamera)->getLookAt(), _perspective);
 
 			_pObjectRenderer->render((Camera*)_pCurrentCamera, _perspective);
 
@@ -208,12 +208,12 @@ namespace ExoEngine {
 		return _pWindow;
 	}
 
-	IKeyboard* RendererSDLOpenGL::getKeyboard(void)
+	Keyboard* RendererSDLOpenGL::getKeyboard(void)
 	{
 		return &_keyboard;
 	}
 
-	IMouse* RendererSDLOpenGL::getMouse(void)
+	Mouse* RendererSDLOpenGL::getMouse(void)
 	{
 		return &_mouse;
 	}

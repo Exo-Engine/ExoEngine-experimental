@@ -28,7 +28,10 @@
 namespace ExoEngine {
 
 	Keyboard::Keyboard()
-	{	}
+	{	
+		for (unsigned int i{ 0 }; i < KEY_MAX; i++)
+			_buffer[i] = false;
+	}
 
 	Keyboard::~Keyboard()
 	{	}
@@ -109,6 +112,19 @@ namespace ExoEngine {
 		case KEY_MINUS:case KEY_KP_MINUS:	return "-";
 		default:							return "";
 		}
+	}
+
+	void Keyboard::reset(void)
+	{
+		for (unsigned int i{ 0 }; i < KEY_MAX; i++)
+			_buffer[i] = false;
+
+		updateLastBuffer();
+	}
+
+	void Keyboard::updateLastBuffer(void)
+	{
+		memcpy(_lastBuffer, _buffer, sizeof(_buffer));
 	}
 
 	// Getters

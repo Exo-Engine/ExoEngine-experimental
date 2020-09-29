@@ -73,8 +73,8 @@ namespace ExoEngine
 		// Getters
 		virtual IWindow *getWindow(void);
 
-		virtual IKeyboard *getKeyboard(void);
-		virtual IMouse *getMouse(void);
+		virtual Keyboard *getKeyboard(void);
+		virtual Mouse *getMouse(void);
 		virtual IGamepadManager *getGamepadManager(void);
 		virtual unsigned int getTime(void) const;
 

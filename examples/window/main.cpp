@@ -31,8 +31,8 @@ int	main(void)
 	Engine		engine("resources/settings.xml");
 	IRenderer*	renderer = engine.getRenderer();
 	IWindow*	window;
-	IMouse*     mouse;
-	IKeyboard*	keyboard;
+	Mouse*      mouse;
+	Keyboard*	keyboard;
 	IGamepad*   gamepad;
 	bool		run = true;
 

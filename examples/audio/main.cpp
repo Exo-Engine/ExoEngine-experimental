@@ -33,7 +33,7 @@ int	main(void)
 	IAudio*		audio = engine.getAudio();
 	IRenderer*	renderer = engine.getRenderer();
 	IWindow*	window;
-	IKeyboard*	keyboard;
+	Keyboard*	keyboard;
 	bool		run = true;
 
 	renderer->initialize("example sound - Press 'space' to stop music & key 's' for playing a sound", 1280, 720, WindowMode::WINDOWED, false);

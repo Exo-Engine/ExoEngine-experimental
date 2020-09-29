@@ -24,14 +24,16 @@
 
 #pragma once
 
+#include <stdio.h>
+#include <string.h>
 #include <SDL2/SDL_keycode.h>
 
-#include "IKeyboard.h"
+#include "Enums.h"
 
 namespace ExoEngine
 {
 
-	class Keyboard : public IKeyboard
+	class Keyboard
 	{
 	public:
 		Keyboard(void);
@@ -44,8 +46,14 @@ namespace ExoEngine
 		virtual bool lastIsKeyDown(const KeyboardKeys &id) const;
 		virtual const char* convertKeyboardKeyToChar(const KeyboardKeys &key) const;
 
+		void reset(void);
+		void updateLastBuffer(void);
+
 		// Getters
 		KeyboardKeys getKeyboardInput(const unsigned int &id) const;
+	private:
+		bool _buffer[KEY_MAX];
+		bool _lastBuffer[KEY_MAX];
 	};
 
 }

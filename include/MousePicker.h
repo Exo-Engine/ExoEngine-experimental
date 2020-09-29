@@ -29,7 +29,7 @@
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 
-#include "IMouse.h"
+#include "Mouse.h"
 
 namespace ExoEngine
 {
@@ -45,7 +45,7 @@ namespace ExoEngine
 			{
 			}
 
-			void update(IMouse *mouse, int displayW, int displayH, const glm::mat4 &lookAt, const glm::mat4 &perspective)
+			void update(Mouse *mouse, int displayW, int displayH, const glm::mat4 &lookAt, const glm::mat4 &perspective)
 			{
 				glm::vec2 normalizedCoords = getNormalizedCoords(mouse->x, mouse->y, displayW, displayH);
 				glm::vec4 clipCoords = glm::vec4(normalizedCoords.x, normalizedCoords.y, -1.0f, 1.0f);
