@@ -36,7 +36,7 @@ namespace ExoEngine {
 	Buffer* Axis::vertexBuffer = nullptr;
 
 	Axis::Axis(void)
-		: IAxis()
+		: _type(AxisType::TRANSLATION), _pos(0, 0)
 	{
 	}
 

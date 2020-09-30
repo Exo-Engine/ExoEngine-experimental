@@ -75,11 +75,6 @@ namespace ExoEngine {
 		return new Camera();
 	}
 
-	IAxis* RendererSDLOpenGL::createAxis(void)
-	{
-		return new Axis();
-	}
-
 	ITexture* RendererSDLOpenGL::createTexture(const std::string& filePath, TextureFilter filter)
 	{
 		ITexture* texture;
@@ -226,7 +221,7 @@ namespace ExoEngine {
 		_pMousePicker = picker;
 	}
 
-	void RendererSDLOpenGL::setAxis(IAxis* axis)
+	void RendererSDLOpenGL::setAxis(Axis* axis)
 	{
 		_pAxis = axis;
 	}

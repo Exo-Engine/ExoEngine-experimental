@@ -22,38 +22,20 @@
  *	SOFTWARE.
  */
 
-#pragma once
+#include "Utils/Utils.h"
 
-#include <glm/vec2.hpp>
+namespace ExoEngine {
 
-namespace ExoEngine
-{
-
-	enum class AxisType {
-		TRANSLATION,
-		SCALE
-	};
-
-	class IAxis
+	std::string	getPath(const std::string& file)
 	{
-	public:
-		IAxis()
-		: _type(AxisType::TRANSLATION), _pos(0, 0)
-		{ }
+		size_t	i;
 
-		virtual ~IAxis(void)
-		{ }
-
-		// Getters
-		const AxisType &getType(void) const { return _type; }
-		const glm::vec2 &getPosition(void) const { return _pos; }
-
-		// Setters
-		void setType(const AxisType &type) { _type = type; };
-		void setPosition(const glm::vec2 &position) { _pos = position; }
-	protected:
-		AxisType _type;
-		glm::vec2 _pos;
-	};
+		for (i = file.length() - 1; i != (size_t)-1 && file[i] != '/'; i--)
+			;
+		if (i)
+			return (std::string(file, 0, i + 1));
+		else
+			return ("");
+	}
 
 }

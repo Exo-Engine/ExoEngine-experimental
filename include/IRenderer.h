@@ -37,7 +37,7 @@
 #include "IFrameBuffer.h"
 #include "sprite.h"
 #include "MousePicker.h"
-#include "IAxis.h"
+#include "Axis.h"
 
 namespace ExoEngine
 {
@@ -55,7 +55,6 @@ namespace ExoEngine
 		virtual void resize() = 0;
 
 		virtual ICamera		    *createCamera(void) = 0;
-		virtual IAxis			*createAxis(void) = 0;
 		virtual ITexture		*createTexture(const std::string& filePath, TextureFilter filter = TextureFilter::LINEAR) = 0;
 		virtual ITexture		*createTexture(unsigned int width, unsigned int height, TextureFormat format = TextureFormat::RGBA, TextureFilter filter = TextureFilter::LINEAR) = 0;
 		virtual IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, TextureFilter filter = TextureFilter::LINEAR) = 0;
@@ -77,14 +76,14 @@ namespace ExoEngine
 		// Setters
 		void setCurrentCamera(ICamera* camera) { _pCurrentCamera = camera; }
 		virtual void setMousePicker(MousePicker* picker) = 0;
-		virtual void setAxis(IAxis* axis) = 0;
+		virtual void setAxis(Axis* axis) = 0;
 		virtual void setGridEnable(bool val) = 0;
 	protected:
 		virtual void draw(void) = 0;
 	protected:
 		ICamera	 *_pCurrentCamera;
 		MousePicker *_pMousePicker;
-		IAxis		*_pAxis;
+		Axis		*_pAxis;
 	};
 
 }

@@ -23,7 +23,7 @@
  */
 
 #include "Engine.h"
-#include "Utils.h"
+#include "Utils/Utils.h"
 
 #include "OALAudio.h"
 #include "RendererSDLOpenGL.h"

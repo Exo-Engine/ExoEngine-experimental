@@ -24,10 +24,9 @@
 
 #pragma once
 
+#include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
-
-#include "IAxis.h"
 
 #include "Grid.h"
 #include "Shader.h"
@@ -36,21 +35,37 @@
 namespace ExoEngine
 {
 
-	class Axis : public IAxis
+	enum class AxisType {
+		TRANSLATION,
+		SCALE
+	};
+
+	class Axis
 	{
-		public:
-			Axis(void);
-			virtual ~Axis(void);
+	public:
+		Axis(void);
+		virtual ~Axis(void);
 
-			void render(const glm::mat4& lookAt, const glm::mat4& perspective);
-		private:
+		void render(const glm::mat4& lookAt, const glm::mat4& perspective);
+
+		// Getters
+		const AxisType& getType(void) const { return _type; }
+		const glm::vec2& getPosition(void) const { return _pos; }
+
+		// Setters
+		void setType(const AxisType& type) { _type = type; };
+		void setPosition(const glm::vec2& position) { _pos = position; }
+	private:
 		void drawAxis(int x, int y, float angle, const glm::vec3 &color, const glm::mat4& lookAt, const glm::mat4& perspective);
-		public:
-			static Shader* pShader;
+	public:
+		static Shader* pShader;
 
-			// Triangle
-			static Buffer* vaoBuffer;
-			static Buffer* vertexBuffer;
+		// Triangle
+		static Buffer* vaoBuffer;
+		static Buffer* vertexBuffer;
+	private:
+		AxisType _type;
+		glm::vec2 _pos;
 	};
 
 }

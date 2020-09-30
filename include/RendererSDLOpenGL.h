@@ -57,7 +57,6 @@ namespace ExoEngine
 		virtual void resize();
 
 		virtual ICamera		*createCamera(void);
-		virtual IAxis			*createAxis(void);
 		virtual ITexture		*createTexture(const std::string& filePath, TextureFilter filter = TextureFilter::LINEAR);
 		virtual ITexture		*createTexture(unsigned int width, unsigned int height, TextureFormat format = TextureFormat::RGBA, TextureFilter filter = TextureFilter::LINEAR);
 		virtual IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, TextureFilter filter = TextureFilter::LINEAR);
@@ -77,7 +76,7 @@ namespace ExoEngine
 
 		// Setters
 		virtual void setMousePicker(MousePicker* picker);
-		virtual void setAxis(IAxis* axis);
+		virtual void setAxis(Axis* axis);
 		virtual void setGridEnable(bool val);
 	private:
 		RendererSDLOpenGL(void);
