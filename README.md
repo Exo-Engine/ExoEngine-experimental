@@ -3,7 +3,6 @@ Designed for Windows. x64 arch only.
 
 **TO-DO**
 
-* Vulkan API (replace OpenGL)
 * IMGUI
 * Profiling the engine
 * Level Editor
