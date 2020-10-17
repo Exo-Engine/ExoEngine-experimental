@@ -93,7 +93,7 @@ namespace ExoEngine {
 		return &RendererSDLOpenGL::Get();
 	}
 
-	IAudio* Engine::getAudio(void) const
+	OALAudio* Engine::getAudio(void) const
 	{
 		return &OALAudio::Get();
 	}

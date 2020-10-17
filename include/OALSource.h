@@ -27,35 +27,43 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include "ISource.h"
+#include "glm/vec3.hpp"
+
 #include "OALSound.h"
 #include "OALMusic.h"
 
 namespace ExoEngine
 {
 
-	class OALSource : public ISource
+	class OALSource
 	{
+	public:
+		enum SourceState {
+			INITIAL,
+			STOPPED,
+			PLAYING,
+			PAUSED
+		};
 	public:
 		OALSource(void);
 		virtual ~OALSource(void);
 
-		virtual void play(void) const;
-		virtual void stop(void) const;
-		virtual void rewind(void) const;
+		void play(void) const;
+		void stop(void) const;
+		void rewind(void) const;
 
-		virtual void streamingUpdate(void) const;
+		void streamingUpdate(void) const;
 
 		// Getters
-		virtual ISource::SourceState getState(void);
+		SourceState getState(void);
 		ALuint getSource(void) const;
 
 		// Setters
-		virtual void setAudio(const ISound* sound);
-		virtual void setAudio(const IMusic* music);
-		virtual void setPosition(const glm::vec3 &position);
-		virtual void setVolume(float volume);
-		virtual void setPitch(float pitch);
+		void setAudio(const OALSound* sound);
+		void setAudio(const OALMusic* music);
+		void setPosition(const glm::vec3 &position);
+		void setVolume(float volume);
+		void setPitch(float pitch);
 	private:
 		OALMusic *_pMusic; // For streaming
 		ALuint _id;

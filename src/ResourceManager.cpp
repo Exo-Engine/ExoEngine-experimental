@@ -48,7 +48,7 @@ namespace ExoEngine {
 		return (vector);
 	}
 
-	ResourceManager::ResourceManager(IRenderer* renderer, IAudio* audio) 
+	ResourceManager::ResourceManager(IRenderer* renderer, OALAudio* audio) 
 		: _renderer(renderer), _audio(audio)
 	{
 	}
@@ -125,7 +125,7 @@ namespace ExoEngine {
 		if (!path)
 			_log.warning << "sound without path" << std::endl;
 		if (name && path)
-			add((char*)name, std::shared_ptr<ISound>(_audio->createSound((relativePath + (char*)path).c_str())));
+			add((char*)name, std::shared_ptr<OALSound>(_audio->createSound((relativePath + (char*)path).c_str())));
 	}
 
 	void	ResourceManager::loadSubResource(const std::string& relativePath, xmlNodePtr node)

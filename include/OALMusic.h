@@ -27,13 +27,13 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include "IMusic.h"
+#include "IResource.h"
 #include "OggLoader.h"
 
 namespace ExoEngine
 {
 
-	class OALMusic : public IMusic
+	class OALMusic : public IResource
 	{
 	public:
 		OALMusic(const std::string &filePath);
@@ -44,8 +44,8 @@ namespace ExoEngine
 		// Getters
 		ALuint* getBuffers(void);
 	private:
-		OggLoader*	_pOggLoader;
-		ALuint					_id[2] = {0, 0};
+		OggLoader* _pOggLoader;
+		ALuint _id[2] = {0, 0};
 	};
 
 }

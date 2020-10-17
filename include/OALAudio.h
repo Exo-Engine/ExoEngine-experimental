@@ -27,8 +27,6 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include "IAudio.h"
-#include "ISound.h"
 #include "OALSource.h"
 #include "OALSound.h"
 #include "OALMusic.h"
@@ -36,10 +34,10 @@
 namespace ExoEngine
 {
 
-	class OALAudio : public IAudio
+	class OALAudio
 	{
 	public:
-		static OALAudio&	Get(void);
+		static OALAudio& Get(void);
 
 		virtual void initialize(void);
 
@@ -47,9 +45,9 @@ namespace ExoEngine
 		virtual void updateListener(const glm::vec3 &position, const glm::vec3 &velocity, float volume);
 		virtual void updateVolume(float volume);
 
-		virtual ISource* createSource(void);
-		virtual ISound* createSound(const std::string& filePath);
-		virtual IMusic* createMusic(const std::string& filePath);
+		OALSource* createSource(void);
+		OALSound* createSound(const std::string& filePath);
+		OALMusic* createMusic(const std::string& filePath);
 	private:
 		OALAudio(void);
 		virtual ~OALAudio(void);

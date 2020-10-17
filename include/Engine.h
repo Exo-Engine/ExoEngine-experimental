@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "IAudio.h"
+#include "OALAudio.h"
 #include "ResourceManager.h"
 #include "SettingsManager.h"
 
@@ -43,7 +43,7 @@ namespace ExoEngine
 			ResourceManager*		getResourceManager(void) const;
 			SettingsManager*		getSettingsManager(void) const;
 			IRenderer*	getRenderer(void) const;
-			IAudio*		getAudio(void) const;
+			OALAudio*		getAudio(void) const;
 
 		private:
 			ResourceManager* _resourceManager;

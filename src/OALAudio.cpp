@@ -103,17 +103,17 @@ namespace ExoEngine {
 		alListenerf(AL_GAIN, volume == 0.0f ? 0.000001f : volume);
 	}
 
-	ISource* OALAudio::createSource(void)
+	OALSource* OALAudio::createSource(void)
 	{
 		return new OALSource();
 	}
 
-	ISound* OALAudio::createSound(const std::string& filePath)
+	OALSound* OALAudio::createSound(const std::string& filePath)
 	{
 		return new OALSound(filePath);
 	}
 
-	IMusic* OALAudio::createMusic(const std::string& filePath)
+	OALMusic* OALAudio::createMusic(const std::string& filePath)
 	{
 		return new OALMusic(filePath);
 	}

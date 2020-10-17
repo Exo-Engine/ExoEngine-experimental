@@ -27,13 +27,13 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include "ISound.h"
+#include "IResource.h"
 #include "OggLoader.h"
 
 namespace ExoEngine
 {
 
-	class OALSound : public ISound
+	class OALSound : public IResource
 	{
 	public:
 		OALSound(const std::string &filePath);

@@ -76,7 +76,7 @@ namespace ExoEngine {
 	}
 
 	// Getters
-	ISource::SourceState OALSource::getState(void)
+	OALSource::SourceState OALSource::getState(void)
 	{
 		ALint status;
 		alGetSourcei(_id, AL_SOURCE_STATE, &status);
@@ -100,12 +100,12 @@ namespace ExoEngine {
 	}
 
 	// Setters
-	void OALSource::setAudio(const ISound* sound)
+	void OALSource::setAudio(const OALSound* sound)
 	{
 		alSourcei(_id, AL_BUFFER, ((OALSound*)sound)->getBuffer());
 	}
 
-	void OALSource::setAudio(const IMusic* music)
+	void OALSource::setAudio(const OALMusic* music)
 	{
 		if (_pMusic)
 		{
