@@ -22,11 +22,11 @@
  *	SOFTWARE.
  */
 
-#include "Audio/OALMusic.h"
+#include "Audio/Music.h"
 
 namespace ExoEngine {
 
-	OALMusic::OALMusic(const std::string& filePath)
+	Music::Music(const std::string& filePath)
 		: _pOggLoader(nullptr)
 	{
 		// Create OpenAL Buffer
@@ -41,7 +41,7 @@ namespace ExoEngine {
 		alBufferData(_id[1], _pOggLoader->getFormat(), &_pOggLoader->readSample(samples, 44100)[0], _pOggLoader->getTotalRead(), _pOggLoader->getSampleRate());
 	}
 
-	OALMusic::~OALMusic(void)
+	Music::~Music(void)
 	{
 		if (_pOggLoader)
 			delete _pOggLoader;
@@ -49,7 +49,7 @@ namespace ExoEngine {
 		alDeleteBuffers(2, _id);
 	}
 
-	void OALMusic::streamingUpdate(ALuint source)
+	void Music::streamingUpdate(ALuint source)
 	{
 		ALint status;
 		alGetSourcei(source, AL_SOURCE_STATE, &status);
@@ -73,7 +73,7 @@ namespace ExoEngine {
 	}
 
 	// Getters
-	ALuint* OALMusic::getBuffers(void)
+	ALuint* Music::getBuffers(void)
 	{
 		return _id;
 	}

@@ -22,18 +22,18 @@
  *	SOFTWARE.
  */
 
-#include "Audio/OALSource.h"
+#include "Audio/Source.h"
 
 namespace ExoEngine {
 
-	OALSource::OALSource()
+	Source::Source()
 		: _id(0), _pMusic(nullptr)
 	{
 		alGenSources(1, &_id);
 		alSource3f(_id, AL_POSITION, 0.0f, 0.0f, 0.0f);
 	}
 
-	OALSource::~OALSource()
+	Source::~Source()
 	{
 		alSourceStop(_id);
 
@@ -54,29 +54,29 @@ namespace ExoEngine {
 		alDeleteSources(1, &_id);
 	}
 
-	void OALSource::play(void) const
+	void Source::play(void) const
 	{
 		alSourcePlay(_id);
 	}
 
-	void OALSource::stop(void) const
+	void Source::stop(void) const
 	{
 		alSourceStop(_id);
 	}
 
-	void OALSource::rewind(void) const
+	void Source::rewind(void) const
 	{
 		alSourceRewind(_id);
 	}
 
-	void OALSource::streamingUpdate(void) const
+	void Source::streamingUpdate(void) const
 	{
 		if (_pMusic)
 			_pMusic->streamingUpdate(_id);
 	}
 
 	// Getters
-	OALSource::SourceState OALSource::getState(void)
+	Source::SourceState Source::getState(void)
 	{
 		ALint status;
 		alGetSourcei(_id, AL_SOURCE_STATE, &status);
@@ -94,18 +94,18 @@ namespace ExoEngine {
 		};
 	}
 
-	ALuint OALSource::getSource(void) const
+	ALuint Source::getSource(void) const
 	{
 		return _id;
 	}
 
 	// Setters
-	void OALSource::setAudio(const OALSound* sound)
+	void Source::setAudio(const Sound* sound)
 	{
-		alSourcei(_id, AL_BUFFER, ((OALSound*)sound)->getBuffer());
+		alSourcei(_id, AL_BUFFER, ((Sound*)sound)->getBuffer());
 	}
 
-	void OALSource::setAudio(const OALMusic* music)
+	void Source::setAudio(const Music* music)
 	{
 		if (_pMusic)
 		{
@@ -113,21 +113,21 @@ namespace ExoEngine {
 			_pMusic = nullptr;
 		}
 
-		_pMusic = (OALMusic*)music;
+		_pMusic = (Music*)music;
 		alSourceQueueBuffers(_id, 2, _pMusic->getBuffers());
 	}
 
-	void OALSource::setPosition(const glm::vec3& position)
+	void Source::setPosition(const glm::vec3& position)
 	{
 		alSource3f(_id, AL_POSITION, position.x, position.y, position.z);
 	}
 
-	void OALSource::setVolume(float volume)
+	void Source::setVolume(float volume)
 	{
 		alSourcef(_id, AL_GAIN, volume);
 	}
 
-	void OALSource::setPitch(float pitch)
+	void Source::setPitch(float pitch)
 	{
 		alSourcef(_id, AL_PITCH, pitch);
 	}

@@ -22,27 +22,42 @@
  *	SOFTWARE.
  */
 
-#pragma once
+#include "Audio/Sound.h"
 
-#include <AL/al.h>
-#include <AL/alc.h>
+#include <stdexcept>
 
-#include "IResource.h"
-#include "OggLoader.h"
+namespace ExoEngine {
 
-namespace ExoEngine
-{
-
-	class OALSound : public IResource
+	Sound::Sound(const std::string& filePath)
+		: _id(0)
 	{
-	public:
-		OALSound(const std::string &filePath);
-		virtual ~OALSound(void);
+		// Create OpenAL Buffer
+		alGenBuffers(1, &_id);
 
-		// Getters
-		ALuint getBuffer(void) const;
-	private:
-		ALuint _id;
-	};
+		// Load
+		std::vector<char> buffer;
+		OggLoader* pOggLoader = new OggLoader(filePath);
+		pOggLoader->readAll(buffer);
+
+		// Filling the OpenAL buffer with the read data
+		alBufferData(_id, pOggLoader->getFormat(), &buffer[0], (ALsizei)buffer.size(), pOggLoader->getSampleRate());
+
+		delete pOggLoader;
+		pOggLoader = nullptr;
+
+		if (alGetError() != AL_NO_ERROR)
+			throw (std::invalid_argument("OpenAL error when loading " + filePath));
+	}
+
+	Sound::~Sound(void)
+	{
+		alDeleteBuffers(1, &_id);
+	}
+
+	// Getters
+	ALuint Sound::getBuffer(void) const
+	{
+		return _id;
+	}
 
 }

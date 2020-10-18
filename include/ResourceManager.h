@@ -33,7 +33,7 @@
 #include "IShader.h"
 #include "hitboxes.h"
 #include "IRenderer.h"
-#include "Audio/OALAudio.h"
+#include "Audio/Audio.h"
 #include "IResource.h"
 
 #include "Log.h"
@@ -44,7 +44,7 @@ namespace ExoEngine
 	class ResourceManager : public IResource
 	{
 		public:
-			ResourceManager(IRenderer* renderer, OALAudio* audio);
+			ResourceManager(IRenderer* renderer, Audio* audio);
 			virtual ~ResourceManager(void);
 
 			IRenderer*	getRenderer(void) const;
@@ -83,7 +83,7 @@ namespace ExoEngine
 			}
 
 			IRenderer*								_renderer;
-			OALAudio*									_audio;
+			Audio*									_audio;
 			std::map<std::string, std::shared_ptr<IResource>>	_resources;
 			std::map<std::string, std::string>					_properties;
 	};

@@ -22,33 +22,33 @@
  *	SOFTWARE.
  */
 
-#include "Audio/OALAudio.h"
+#include "Audio/Audio.h"
 
 #include <stdexcept>
 
 namespace ExoEngine {
 
-	static OALAudio* g_instance = nullptr;
+	static Audio* g_instance = nullptr;
 
-	OALAudio& OALAudio::Get(void)
+	Audio& Audio::Get(void)
 	{
 		if (!g_instance)
-			g_instance = new OALAudio();
+			g_instance = new Audio();
 		return (*g_instance);
 	}
 
-	OALAudio::OALAudio(void)
+	Audio::Audio(void)
 		: _pDevice(nullptr), _pContext(nullptr)
 	{	}
 
-	OALAudio::~OALAudio(void)
+	Audio::~Audio(void)
 	{
 		alcMakeContextCurrent(nullptr);
 		alcDestroyContext(_pContext);
 		alcCloseDevice(_pDevice);
 	}
 
-	void OALAudio::initialize(void)
+	void Audio::initialize(void)
 	{
 		_pDevice = alcOpenDevice(nullptr); // Default device
 		if (!_pDevice)
@@ -72,7 +72,7 @@ namespace ExoEngine {
 		alListenerf(AL_GAIN, 1.0f);
 	}
 
-	void OALAudio::getDevices(std::vector<std::string>& devices)
+	void Audio::getDevices(std::vector<std::string>& devices)
 	{
 		// Clear list
 		devices.clear();
@@ -91,31 +91,31 @@ namespace ExoEngine {
 		}
 	}
 
-	void OALAudio::updateListener(const glm::vec3& position, const glm::vec3& velocity, float volume)
+	void Audio::updateListener(const glm::vec3& position, const glm::vec3& velocity, float volume)
 	{
 		alListener3f(AL_POSITION, position.x, position.y, position.z);
 		alListener3f(AL_VELOCITY, velocity.x, velocity.y, velocity.z);
 		alListenerf(AL_GAIN, volume == 0.0f ? 0.000001f : volume);
 	}
 
-	void OALAudio::updateVolume(float volume)
+	void Audio::updateVolume(float volume)
 	{
 		alListenerf(AL_GAIN, volume == 0.0f ? 0.000001f : volume);
 	}
 
-	OALSource* OALAudio::createSource(void)
+	Source* Audio::createSource(void)
 	{
-		return new OALSource();
+		return new Source();
 	}
 
-	OALSound* OALAudio::createSound(const std::string& filePath)
+	Sound* Audio::createSound(const std::string& filePath)
 	{
-		return new OALSound(filePath);
+		return new Sound(filePath);
 	}
 
-	OALMusic* OALAudio::createMusic(const std::string& filePath)
+	Music* Audio::createMusic(const std::string& filePath)
 	{
-		return new OALMusic(filePath);
+		return new Music(filePath);
 	}
 
 }

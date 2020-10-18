@@ -27,33 +27,22 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include "OALSource.h"
-#include "OALSound.h"
-#include "OALMusic.h"
+#include "IResource.h"
+#include "OggLoader.h"
 
 namespace ExoEngine
 {
 
-	class OALAudio
+	class Sound : public IResource
 	{
 	public:
-		static OALAudio& Get(void);
+		Sound(const std::string &filePath);
+		virtual ~Sound(void);
 
-		virtual void initialize(void);
-
-		virtual void getDevices(std::vector<std::string> &devices);
-		virtual void updateListener(const glm::vec3 &position, const glm::vec3 &velocity, float volume);
-		virtual void updateVolume(float volume);
-
-		OALSource* createSource(void);
-		OALSound* createSound(const std::string& filePath);
-		OALMusic* createMusic(const std::string& filePath);
+		// Getters
+		ALuint getBuffer(void) const;
 	private:
-		OALAudio(void);
-		virtual ~OALAudio(void);
-	private:
-		ALCdevice* _pDevice;
-		ALCcontext* _pContext;
+		ALuint _id;
 	};
 
 }

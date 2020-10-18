@@ -25,7 +25,7 @@
 #include "Engine.h"
 #include "Utils/Utils.h"
 
-#include "Audio/OALAudio.h"
+#include "Audio/Audio.h"
 #include "RendererSDLOpenGL.h"
 
 namespace ExoEngine {
@@ -93,9 +93,9 @@ namespace ExoEngine {
 		return &RendererSDLOpenGL::Get();
 	}
 
-	OALAudio* Engine::getAudio(void) const
+	Audio* Engine::getAudio(void) const
 	{
-		return &OALAudio::Get();
+		return &Audio::Get();
 	}
 
 }

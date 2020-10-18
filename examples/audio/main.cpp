@@ -30,7 +30,7 @@ using namespace	ExoEngine;
 int	main(void)
 {
 	Engine		engine("resources/settings.xml");
-	IAudio*		audio = engine.getAudio();
+	Audio*		audio = engine.getAudio();
 	IRenderer*	renderer = engine.getRenderer();
 	IWindow*	window;
 	Keyboard*	keyboard;
@@ -43,11 +43,11 @@ int	main(void)
 	window = renderer->getWindow();
 	keyboard = renderer->getKeyboard();
 
-	ISource* source1 = audio->createSource();
-	ISource* source2 = audio->createSource();
+	Source* source1 = audio->createSource();
+	Source* source2 = audio->createSource();
 
 	auto music = audio->createMusic("resources/music.ogg"); // For the moment, no implementation with the ResourceManager #TODO
-	auto sound = engine.getResourceManager()->get<ISound>("sound");
+	auto sound = engine.getResourceManager()->get<Sound>("sound");
 
 	source1->setAudio(music);
 	source2->setAudio(sound.get());

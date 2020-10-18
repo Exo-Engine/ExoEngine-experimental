@@ -29,13 +29,13 @@
 
 #include "glm/vec3.hpp"
 
-#include "OALSound.h"
-#include "OALMusic.h"
+#include "Audio/Sound.h"
+#include "Audio/Music.h"
 
 namespace ExoEngine
 {
 
-	class OALSource
+	class Source
 	{
 	public:
 		enum SourceState {
@@ -45,8 +45,8 @@ namespace ExoEngine
 			PAUSED
 		};
 	public:
-		OALSource(void);
-		virtual ~OALSource(void);
+		Source(void);
+		virtual ~Source(void);
 
 		void play(void) const;
 		void stop(void) const;
@@ -59,13 +59,13 @@ namespace ExoEngine
 		ALuint getSource(void) const;
 
 		// Setters
-		void setAudio(const OALSound* sound);
-		void setAudio(const OALMusic* music);
+		void setAudio(const Sound* sound);
+		void setAudio(const Music* music);
 		void setPosition(const glm::vec3 &position);
 		void setVolume(float volume);
 		void setPitch(float pitch);
 	private:
-		OALMusic *_pMusic; // For streaming
+		Music *_pMusic; // For streaming
 		ALuint _id;
 	};
 
