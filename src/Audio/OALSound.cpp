@@ -22,7 +22,7 @@
  *	SOFTWARE.
  */
 
-#include "OALSound.h"
+#include "Audio/OALSound.h"
 
 #include <stdexcept>
 

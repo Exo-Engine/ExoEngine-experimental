@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "OALAudio.h"
+#include "Audio/OALAudio.h"
 #include "ResourceManager.h"
 #include "SettingsManager.h"
 

@@ -25,7 +25,7 @@
 #include "Engine.h"
 #include "Utils/Utils.h"
 
-#include "OALAudio.h"
+#include "Audio/OALAudio.h"
 #include "RendererSDLOpenGL.h"
 
 namespace ExoEngine {

@@ -33,7 +33,7 @@
 #include "IShader.h"
 #include "hitboxes.h"
 #include "IRenderer.h"
-#include "OALAudio.h"
+#include "Audio/OALAudio.h"
 #include "IResource.h"
 
 #include "Log.h"

@@ -22,7 +22,7 @@
  *	SOFTWARE.
  */
 
-#include "OALAudio.h"
+#include "Audio/OALAudio.h"
 
 #include <stdexcept>
 

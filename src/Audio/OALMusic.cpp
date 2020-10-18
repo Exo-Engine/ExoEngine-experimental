@@ -22,7 +22,7 @@
  *	SOFTWARE.
  */
 
-#include "OALMusic.h"
+#include "Audio/OALMusic.h"
 
 namespace ExoEngine {
 
