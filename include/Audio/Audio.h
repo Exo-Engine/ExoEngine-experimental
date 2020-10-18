@@ -27,6 +27,8 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
+#include "Singleton.h"
+
 #include "Audio/Source.h"
 #include "Audio/Sound.h"
 #include "Audio/Music.h"
@@ -34,11 +36,9 @@
 namespace ExoEngine
 {
 
-	class Audio
+	class Audio : public Singleton<Audio>
 	{
 	public:
-		static Audio& Get(void);
-
 		virtual void initialize(void);
 
 		virtual void getDevices(std::vector<std::string> &devices);
@@ -49,6 +49,8 @@ namespace ExoEngine
 		Sound* createSound(const std::string& filePath);
 		Music* createMusic(const std::string& filePath);
 	private:
+		friend class Singleton<Audio>;
+
 		Audio(void);
 		virtual ~Audio(void);
 	private:

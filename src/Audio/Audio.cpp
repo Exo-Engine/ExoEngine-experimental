@@ -28,14 +28,6 @@
 
 namespace ExoEngine {
 
-	static Audio* g_instance = nullptr;
-
-	Audio& Audio::Get(void)
-	{
-		if (!g_instance)
-			g_instance = new Audio();
-		return (*g_instance);
-	}
 
 	Audio::Audio(void)
 		: _pDevice(nullptr), _pContext(nullptr)
