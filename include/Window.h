@@ -60,6 +60,10 @@ namespace ExoEngine
 		virtual IFrameBuffer	*getFrameBuffer(void) const;
 
 		// Getters
+		// SDL_Window* getSDLWindow(void);
+		virtual void* getWindowID();
+		virtual void* getGLContext();
+
 		virtual double getDelta(void) const;
 		virtual float getWidth(void) const;
 		virtual float getHeight(void) const;

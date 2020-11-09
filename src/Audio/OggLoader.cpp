@@ -22,7 +22,7 @@
  *	SOFTWARE.
  */
 
-#include "OggLoader.h"
+#include "Audio/OggLoader.h"
 
 #include <stdexcept>
 

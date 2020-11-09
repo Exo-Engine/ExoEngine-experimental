@@ -1,1 +1,1 @@
-subdirs(window audio)
+subdirs(editor window audio)

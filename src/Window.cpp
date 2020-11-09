@@ -383,6 +383,16 @@ namespace ExoEngine {
 			throw (SDLException());
 	}
 
+	void* Window::getWindowID()
+	{
+		return _window;
+	}
+
+	void* Window::getGLContext()
+	{
+		return _context;
+	}
+
 	// Getters
 	double Window::getDelta(void) const
 	{

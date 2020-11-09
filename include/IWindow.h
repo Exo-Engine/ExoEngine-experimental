@@ -45,6 +45,9 @@ namespace ExoEngine
 		virtual void setVsync(bool vsync) = 0;
 
 		// Getters
+		virtual void* getWindowID() = 0;
+		virtual void* getGLContext() = 0;
+
 		virtual double getDelta(void) const = 0;
 		virtual float getWidth(void) const = 0;
 		virtual float getHeight(void) const = 0;
