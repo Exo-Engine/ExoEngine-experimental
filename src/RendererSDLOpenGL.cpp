@@ -161,6 +161,9 @@ namespace ExoEngine {
 
 	void RendererSDLOpenGL::draw(void)
 	{
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
 		// Renderers
 		if (_pCurrentCamera)
 		{
@@ -173,19 +176,11 @@ namespace ExoEngine {
 				((Axis*)_pAxis)->render(((Camera*)_pCurrentCamera)->getLookAt(), _perspective);
 		}
 
-		GL_CALL(glEnable(GL_BLEND));
-		GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
 		GL_CALL(glDisable(GL_BLEND));
 	}
 
 	void RendererSDLOpenGL::swap(void)
 	{
-		GL_CALL(glEnable(GL_BLEND));
-		GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-		draw();
-		GL_CALL(glDisable(GL_BLEND));
-
 		_mouse.updateLastBuffer();
 		_keyboard.updateLastBuffer();
 

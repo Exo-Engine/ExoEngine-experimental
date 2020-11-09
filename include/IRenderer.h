@@ -63,6 +63,7 @@ namespace ExoEngine
 		virtual void add(sprite &s) = 0;
 		virtual void remove(sprite &s) = 0;
 
+		virtual void draw(void) = 0;
 		virtual void swap(void) = 0;
 
 		// Getters
@@ -78,8 +79,6 @@ namespace ExoEngine
 		virtual void setMousePicker(MousePicker* picker) = 0;
 		virtual void setAxis(Axis* axis) = 0;
 		virtual void setGridEnable(bool val) = 0;
-	protected:
-		virtual void draw(void) = 0;
 	protected:
 		ICamera	 *_pCurrentCamera;
 		MousePicker *_pMousePicker;

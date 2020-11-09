@@ -65,6 +65,7 @@ namespace ExoEngine
 		virtual void add(sprite &s);
 		virtual void remove(sprite &s);
 
+		virtual void draw(void);
 		virtual void swap(void);
 
 		// Getters
@@ -84,8 +85,6 @@ namespace ExoEngine
 
 		void createBuffers(void);
 		void loadShaders(void);
-
-		virtual void draw(void);
 	private:
 		Window* _pWindow;
 

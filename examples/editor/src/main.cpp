@@ -113,7 +113,10 @@ int	main(void)
 		cam->update(mouse, keyboard);
 
 		// ImGui_ImplSDL2_ProcessEvent(&event);
+
+		renderer->draw();
 		renderImGui(window);
+
 		renderer->swap();
 	}
 
