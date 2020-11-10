@@ -25,6 +25,7 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
+#include "ImGui/imgui_internal.h"
 
 #include <Engine.h>
 // #include <SDL2/SDL.h>
@@ -38,6 +39,7 @@ void setupImGui(IWindow* window)
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
 	// Style
 	ImGui::StyleColorsDark();
@@ -61,11 +63,101 @@ void renderImGui(IWindow* window)
 	ImGui_ImplSDL2_NewFrame((SDL_Window*)window->getWindowID());
 	ImGui::NewFrame();
 
+	// Dockspace
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	ImGui::SetNextWindowBgAlpha(0.0f);
+	window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiDockNodeFlags_PassthruCentralNode;
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("DockSpace Demo", (bool*)true, window_flags);
+
+	ImGui::PopStyleVar();
+	ImGui::PopStyleVar(2);
+
+	if (ImGui::DockBuilderGetNode(ImGui::GetID("Dockspace")) == NULL)
 	{
-		ImGui::Begin("Hello, world!");
-		ImGui::Text("This is some useful text.");
-		ImGui::End();
+		ImGuiID dockspace_id = ImGui::GetID("Dockspace");
+		ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::DockBuilderRemoveNode(dockspace_id); // Clear out existing layout
+		ImGui::DockBuilderAddNode(dockspace_id, ImGuiDockNodeFlags_DockSpace | ImGuiDockNodeFlags_PassthruCentralNode); // Add empty node
+
+		ImGuiID dock_main_id = dockspace_id;
+		ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.20f, NULL, &dock_main_id);
+		ImGuiID dock_id_left_bottom = ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Down, 0.20f, NULL, &dock_id_left);
+		ImGuiID dock_id_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.20f, NULL, &dock_main_id);
+		ImGuiID dock_id_bottom = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.20f, NULL, &dock_main_id);
+
+		ImGui::DockBuilderDockWindow("Project", dock_id_left);
+		ImGui::DockBuilderDockWindow("Hierarchy", dock_id_left_bottom);
+		ImGui::DockBuilderDockWindow("Inspector", dock_id_right);
+		ImGui::DockBuilderFinish(dockspace_id);
 	}
+
+	// Menu Bar
+	if (ImGui::BeginMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Edit"))
+		{
+			if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+			if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+			ImGui::Separator();
+			if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+			if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+			if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Project"))
+		{
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Tools"))
+		{
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Window"))
+		{
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Help"))
+		{
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
+	// Windows
+	ImGuiID dockspace_id = ImGui::GetID("Dockspace");
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+	ImGui::Begin("Project");
+	ImGui::Text("Text 1");
+	ImGui::End();
+
+	ImGui::Begin("Hierarchy");
+	ImGui::Text("Text 2");
+	ImGui::End();
+
+	ImGui::Begin("Inspector");
+	ImGui::Text("Text 3");
+	ImGui::End();
+
+	ImGui::End();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -80,7 +172,7 @@ int	main(void)
 	Keyboard*	keyboard;
 	bool		run = true;
 
-	renderer->initialize("Editor", 1280, 720, WindowMode::WINDOWED, true);
+	renderer->initialize("ExoEngine - Editor", 1280, 720, WindowMode::WINDOWED, true);
 	engine.getResourceManager()->load("resources/resources.xml");
 	window = renderer->getWindow();
 	mouse = renderer->getMouse();
