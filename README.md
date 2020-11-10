@@ -1,5 +1,5 @@
 # ExoEngine
-Designed for Windows & Linux. x64 arch only.
+Designed for Windows, MacOS & Linux. x64 arch only.
 
 **TO-DO**
 
