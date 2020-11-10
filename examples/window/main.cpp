@@ -62,6 +62,7 @@ int	main(void)
 			run = false;
 
 		cam->update(mouse, keyboard);
+		renderer->draw();
 		renderer->swap();
 	}
 
