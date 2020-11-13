@@ -38,6 +38,7 @@
 #include "sprite.h"
 #include "MousePicker.h"
 #include "Axis.h"
+#include "UI/ICursor.h"
 
 namespace ExoEngine
 {
@@ -67,6 +68,9 @@ namespace ExoEngine
 		virtual void swap(void) = 0;
 
 		// Getters
+		NavigationType& getNavigationType(void) { return _currentNavigationType; }
+		float getUIScaleFactor(void) { return _UIScaleFactor; }
+
 		ICamera *getCurrentCamera(void) { return _pCurrentCamera; }
 		virtual IWindow *getWindow(void) = 0;
 
@@ -75,11 +79,15 @@ namespace ExoEngine
 		virtual unsigned int getTime(void) const = 0;
 
 		// Setters
+		void setNavigationType(const NavigationType& type) { _currentNavigationType = type; }
 		void setCurrentCamera(ICamera* camera) { _pCurrentCamera = camera; }
+		virtual void setCursor(ICursor* cursor) = 0;
 		virtual void setMousePicker(MousePicker* picker) = 0;
 		virtual void setAxis(Axis* axis) = 0;
 		virtual void setGridEnable(bool val) = 0;
 	protected:
+		NavigationType _currentNavigationType;
+		float		_UIScaleFactor;
 		ICamera	 *_pCurrentCamera;
 		MousePicker *_pMousePicker;
 		Axis		*_pAxis;

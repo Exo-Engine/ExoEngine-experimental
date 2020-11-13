@@ -34,12 +34,14 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "ObjectRenderer.h"
+#include "GUIRenderer.h"
 #include "Grid.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "ArrayTexture.h"
 
 #include <vector>
+#include <UI/Cursor.h>
 
 namespace ExoEngine
 {
@@ -60,13 +62,33 @@ namespace ExoEngine
 		virtual ITexture		*createTexture(const std::string& filePath, TextureFilter filter = TextureFilter::LINEAR);
 		virtual ITexture		*createTexture(unsigned int width, unsigned int height, TextureFormat format = TextureFormat::RGBA, TextureFilter filter = TextureFilter::LINEAR);
 		virtual IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, TextureFilter filter = TextureFilter::LINEAR);
-		virtual IFrameBuffer	*createFrameBuffer(void);
+		
+		/*virtual ICursor* createCursor();
+		virtual ILabel* createLabel();
+		virtual IButton* createButton(const std::shared_ptr<ITexture>& texture, ButtonType buttonType = ButtonType::NORMAL, bool withLabel = true);
+		virtual ICheckbox* createCheckbox(const std::shared_ptr<ITexture>& texture, bool checked = false);
+		virtual IInput* createInput(const std::shared_ptr<ITexture>& texture, const std::string& text = "", InputType type = InputType::TEXT);
+		virtual IImage* createImage(const std::shared_ptr<ITexture>& texture);
+		virtual ISpinner* createSpinner(const std::shared_ptr<ITexture>& texture);
+		virtual ISlider* createSlider(const std::shared_ptr<ITexture>& buttonTexture, const std::shared_ptr<ITexture>& barTexture);
+		virtual ISelect* createSelect(const std::shared_ptr<ITexture>& buttonTexture, const std::shared_ptr<ITexture>& backgroundTexture, const std::shared_ptr<ITexture>& scrollTexture, const std::shared_ptr<Font>& font);
+		virtual IView* createView(const std::shared_ptr<ITexture>& scrollTexture, unsigned int numberOfRows = 1, unsigned int numberOfColumns = 1);
+		virtual IView* createView(const std::shared_ptr<ITexture>& backgroundTexture, const std::shared_ptr<ITexture>& scrollTexture, unsigned int numberOfRows = 1, unsigned int numberOfColumns = 1);*/
+		virtual IFrameBuffer* createFrameBuffer(void);
 
 		virtual void add(sprite &s);
+		virtual void add(IWidget* widget);
+		virtual void add(ILabel* label);
+
 		virtual void remove(sprite &s);
+		virtual void remove(IWidget *widget);
+		virtual void remove(ILabel *label);
 
 		virtual void draw(void);
 		virtual void swap(void);
+
+		void beginScissor(glm::vec2 position, glm::vec2 size, glm::vec2 parentPosition, glm::vec2 parentSize);
+		void endScissor(void);
 
 		// Getters
 		virtual IWindow *getWindow(void);
@@ -76,6 +98,7 @@ namespace ExoEngine
 		virtual unsigned int getTime(void) const;
 
 		// Setters
+		virtual void setCursor(ICursor* cursor);
 		virtual void setMousePicker(MousePicker* picker);
 		virtual void setAxis(Axis* axis);
 		virtual void setGridEnable(bool val);
@@ -92,10 +115,14 @@ namespace ExoEngine
 		Mouse _mouse;
 
 		ObjectRenderer* _pObjectRenderer;
+		GUIRenderer* _pGUIRenderer;
+		// TextRenderer* _pTextRenderer;
 
-		glm::mat4 _perspective;
+		glm::mat4 _perspective, _orthographic;
+		int _scissorBit[4];
 
 		std::thread::id _mainThread;
+		Cursor* _pCursor;
 	};
 
 }
