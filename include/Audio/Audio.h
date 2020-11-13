@@ -32,7 +32,7 @@
 #include <AL/alc.h>
 #endif
 
-#include "Singleton.h"
+#include "Utils/Singleton.h"
 
 #include "Audio/Source.h"
 #include "Audio/Sound.h"
