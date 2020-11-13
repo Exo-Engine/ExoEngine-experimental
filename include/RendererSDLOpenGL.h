@@ -43,16 +43,14 @@
 #include <vector>
 #include <UI/Cursor.h>
 
+#include "Utils/Singleton.h"
+
 namespace ExoEngine
 {
 
-	class RendererSDLOpenGL : public IRenderer
+	class RendererSDLOpenGL : public IRenderer, public Singleton<RendererSDLOpenGL>
 	{
 	public:
-
-		//	Singleton methods
-		static RendererSDLOpenGL&	Get(void);
-		static void				 Destroy(void);
 
 		//	class methods
 		virtual void initialize(const std::string& title, const int width, const int height, const WindowMode &mode, bool resizable);
@@ -109,6 +107,7 @@ namespace ExoEngine
 		void createBuffers(void);
 		void loadShaders(void);
 	private:
+		friend class Singleton<RendererSDLOpenGL>;
 		Window* _pWindow;
 
 		Keyboard _keyboard;

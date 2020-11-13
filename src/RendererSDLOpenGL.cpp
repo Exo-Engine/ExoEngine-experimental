@@ -27,24 +27,6 @@
 
 namespace ExoEngine {
 
-	static RendererSDLOpenGL* g_instance = nullptr;
-
-	RendererSDLOpenGL& RendererSDLOpenGL::Get(void)
-	{
-		if (!g_instance)
-			g_instance = new RendererSDLOpenGL();
-		return *g_instance;
-	}
-
-	void				 RendererSDLOpenGL::Destroy(void)
-	{
-		if (g_instance)
-		{
-			delete g_instance;
-			g_instance = nullptr;
-		}
-	}
-
 	void RendererSDLOpenGL::initialize(const std::string& title, const int width, const int height, const WindowMode& mode, bool resizable)
 	{
 		_scissorBit[0] = 0; _scissorBit[1] = 0; _scissorBit[2] = 0; _scissorBit[3] = 0;
