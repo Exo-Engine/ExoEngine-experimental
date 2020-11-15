@@ -39,6 +39,7 @@
 #include "MousePicker.h"
 #include "Axis.h"
 #include "UI/ICursor.h"
+#include "UI/ILabel.h"
 
 namespace ExoEngine
 {
@@ -46,7 +47,11 @@ namespace ExoEngine
 	class IRenderer
 	{
 	public:
-		IRenderer(void): _pCurrentCamera(nullptr), _pMousePicker(nullptr), _pAxis(nullptr)
+		IRenderer(void): 
+			_currentNavigationType(NavigationType::MOUSE),
+			_pCurrentCamera(nullptr), 
+			_pMousePicker(nullptr), 
+			_pAxis(nullptr)
 		{ };
 
 		virtual ~IRenderer(void)
@@ -61,8 +66,15 @@ namespace ExoEngine
 		virtual IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, TextureFilter filter = TextureFilter::LINEAR) = 0;
 		virtual IFrameBuffer	*createFrameBuffer(void) = 0;
 
+		virtual IImage* createImage(const std::shared_ptr<ITexture>& texture) = 0;
+
 		virtual void add(sprite &s) = 0;
+		virtual void add(IWidget* widget) = 0;
+		virtual void add(ILabel* label) = 0;
+
 		virtual void remove(sprite &s) = 0;
+		virtual void remove(IWidget* widget) = 0;
+		virtual void remove(ILabel* label) = 0;
 
 		virtual void draw(void) = 0;
 		virtual void swap(void) = 0;

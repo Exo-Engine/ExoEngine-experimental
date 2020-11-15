@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<arrayTexture name="cursor" height="128" width="128" filter="nearest">
-		cursor.png
+	<texture name="cursor" path="cursor.png" />
+	<arrayTexture name="red_block" height="128" width="128" filter="nearest">
+		red_block.png
 	</arrayTexture>
 </resources>

@@ -118,6 +118,11 @@ namespace ExoEngine {
 			return (new ArrayTexture(width, height, textures, filter));
 	}
 
+	IImage* RendererSDLOpenGL::createImage(const std::shared_ptr<ITexture>& texture)
+	{
+		return new Image(texture, _UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
+	}
+
 	IFrameBuffer* RendererSDLOpenGL::createFrameBuffer(void)
 	{
 		IFrameBuffer* frameBuffer;
@@ -236,7 +241,7 @@ namespace ExoEngine {
 				((Axis*)_pAxis)->render(((Camera*)_pCurrentCamera)->getLookAt(), _perspective);
 		}
 
-		// _pGUIRenderer->render(_orthographic);
+		_pGUIRenderer->render(_orthographic);
 		// _pTextRenderer->render(_orthographic);
 
 		GL_CALL(glDisable(GL_BLEND));
@@ -248,7 +253,6 @@ namespace ExoEngine {
 		_keyboard.updateLastBuffer();
 
 		_pWindow->handleEvents(_keyboard, _mouse);
-
 		if (_pCursor)
 			_pCursor->update();
 
@@ -325,6 +329,7 @@ namespace ExoEngine {
 	{
 		if (_pCursor)
 			remove(_pCursor->getImage());
+
 		_pCursor = (Cursor*)cursor;
 		if (_pCursor)
 			add(_pCursor->getImage());
@@ -422,7 +427,7 @@ namespace ExoEngine {
 
 #ifndef USE_TEST_SHADERS
 
-	static const std::vector<std::string>	g_2DShader = {
+	static const std::vector<std::string> g_2DShader = {
 		"#version 330 core",
 		"",
 		"layout(location = 0) in vec3 position;",
@@ -464,7 +469,71 @@ namespace ExoEngine {
 		"}"
 	};
 
-	static const std::vector<std::string>	g_lineShader = {
+	static const std::vector<std::string> g_guiShader = {
+		"#version 330 core",
+		"layout (location = 0) in vec2 position;",
+		"",
+		"uniform mat4 transformation;",
+		"uniform mat4 projection;",
+		"",
+		"out vec2 TexCoords;",
+		"",
+		"void main(void)",
+		"{",
+		"    gl_Position = projection * transformation * vec4(position, 0.0, 1.0);",
+		"    TexCoords = vec2((position.x + 1.0) / 2, 1 - (-1 * position.y + 1.0) / 2.0);",
+		"}",
+		"",
+		"#FRAGMENT",
+		"#version 330 core",
+		"",
+		"in vec2 TexCoords;",
+		"",
+		"out vec4 color;",
+		"",
+		"uniform sampler2D guiTexture;",
+		"uniform float opacity;",
+		"uniform float numberOfRows;",
+		"uniform float numberOfColumns;",
+		"uniform vec2 offset;",
+		"",
+		"void main(void)",
+		"{    ",
+		"    color = texture(guiTexture, vec2(TexCoords.x / numberOfRows, TexCoords.y / numberOfColumns) + offset);",
+		"    color.a = color.a - opacity;",
+		"}"
+	};
+
+	static const std::vector<std::string>	g_fontShader = {
+		"#version 330 core",
+		"layout (location = 0) in vec4 vertex;",
+		"",
+		"uniform mat4 projection;",
+		"",
+		"out vec2 TexCoords;",
+		"",
+		"void main()",
+		"{",
+		"    gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);",
+		"    TexCoords = vertex.zw;",
+		"}",
+		"",
+		"#FRAGMENT",
+		"#version 330 core",
+		"",
+		"in vec2 TexCoords;",
+		"out vec4 color;",
+		"",
+		"uniform sampler2D fontAtlas;",
+		"uniform vec3 textColor;",
+		"",
+		"void main()",
+		"{    ",
+		"    color = vec4(textColor, texture(fontAtlas, TexCoords).r);",
+		"}"
+	};
+
+	static const std::vector<std::string> g_lineShader = {
 		"#version 330",
 		"",
 		"layout(location = 0) in vec3 position;",
@@ -494,7 +563,7 @@ namespace ExoEngine {
 		"}"
 	};
 
-	static const std::vector<std::string>	g_axisShader = {
+	static const std::vector<std::string> g_axisShader = {
 		"#version 330",
 		"",
 		"layout(location = 0) in vec3 position;",
@@ -530,10 +599,14 @@ namespace ExoEngine {
 	{
 #ifdef USE_TEST_SHADERS
 		ObjectRenderer::pShader = new Shader("resources/shaders/OpenGL3/2D.glsl");
+		GUIRenderer::pGuiShader = new Shader("resources/shaders/OpenGL3/gui.glsl");
+		TextRenderer::pTextShader = new Shader("resources/shaders/OpenGL3/font.glsl");
 		Grid::pShader = new Shader("resources/shaders/OpenGL3/line.glsl");
 		Axis::pShader = new Shader("resources/shaders/OpenGL3/axis.glsl");
 #else
 		ObjectRenderer::pShader = new Shader(g_2DShader);
+		GUIRenderer::pGuiShader = new Shader(g_guiShader);
+		TextRenderer::pTextShader = new Shader(g_fontShader);
 		Grid::pShader = new Shader(g_lineShader);
 		Axis::pShader = new Shader(g_axisShader);
 #endif

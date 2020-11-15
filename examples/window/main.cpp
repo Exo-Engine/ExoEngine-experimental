@@ -23,6 +23,8 @@
  */
 
 #include "Engine.h"
+#include <UI/Image.h>
+#include <UI/Cursor.h>
 
 using namespace	ExoEngine;
 
@@ -47,10 +49,16 @@ int	main(void)
 
 	renderer->setCurrentCamera(cam);
 
-	sprite img;
-	img.texture = engine.getResourceManager()->get<IArrayTexture>("cursor");
-	img.scale = glm::vec2(3.6);
+	// Cursor
+	ICursor* cursor = new Cursor();
+	std::shared_ptr<ITexture> cursorTexture = engine.getResourceManager()->get<ITexture>("cursor");
+	cursor->setCursorTexture(cursorTexture);
+	renderer->setCursor(cursor);
 
+	// Red block
+	sprite img;
+	img.texture = engine.getResourceManager()->get<IArrayTexture>("red_block");
+	img.scale = glm::vec2(3.6);
 	renderer->add(img);
 
 	while (run)

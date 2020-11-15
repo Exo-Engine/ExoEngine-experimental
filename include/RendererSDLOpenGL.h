@@ -60,13 +60,13 @@ namespace ExoEngine
 		virtual ITexture		*createTexture(const std::string& filePath, TextureFilter filter = TextureFilter::LINEAR);
 		virtual ITexture		*createTexture(unsigned int width, unsigned int height, TextureFormat format = TextureFormat::RGBA, TextureFilter filter = TextureFilter::LINEAR);
 		virtual IArrayTexture	*createArrayTexture(int width, int height, std::vector<std::string> &textures, TextureFilter filter = TextureFilter::LINEAR);
-		
-		/*virtual ICursor* createCursor();
-		virtual ILabel* createLabel();
+
+		virtual IImage* createImage(const std::shared_ptr<ITexture>& texture);
+
+		/*virtual ILabel* createLabel();
 		virtual IButton* createButton(const std::shared_ptr<ITexture>& texture, ButtonType buttonType = ButtonType::NORMAL, bool withLabel = true);
 		virtual ICheckbox* createCheckbox(const std::shared_ptr<ITexture>& texture, bool checked = false);
 		virtual IInput* createInput(const std::shared_ptr<ITexture>& texture, const std::string& text = "", InputType type = InputType::TEXT);
-		virtual IImage* createImage(const std::shared_ptr<ITexture>& texture);
 		virtual ISpinner* createSpinner(const std::shared_ptr<ITexture>& texture);
 		virtual ISlider* createSlider(const std::shared_ptr<ITexture>& buttonTexture, const std::shared_ptr<ITexture>& barTexture);
 		virtual ISelect* createSelect(const std::shared_ptr<ITexture>& buttonTexture, const std::shared_ptr<ITexture>& backgroundTexture, const std::shared_ptr<ITexture>& scrollTexture, const std::shared_ptr<Font>& font);

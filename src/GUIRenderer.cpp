@@ -34,14 +34,15 @@ namespace ExoEngine {
 
 	Shader* GUIRenderer::pGuiShader = nullptr;
 
-	GUIRenderer::GUIRenderer(void)
-		: _vaoBuffer(nullptr), _vertexBuffer(nullptr)
+	GUIRenderer::GUIRenderer(void): 
+		_vaoBuffer(nullptr), 
+		_vertexBuffer(nullptr)
 	{
 		const float tmp[] = {
 			-1.0f,	1.0f,
-			1.0f,	1.0f,
+			 1.0f,	1.0f,
 			-1.0f, -1.0f,
-			1.0f, -1.0f
+			 1.0f, -1.0f
 		};
 
 		_vaoBuffer = new Buffer(0, 0, NULL, BufferType::VERTEXARRAY, BufferDraw::STATIC, 0, false);

@@ -29,8 +29,8 @@
 
 using namespace ExoEngine;
 
-Cursor::Cursor()
-: ICursor()
+Cursor::Cursor(): 
+	ICursor()
 {	}
 
 Cursor::~Cursor()
@@ -51,8 +51,9 @@ void Cursor::setCursorTexture(const std::shared_ptr<ITexture> &texture)
 	if (_pImage)
 		delete _pImage;
 
-	_pImage = new Image(texture, RendererSDLOpenGL::Get().getUIScaleFactor(), RendererSDLOpenGL::Get().getWindow()->getWidth(), RendererSDLOpenGL::Get().getWindow()->getHeight());
-	_pImage->setScale(false);
+	_pImage = RendererSDLOpenGL::Get().createImage(texture);
 	_pImage->setLocalAnchor(AnchorPoint::TOP_LEFT);
+	_pImage->setScale(true);
 	_pImage->setSize(12, 12);
+	_pImage->setPosition(0.0f, 0.0f);
 }
