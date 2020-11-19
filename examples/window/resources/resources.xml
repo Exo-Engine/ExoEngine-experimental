@@ -4,4 +4,18 @@
 	<arrayTexture name="red_block" height="128" width="128" filter="nearest">
 		red_block.png
 	</arrayTexture>
+	<texture name="spinner" path="UI/spinners/spinner.png" />
+    <texture name="black" path="UI/black.png" />
+    <texture name="cursor" path="UI/cursor.png" />
+	<texture name="Exoway_logo" path="UI/Exoway_logo.png" />
+	<texture name="mainButton" path="UI/buttons/main_button.png" />
+    <texture name="button" path="UI/buttons/button.png" />
+    <texture name="input" path="UI/input/input.png" />
+    <texture name="scrollBackground" path="UI/scroll/scrollBackground.png" />
+    <texture name="scrollBackground2" path="UI/scroll/scrollBackground2.png" />
+    <texture name="checkboxTexture" path="UI/checkbox/checkbox.png" />
+	<sound name="ui_button_sound" path="UI/buttons/click.ogg" />
+    <sound name="ui_checkbox_sound" path="UI/checkbox/switch.ogg" />
+	<font name="global_font" texture="UI/fonts/raleway/Raleway.png" path="UI/fonts/raleway/Raleway.fnt" />
+    <font name="awesome_font" texture="UI/fonts/fontawesome/fontawesome.png" path="UI/fonts/fontawesome/fontawesome.fnt" />
 </resources>
