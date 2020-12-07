@@ -35,6 +35,7 @@
 #include "IRenderer.h"
 #include "Audio/Audio.h"
 #include "IResource.h"
+#include "UI/Font.h"
 
 #include "Log.h"
 
@@ -69,6 +70,7 @@ namespace ExoEngine
 
 			void	loadProperties(xmlNodePtr node);
 
+			void	loadFont(const std::string& path, xmlNodePtr node);
 			void	loadTexture(const std::string &path, xmlNodePtr node);
 			void	loadArrayTexture(const std::string &path, xmlNodePtr node);
 			void	loadSound(const std::string &path, xmlNodePtr node);

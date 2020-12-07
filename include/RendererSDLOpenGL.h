@@ -76,11 +76,11 @@ namespace ExoEngine
 
 		virtual void add(sprite &s);
 		virtual void add(IWidget* widget);
-		virtual void add(ILabel* label);
+		virtual void add(Label* label);
 
 		virtual void remove(sprite &s);
 		virtual void remove(IWidget *widget);
-		virtual void remove(ILabel *label);
+		virtual void remove(Label *label);
 
 		virtual void draw(void);
 		virtual void swap(void);
@@ -115,7 +115,7 @@ namespace ExoEngine
 
 		ObjectRenderer* _pObjectRenderer;
 		GUIRenderer* _pGUIRenderer;
-		// TextRenderer* _pTextRenderer;
+		TextRenderer* _pTextRenderer;
 
 		glm::mat4 _perspective, _orthographic;
 		int _scissorBit[4];

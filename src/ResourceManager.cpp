@@ -76,7 +76,24 @@ namespace ExoEngine {
 		return (_properties.at(name));
 	}
 
-	void	ResourceManager::loadTexture(const std::string& relativePath, xmlNodePtr node)
+	void ResourceManager::loadFont(const std::string& relativePath, xmlNodePtr node)
+	{
+		xmlChar* name = xmlGetProp(node, (const xmlChar*)"name");
+		xmlChar* path = xmlGetProp(node, (const xmlChar*)"path");
+		xmlChar* texture = xmlGetProp(node, (const xmlChar*)"texture");
+
+		if (!name)
+			_log.warning << "font without name" << std::endl;
+		if (!path)
+			_log.warning << "font without path" << std::endl;
+		if (!texture)
+			_log.warning << "font without texture" << std::endl;
+		if (name && path)
+			add((char*)name, std::shared_ptr<Font>(
+				new Font(std::shared_ptr<FntLoader>(new FntLoader((relativePath + (char*)path).c_str())), std::shared_ptr<ITexture>(_renderer->createTexture((relativePath + (char*)texture).c_str())))));
+	}
+
+	void ResourceManager::loadTexture(const std::string& relativePath, xmlNodePtr node)
 	{
 		xmlChar* name = xmlGetProp(node, (const xmlChar*)"name");
 		xmlChar* path = xmlGetProp(node, (const xmlChar*)"path");
@@ -222,6 +239,8 @@ namespace ExoEngine {
 						loadArrayTexture(path, currentNode);
 					else if (!xmlStrcmp(currentNode->name, (const xmlChar*)"sound"))
 						loadSound(path, currentNode);
+					else if (!xmlStrcmp(currentNode->name, (const xmlChar*)"font"))
+						loadFont(path, currentNode);
 					else if (!xmlStrcmp(currentNode->name, (const xmlChar*)"sub-resource"))
 						loadSubResource(path, currentNode);
 					else if (!xmlStrcmp(currentNode->name, (const xmlChar*)"hitboxes"))

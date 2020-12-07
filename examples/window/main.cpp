@@ -61,6 +61,14 @@ int	main(void)
 	img.scale = glm::vec2(3.6);
 	renderer->add(img);
 
+	// Label
+	Label* label = new Label();
+	label->setFont(engine.getResourceManager()->get<Font>("global_font"));
+	label->setText("Hello World!");
+	label->setLocalAnchor(AnchorPoint::TOP_LEFT);
+	label->setFontScale(0.3f);
+	renderer->add(label);
+
 	while (run)
 	{
 		if (keyboard->isKeyDown(KeyboardKeys::KEY_ESCAPE))

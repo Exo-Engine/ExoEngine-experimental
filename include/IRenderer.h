@@ -39,7 +39,7 @@
 #include "MousePicker.h"
 #include "Axis.h"
 #include "UI/ICursor.h"
-#include "UI/ILabel.h"
+#include "UI/Label.h"
 
 namespace ExoEngine
 {
@@ -70,11 +70,11 @@ namespace ExoEngine
 
 		virtual void add(sprite &s) = 0;
 		virtual void add(IWidget* widget) = 0;
-		virtual void add(ILabel* label) = 0;
+		virtual void add(Label* label) = 0;
 
 		virtual void remove(sprite &s) = 0;
 		virtual void remove(IWidget* widget) = 0;
-		virtual void remove(ILabel* label) = 0;
+		virtual void remove(Label* label) = 0;
 
 		virtual void draw(void) = 0;
 		virtual void swap(void) = 0;

@@ -47,7 +47,7 @@ namespace ExoEngine {
 		// Renderers
 		_pObjectRenderer = new ObjectRenderer();
 		_pGUIRenderer = new GUIRenderer();
-		// _pTextRenderer = new TextRenderer();
+		_pTextRenderer = new TextRenderer();
 	}
 
 	void RendererSDLOpenGL::resize()
@@ -182,10 +182,10 @@ namespace ExoEngine {
 		_pGUIRenderer->add(widget);
 	}
 
-	void RendererSDLOpenGL::add(ILabel* label)
+	void RendererSDLOpenGL::add(Label* label)
 	{
-		//label->contextInfo(_UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
-		//_pTextRenderer->add((Label*)label);
+		label->contextInfo(_UIScaleFactor, _pWindow->getWidth(), _pWindow->getHeight());
+		_pTextRenderer->add(label);
 	}
 
 	void RendererSDLOpenGL::remove(sprite& s)
@@ -219,9 +219,9 @@ namespace ExoEngine {
 		_pGUIRenderer->remove(widget);
 	}
 
-	void RendererSDLOpenGL::remove(ILabel* label)
+	void RendererSDLOpenGL::remove(Label* label)
 	{
-		// _pTextRenderer->remove((Label*)label);
+		_pTextRenderer->remove(label);
 	}
 
 	void RendererSDLOpenGL::draw(void)
@@ -242,7 +242,7 @@ namespace ExoEngine {
 		}
 
 		_pGUIRenderer->render(_orthographic);
-		// _pTextRenderer->render(_orthographic);
+		_pTextRenderer->render(_orthographic);
 
 		GL_CALL(glDisable(GL_BLEND));
 	}
@@ -354,7 +354,7 @@ namespace ExoEngine {
 
 	// Private
 	RendererSDLOpenGL::RendererSDLOpenGL(void)
-		: IRenderer(), _pWindow(nullptr), _pObjectRenderer(nullptr), _pGUIRenderer(nullptr), _pCursor(nullptr)
+		: IRenderer(), _pWindow(nullptr), _pObjectRenderer(nullptr), _pGUIRenderer(nullptr), _pTextRenderer(nullptr), _pCursor(nullptr)
 	{
 		_mainThread = std::this_thread::get_id();
 	}
@@ -374,9 +374,25 @@ namespace ExoEngine {
 		if (_pGUIRenderer)
 			delete _pGUIRenderer;
 
+		if (_pTextRenderer)
+			delete _pTextRenderer;
+
+		// Buffers
+		if (TextRenderer::vaoBuffer)
+			delete TextRenderer::vaoBuffer;
+
+		if (TextRenderer::vertexBuffer)
+			delete TextRenderer::vertexBuffer;
+
 		// Shaders
 		if (ObjectRenderer::pShader)
 			delete ObjectRenderer::pShader;
+
+		if (GUIRenderer::pGuiShader)
+			delete GUIRenderer::pGuiShader;
+
+		if (TextRenderer::pTextShader)
+			delete TextRenderer::pTextShader;
 	}
 
 	void RendererSDLOpenGL::createBuffers(void)
@@ -404,6 +420,10 @@ namespace ExoEngine {
 		ObjectRenderer::vertexBuffer = new Buffer(12, 3, &vertexBuffer, BufferType::ARRAYBUFFER, BufferDraw::STATIC, 0, false);
 		ObjectRenderer::indexBuffer = new Buffer(6, 3, &indexBuffer, BufferType::INDEXBUFFER, BufferDraw::STATIC, 0, false);
 		ObjectRenderer::uvBuffer = new Buffer(8, 2, &UVBuffer, BufferType::ARRAYBUFFER, BufferDraw::STATIC, 1, true);
+
+		// TextRenderer
+		TextRenderer::vaoBuffer = new Buffer(0, 0, NULL, BufferType::VERTEXARRAY, BufferDraw::STATIC, 0, false);
+		TextRenderer::vertexBuffer = new Buffer(24, 4, NULL, BufferType::ARRAYBUFFER, BufferDraw::DYNAMIC, 0, false);
 
 		// Grid
 		const float line[] = {
