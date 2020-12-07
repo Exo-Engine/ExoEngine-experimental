@@ -178,6 +178,7 @@ int	main(void)
 	mouse = renderer->getMouse();
 	keyboard = renderer->getKeyboard();
 
+	window->isCursorVisible(true);
 	window->setVsync(true);
 
 	setupImGui(window);

@@ -40,6 +40,7 @@ namespace ExoEngine
 		{ };
 
 		// Setters
+		virtual void isCursorVisible(bool visible) = 0;
 		virtual void setWindowSize(int w, int h) = 0;
 		virtual void setWindowMode(const WindowMode &mode) = 0;
 		virtual void setVsync(bool vsync) = 0;

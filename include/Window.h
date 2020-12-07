@@ -59,6 +59,9 @@ namespace ExoEngine
 		void		handleThread(void);
 		virtual IFrameBuffer	*getFrameBuffer(void) const;
 
+		// Setters
+		virtual void isCursorVisible(bool visible);
+
 		// Getters
 		// SDL_Window* getSDLWindow(void);
 		virtual void* getWindowID();

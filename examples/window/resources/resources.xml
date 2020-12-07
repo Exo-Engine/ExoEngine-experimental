@@ -14,8 +14,6 @@
     <texture name="scrollBackground" path="UI/scroll/scrollBackground.png" />
     <texture name="scrollBackground2" path="UI/scroll/scrollBackground2.png" />
     <texture name="checkboxTexture" path="UI/checkbox/checkbox.png" />
-	<sound name="ui_button_sound" path="UI/buttons/click.ogg" />
-    <sound name="ui_checkbox_sound" path="UI/checkbox/switch.ogg" />
 	<font name="global_font" texture="UI/fonts/raleway/Raleway.png" path="UI/fonts/raleway/Raleway.fnt" />
     <font name="awesome_font" texture="UI/fonts/fontawesome/fontawesome.png" path="UI/fonts/fontawesome/fontawesome.fnt" />
 </resources>

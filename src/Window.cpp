@@ -86,7 +86,6 @@ namespace ExoEngine {
 
 	void Window::initialize(const std::string& title, uint32_t width, uint32_t height, const WindowMode& mode, bool resizable)
 	{
-
 		_width = width;
 		_height = height;
 
@@ -167,7 +166,7 @@ namespace ExoEngine {
 			throw (SDLException());
 		}
 		SDL_GL_MakeCurrent(_window, _context);
-		// SDL_ShowCursor(SDL_DISABLE); // Disable cursor
+		SDL_ShowCursor(SDL_DISABLE); // Disable cursor
 
 #ifndef __APPLE__
 		if (glew_init == false)
@@ -297,6 +296,11 @@ namespace ExoEngine {
 	IFrameBuffer* Window::getFrameBuffer(void) const
 	{
 		return (_pFrameBuffer);
+	}
+
+	void Window::isCursorVisible(bool visible)
+	{
+		SDL_ShowCursor(visible);
 	}
 
 	void Window::initPostProcessing(void)
